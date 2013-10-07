@@ -1,0 +1,23 @@
+{% extends 'AnhAdminBundle::base.html.twig' %}
+
+{% block body %}
+    <h1>
+        ModuContentBundle
+        <a href="{{ url('anh_admin') }}">back</a>
+    </h1>
+
+    Sections:
+    {% for section, flags in sections %}
+        <a href="{{ url('anh_content_admin_document_list', { 'section': section }) }}">{{ section }}</a>
+    {% endfor %}
+
+    {% if options.show_categories %}
+        &middot; <a href="{{ url('anh_content_admin_category_list') }}">Categories</a>
+    {% endif %}
+
+    {% if options.show_tags %}
+        &middot; <a href="">Tags</a>
+    {% endif %}
+
+    {% block content '' %}
+{% endblock %}

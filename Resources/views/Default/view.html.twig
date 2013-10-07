@@ -1,0 +1,6 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <h1>{{ document.getTitle() }}</h1>
+    <div>{{ document.getContent()|raw }}</div>
+{% endblock %}

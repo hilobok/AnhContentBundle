@@ -1,0 +1,49 @@
+anh_content_admin:
+    path: /
+    defaults: { _controller: AnhContentBundle:Admin:index }
+
+anh_content_admin_category_list:
+    path: /category-list
+    defaults: { _controller: AnhContentBundle:Admin:categoryList }
+
+anh_content_admin_category_add:
+    path: /category-add
+    defaults: { _controller: AnhContentBundle:Admin:categoryAdd }
+
+anh_content_admin_category_edit:
+    pattern: /category-edit-{id}
+    defaults: { _controller: AnhContentBundle:Admin:categoryEdit }
+    requirements:
+        id: "\d+"
+
+anh_content_admin_category_delete:
+    pattern: /category-delete
+    defaults: { _controller: AnhContentBundle:Admin:categoryDelete }
+    methods: [ 'POST' ]
+
+anh_content_admin_document_list:
+    pattern: /{section}-list-{page}
+    defaults: { _controller: AnhContentBundle:Admin:documentList, page: 1 }
+    requirements:
+        section: "[a-z\d]+"
+        page: "\d+"
+
+anh_content_admin_document_add:
+    pattern: /{section}-add
+    defaults: { _controller: AnhContentBundle:Admin:documentAdd }
+    requirements:
+        section: "[a-z\d]+"
+
+anh_content_admin_document_edit:
+    pattern: /{section}-edit-{id}
+    defaults: { _controller: AnhContentBundle:Admin:documentEdit }
+    requirements:
+        section: "[a-z\d]+"
+        id: "\d+"
+
+anh_content_admin_document_delete:
+    pattern: /{section}-delete
+    defaults: { _controller: AnhContentBundle:Admin:documentDelete }
+    methods: [ 'POST' ]
+    requirements:
+        section: "[a-z\d]+"

@@ -1,0 +1,77 @@
+{% extends "AnhContentBundle::admin.html.twig" %}
+
+{% block title %}Edit document in {{ section }}{% endblock %}
+
+{% block content %}
+    <h2>Edit document in {{ section }}</h2>
+
+    {{ form(form) }}
+{% endblock %}
+
+{% block stylesheets %}
+    <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+
+    {% stylesheets
+        filter="cssrewrite"
+
+        '@AnhContentBundle/Resources/vendor/codemirror/lib/codemirror.css'
+        '@AnhContentBundle/Resources/vendor/fine-uploader/build/fineuploader.css'
+
+        '@AnhContentBundle/Resources/public/editor.css'
+
+        '@AnhContentBundle/Resources/vendor/jQuery-Timepicker-Addon/jquery-ui-timepicker-addon.css'
+    %}<link rel="stylesheet" href="{{ asset_url }}" />{% endstylesheets %}
+
+    <style>
+        .ui-widget { font-size: 13px; z-index: 10 !important; }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+
+    {% javascripts
+        '@AnhContentBundle/Resources/vendor/codemirror/lib/codemirror.js'
+        '@AnhContentBundle/Resources/vendor/fine-uploader/build/jquery.fineuploader.js'
+
+        '@AnhContentBundle/Resources/public/editor-bbcode-tagset.js'
+        '@AnhContentBundle/Resources/public/editor.js'
+
+        '@AnhContentBundle/Resources/vendor/jQuery-Timepicker-Addon/jquery-ui-timepicker-addon.js'
+    %}<script src="{{ asset_url }}"></script>{% endjavascripts %}
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var ed = new $.editor({
+                textarea: $('.bbcode'),
+                tagList: $.parseJSON('{{ tags|json_encode()|raw }}'),
+                tagSet: editor_bbcode_tagset,
+                uploader: {
+                    endpoint: '{{ oneup_uploader_endpoint('anh_content_assets') }}'
+                },
+                path: {
+                    uploads: '{{ path.uploads }}',
+                    thumbs: '{{ path.thumbs }}'
+                }
+            });
+
+            // init datetime picker
+            $('.datetime-picker').datetimepicker({
+                // monthNames: ['Січень', 'Лютий', 'Березень', 'Квітень', 'Травень', 'Червень', 'Липень', 'Серпень', 'Вересень', 'Жовтень', 'Листопад', 'Грудень'],
+                // dayNamesMin: ['Нд', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+                // firstDay: 1,
+                // timeText: 'Час',
+                // hourText: 'Год.',
+                // minuteText: 'Хв.',
+                // secondText: 'Сек.',
+                // currentText: 'Зараз',
+                // closeText: 'ОК',
+                dateFormat: 'yy-mm-dd',
+                timeFormat: 'HH:mm:ss'
+                // showSecond: true
+            });
+        });
+    </script>
+{% endblock %}

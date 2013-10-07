@@ -1,0 +1,47 @@
+{% extends "AnhContentBundle::admin.html.twig" %}
+
+{% block title %}Categories{% endblock %}
+
+{% block content %}
+    <h2>Categories</h2>
+
+    <form action="{{ url('anh_content_admin_category_delete') }}" method="post" id="fCategories">
+        <a href="{{ url('anh_content_admin_category_add') }}">Create new</a>
+
+        {% if categories %}
+            <button type="submit">Delete</button>
+
+            {% for category in categories %}
+                <div>
+                    <input type="checkbox" name="id[]" value="{{ category.getId() }}" />
+                    <a href="{{ url('anh_content_admin_category_edit', { 'id': category.getId() }) }}">{{ category.getTitle() }}</a>
+                    &middot; {{ category.getSection() }}
+                    &middot; {{ category.getCreatedAt()|date }}
+                    &middot; {{ category.getUpdatedAt()|date }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+    <script><!--
+        $(function() {
+            var check = function() {
+                $('#fCategories button[type="submit"]').attr('disabled', $('#fCategories input[name="id[]"]:checked').length == 0);
+            };
+
+            $('#fCategories input[name="id[]"]').click(check);
+
+            check();
+
+            $('#fCategories').submit(function(event) {
+                if(!confirm('Are you sure?')) {
+                    event.preventDefault();
+                }
+            });
+        });
+    --></script>
+{% endblock %}

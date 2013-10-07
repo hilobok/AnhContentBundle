@@ -1,0 +1,77 @@
+parameters:
+    anh_content.entity.category.class: Anh\Bundle\ContentBundle\Entity\Category
+    anh_content.entity.document.class: Anh\Bundle\ContentBundle\Entity\Document
+    anh_content.manager.category.class: Anh\Bundle\ContentBundle\Entity\CategoryManager
+    anh_content.manager.document.class: Anh\Bundle\ContentBundle\Entity\DocumentManager
+    anh_content.form.type.category.class: Anh\Bundle\ContentBundle\Form\CategoryType
+    anh_content.form.type.document.class: Anh\Bundle\ContentBundle\Form\DocumentType
+    anh_content.bbcode_parser.class: Anh\Bundle\ContentBundle\EventListener\BbcodeParser
+    anh_content.uploader.class: Anh\Bundle\ContentBundle\EventListener\Uploader
+    anh_content.asset_remover.class: Anh\Bundle\ContentBundle\EventListener\AssetRemover
+    anh_content.asset_manager.class: Anh\Bundle\ContentBundle\AssetManager
+
+services:
+    anh_content.bundle:
+        class: Anh\Bundle\ContentBundle\AnhContentBundle
+        factory_service: kernel
+        factory_method: getBundle
+        arguments:
+            - 'AnhContentBundle'
+        tags:
+            - { name: anh_admin.bundle }
+
+    anh_content.manager.category:
+        class: %anh_content.manager.category.class%
+        arguments:
+            - @doctrine.orm.entity_manager
+            - %anh_content.entity.category.class%
+
+    anh_content.manager.document:
+        class: %anh_content.manager.document.class%
+        arguments:
+            - @doctrine.orm.entity_manager
+            - %anh_content.entity.document.class%
+            - @anh_pager.pager
+
+    anh_content.form.type.category:
+        class: %anh_content.form.type.category.class%
+        arguments:
+            - %anh_content.entity.category.class%
+            - %anh_content.sections%
+        tags:
+            - { name: form.type, alias: anh_content_form_type_category }
+
+    anh_content.form.type.document:
+        class: %anh_content.form.type.document.class%
+        arguments:
+            - %anh_content.entity.document.class%
+            - %anh_content.entity.category.class%
+            - %anh_content.sections%
+        tags:
+            - { name: form.type, alias: anh_content_form_type_document }
+
+    anh_content.uploader:
+        class: %anh_content.uploader.class%
+        tags:
+            - { name: kernel.event_listener, event: oneup_uploader.post_persist, method: onUpload }
+
+    anh_content.asset_remover:
+        class: %anh_content.asset_remover.class%
+        arguments:
+            - @anh_content.asset_manager
+        tags:
+            - { name: doctrine.event_subscriber }
+
+    anh_content.asset_manager:
+        class: %anh_content.asset_manager.class%
+        arguments:
+            - %kernel.root_dir%
+
+    anh_content.bbcode_parser:
+        class: %anh_content.bbcode_parser.class%
+        arguments:
+            - %anh_content.sections%
+            - @router
+            - @anh_content.asset_manager
+        tags:
+            - { name: kernel.event_subscriber }
