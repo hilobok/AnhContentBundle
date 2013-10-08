@@ -173,7 +173,7 @@ class Document
      *
      * @return array
      */
-    public function getMarkupMasterFields()
+    public function getMarkupExtraFields()
     {
         return array(
             'id' => $this->getId(),
