@@ -8,7 +8,7 @@
     <form action="{{ url('anh_content_admin_document_delete', { 'section': section }) }}" method="post" id="fDocuments">
         <a href="{{ url('anh_content_admin_document_add', { 'section': section }) }}">Create new</a>
 
-        {% if pager.getResult() %}
+        {% if not pager.isEmpty() %}
             <button type="submit">Delete</button>
 
             {% for document in pager.getResult() %}

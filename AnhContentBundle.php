@@ -15,6 +15,8 @@ class AnhContentBundle extends Bundle
         return array(
             'Anh\Bundle\AdminBundle\AnhAdminBundle',
             'Anh\Bundle\MarkupBundle\AnhMarkupBundle',
+            'Anh\Bundle\TaggableBundle\AnhTaggableBundle',
+            'Anh\Bundle\DateTimePickerBundle\AnhDateTimePickerBundle',
             'Anh\Bundle\PagerBundle\AnhPagerBundle',
             'Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle',
             'Oneup\UploaderBundle\OneupUploaderBundle',

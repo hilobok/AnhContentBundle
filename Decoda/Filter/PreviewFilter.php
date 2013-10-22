@@ -46,7 +46,7 @@ class PreviewFilter extends AbstractFilter
     /**
      * Add preview hook.
      *
-     * @param  \Decoda\Decoda                                         $decoda
+     * @param  \Decoda\Decoda                                        $decoda
      * @return \Anh\Bundle\ContentBundle\Decoda\Filter\PreviewFilter
      */
     public function setupHooks(Decoda $decoda)

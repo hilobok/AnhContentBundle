@@ -32,6 +32,7 @@ services:
             - @doctrine.orm.entity_manager
             - %anh_content.entity.document.class%
             - @anh_pager.pager
+            - @anh_taggable.manager
 
     anh_content.form.type.category:
         class: %anh_content.form.type.category.class%
@@ -47,6 +48,7 @@ services:
             - %anh_content.entity.document.class%
             - %anh_content.entity.category.class%
             - %anh_content.sections%
+            - @anh_taggable.manager
         tags:
             - { name: form.type, alias: anh_content_form_type_document }
 

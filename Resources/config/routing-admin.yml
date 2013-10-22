@@ -17,9 +17,25 @@ anh_content_admin_category_edit:
         id: "\d+"
 
 anh_content_admin_category_delete:
-    pattern: /category-delete
+    path: /category-delete
     defaults: { _controller: AnhContentBundle:Admin:categoryDelete }
     methods: [ 'POST' ]
+
+anh_content_admin_tags_list:
+    pattern: /tags-{page}
+    defaults: { _controller: AnhContentBundle:Admin:tagsList, page: 1 }
+    requirements:
+        page: "\d+"
+
+anh_content_admin_tags_edit:
+    pattern: /tags-edit-{id}
+    defaults: { _controller: AnhContentBundle:Admin:tagsEdit }
+    requirements:
+        id: "\d+"
+
+anh_content_admin_tags_delete:
+    path: /tags-delete
+    defaults: { _controller: AnhContentBundle:Admin:tagsDelete }
 
 anh_content_admin_document_list:
     pattern: /{section}-list-{page}

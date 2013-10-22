@@ -1,5 +1,8 @@
 {% extends "AnhContentBundle::admin.html.twig" %}
 
+{% import "AnhDateTimePickerBundle::macro.html.twig" as dateTimePicker %}
+{% import "AnhTaggableBundle::macro.html.twig" as taggable %}
+
 {% block title %}Edit document in {{ section }}{% endblock %}
 
 {% block content %}
@@ -13,15 +16,13 @@
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
 
     {% stylesheets
-        filter="cssrewrite"
-
         '@AnhContentBundle/Resources/vendor/codemirror/lib/codemirror.css'
         '@AnhContentBundle/Resources/vendor/fine-uploader/build/fineuploader.css'
-
         '@AnhContentBundle/Resources/public/editor.css'
-
-        '@AnhContentBundle/Resources/vendor/jQuery-Timepicker-Addon/jquery-ui-timepicker-addon.css'
     %}<link rel="stylesheet" href="{{ asset_url }}" />{% endstylesheets %}
+
+    {{ dateTimePicker.stylesheets() }}
+    {{ taggable.stylesheets() }}
 
     <style>
         .ui-widget { font-size: 13px; z-index: 10 !important; }
@@ -35,12 +36,15 @@
     {% javascripts
         '@AnhContentBundle/Resources/vendor/codemirror/lib/codemirror.js'
         '@AnhContentBundle/Resources/vendor/fine-uploader/build/jquery.fineuploader.js'
-
         '@AnhContentBundle/Resources/public/editor-bbcode-tagset.js'
         '@AnhContentBundle/Resources/public/editor.js'
-
-        '@AnhContentBundle/Resources/vendor/jQuery-Timepicker-Addon/jquery-ui-timepicker-addon.js'
     %}<script src="{{ asset_url }}"></script>{% endjavascripts %}
+
+    {{ dateTimePicker.javascript() }}
+    {{ dateTimePicker.init() }}
+
+    {{ taggable.javascript() }}
+    {{ taggable.init() }}
 
     <script type="text/javascript">
         $(document).ready(function() {
@@ -55,22 +59,6 @@
                     uploads: '{{ path.uploads }}',
                     thumbs: '{{ path.thumbs }}'
                 }
-            });
-
-            // init datetime picker
-            $('.datetime-picker').datetimepicker({
-                // monthNames: ['Січень', 'Лютий', 'Березень', 'Квітень', 'Травень', 'Червень', 'Липень', 'Серпень', 'Вересень', 'Жовтень', 'Листопад', 'Грудень'],
-                // dayNamesMin: ['Нд', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
-                // firstDay: 1,
-                // timeText: 'Час',
-                // hourText: 'Год.',
-                // minuteText: 'Хв.',
-                // secondText: 'Сек.',
-                // currentText: 'Зараз',
-                // closeText: 'ОК',
-                dateFormat: 'yy-mm-dd',
-                timeFormat: 'HH:mm:ss'
-                // showSecond: true
             });
         });
     </script>

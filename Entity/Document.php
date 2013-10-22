@@ -9,6 +9,9 @@ use Anh\Bundle\MarkupBundle\Validator\Markup as MarkupValidator;
 
 use Anh\Bundle\ContentBundle\Entity\Category;
 
+use Anh\Taggable\AbstractTaggable;
+use Anh\Taggable\TaggableInterface;
+
 /**
  * Document
  *
@@ -23,7 +26,7 @@ use Anh\Bundle\ContentBundle\Entity\Category;
  * })
  * @ORM\Entity(repositoryClass="Anh\Bundle\ContentBundle\Entity\DocumentRepository")
  */
-class Document
+class Document extends AbstractTaggable implements TaggableInterface
 {
     /**
      * @var integer
@@ -443,5 +446,13 @@ class Document
     public function getCategory()
     {
         return $this->category;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTaggableType()
+    {
+        return $this->section;
     }
 }

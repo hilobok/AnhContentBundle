@@ -9,34 +9,39 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Doctrine\ORM\EntityRepository;
 
+use Anh\Taggable\TaggableManager;
+
 class DocumentType extends AbstractType
 {
     /**
-     * @var string
-     *
      * Document entity class
+     * @var string
      */
     protected $documentClass;
 
     /**
-     * @var string
-     *
      * Category entity class
+     * @var string
      */
     protected $categoryClass;
 
     /**
+     * Sections config
      * @var array
-     *
-     * Sections
      */
     protected $sections;
 
-    public function __construct($documentClass, $categoryClass, $sections)
+    /**
+     * TaggableManager
+     * @var \Anh\Taggable\TaggableManager
+     */
+
+    public function __construct($documentClass, $categoryClass, $sections, TaggableManager $taggableManager)
     {
         $this->documentClass = $documentClass;
         $this->categoryClass = $categoryClass;
         $this->sections = $sections;
+        $this->taggableManager = $taggableManager;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -82,11 +87,10 @@ class DocumentType extends AbstractType
         if ($config['publishedSince']) {
             $builder
                 ->add('publishedSince', 'datetime', array(
-                    'widget' => 'single_text',
-                    'format' => 'yyyy-MM-dd HH:mm:ss',
-                    'attr' => array(
-                        'class' => 'datetime-picker'
-                    )
+                    'picker' => true,
+                    'format' => 'dd.MM.yyyy HH:mm:ss',
+                    // 'format' => 'yyyy-MM-dd HH:mm:ss',
+                    'separator' => ' '
                 ))
             ;
         }
@@ -98,6 +102,15 @@ class DocumentType extends AbstractType
                 )
             ))
             ->add('isDraft', 'checkbox')
+        ;
+
+        if ($config['tags']) {
+            $builder
+                ->add('tags', 'tags')
+            ;
+        }
+
+        $builder
             ->add('submit', 'submit')
         ;
 

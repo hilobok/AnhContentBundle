@@ -1,0 +1,55 @@
+{% extends "AnhContentBundle::admin.html.twig" %}
+
+{% block title %}Tags{% endblock %}
+
+{% block content %}
+    {% if not pager.isEmpty() %}
+        <h2>Tags</h2>
+
+        <form action="{{ url('anh_content_admin_tags_delete') }}" method="post" id="fTags">
+                <button type="submit">Delete</button>
+
+                {% for tag in pager.getResult() %}
+                    <div>
+                        <input type="checkbox" name="id[]" value="{{ tag.getId() }}" />
+                        <a href="{{ url('anh_content_admin_tags_edit', { id: tag.getId() }) }}">{{ tag.getName() }}</a>
+                    </div>
+                {% endfor %}
+
+                <div id="pager" class="paginator"></div>
+        </form>
+    {% else %}
+        <h2>No tags</h2>
+    {% endif %}
+{% endblock %}
+
+{% import 'AnhPagerBundle::macro.html.twig' as pagination %}
+
+{% block stylesheets %}
+    {{ pagination.stylesheets() }}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+    {{ pagination.javascripts() }}
+    {{ pagination.init('pager', pager, pagerUrl) }}
+
+    <script><!--
+        $(function() {
+            var check = function() {
+                $('#fTags button[type="submit"]').attr('disabled', $('#fTags input[name="id[]"]:checked').length == 0);
+            };
+
+            $('#fTags input[name="id[]"]').click(check);
+
+            check();
+
+            $('#fTags').submit(function(event) {
+                if(!confirm('Are you sure?')) {
+                    event.preventDefault();
+                }
+            });
+        });
+    --></script>
+{% endblock %}

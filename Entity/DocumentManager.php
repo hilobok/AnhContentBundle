@@ -4,15 +4,47 @@ namespace Anh\Bundle\ContentBundle\Entity;
 
 use Anh\Bundle\ContentBundle\AbstractModelManager;
 use Doctrine\ORM\EntityManager;
+use Anh\Taggable\TaggableManager;
 
 class DocumentManager extends AbstractModelManager
 {
     protected $pager;
 
-    public function __construct(EntityManager $em, $class, $pager)
+    protected $taggableManager;
+
+    public function __construct(EntityManager $em, $class, $pager, TaggableManager $taggableManager)
     {
         parent::__construct($em, $class);
         $this->pager = $pager;
+        $this->taggableManager = $taggableManager;
+    }
+
+    /**
+     * Returns taggable manager
+     *
+     * @return TaggableManager
+     */
+    public function getTaggableManager()
+    {
+        return $this->taggableManager;
+    }
+
+    /**
+     * {@inhertidoc}
+     */
+    public function create()
+    {
+        $entity = parent::create();
+        $entity->setTaggableManager($this->taggableManager);
+
+        return $entity;
+    }
+
+    public function paginateTags($page, $limit)
+    {
+        $query = $this->taggableManager->getTagRepository()->findAllQB();
+
+        return $this->pager->paginate($query, $page, $limit);
     }
 
     public function findInSectionBySlug($section, $slug)

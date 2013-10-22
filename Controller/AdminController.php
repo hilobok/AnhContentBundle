@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Anh\Bundle\ContentBundle\Entity\Category;
 use Anh\Bundle\ContentBundle\Entity\Document;
+use Anh\Taggable\Entity\Tag;
 
 use Symfony\Component\HttpFoundation\Request;
 
@@ -22,6 +23,67 @@ class AdminController extends Controller
         ));
     }
 
+    public function tagsListAction($page = 1)
+    {
+        $pager = $this->getDocumentManager()->paginateTags($page, 10);
+        $pagerUrl = str_replace('0', '{page}', $this->generateUrl('anh_content_admin_tags_list', array(
+            'page' => 0
+        )));
+
+        $options = $this->container->getParameter('anh_content.options');
+        $sections = $this->container->getParameter('anh_content.sections');
+
+        return $this->render('AnhContentBundle:Admin:tags/list.html.twig', array(
+            'sections' => $sections,
+            'options' => $options,
+            'pager' => $pager,
+            'pagerUrl' => $pagerUrl
+        ));
+    }
+
+    public function tagsEditAction(Tag $tag)
+    {
+        $form = $this->createForm('anh_taggable_form_type_tag', $tag);
+        $request = $this->getRequest();
+
+        if ($request->getMethod() == 'POST') {
+            $form->bind($request);
+
+            if ($form->isValid()) {
+                $this->getDocumentManager()->save($tag);
+
+                return $this->redirect($this->generateUrl('anh_content_admin_tags_list'));
+            }
+        }
+
+        $options = $this->container->getParameter('anh_content.options');
+        $sections = $this->container->getParameter('anh_content.sections');
+
+        return $this->render('AnhContentBundle:Admin:tags/edit.html.twig', array(
+            'sections' => $sections,
+            'options' => $options,
+            'form' => $form->createView()
+        ));
+    }
+
+    public function tagsDeleteAction()
+    {
+        $request = $this->getRequest();
+
+        if ($request->getMethod() == 'POST') {
+            $list = $request->request->get('id');
+
+            if (!empty($list) and is_array($list)) {
+                $this->getDocumentManager()
+                    ->getTaggableManager()
+                    ->deleteTagsByIdList($list)
+                ;
+            }
+        }
+
+        return $this->redirect($this->generateUrl('anh_content_admin_tags_list'));
+    }
+
     public function documentListAction($section, $page = 1)
     {
         $sections = $this->container->getParameter('anh_content.sections');
@@ -33,7 +95,6 @@ class AdminController extends Controller
         $options = $this->container->getParameter('anh_content.options');
 
         $pager = $this->getDocumentManager()->paginateInSection($section, $page, 10);
-
         $pagerUrl = str_replace('0', '{page}', $this->generateUrl('anh_content_admin_document_list', array(
             'section' => $section,
             'page' => 0
@@ -62,7 +123,7 @@ class AdminController extends Controller
         return $this->documentAddEdit($document, 'AnhContentBundle:Admin:document/add.html.twig');
     }
 
-    public function documentEditAction($section, $id)
+    public function documentEditAction($section, Document $document)
     {
         $sections = $this->container->getParameter('anh_content.sections');
 
@@ -70,21 +131,13 @@ class AdminController extends Controller
             throw new \InvalidArgumentException("Section '{$section}' not configured.");
         }
 
-        $document = $this->getDocumentManager()->find($id);
-
-        if ($section !== $document->getSection()) {
-            throw new \InvalidArgumentException("Document '{$id}' not in '{$section}'.");
-        }
-
         return $this->documentAddEdit($document, 'AnhContentBundle:Admin:document/edit.html.twig');
     }
 
-    private function documentAddEdit($document, $template)
+    private function documentAddEdit(Document $document, $template)
     {
-        $form = $this->createDocumentForm($document);
-
+        $form = $this->createForm('anh_content_form_type_document', $document);
         $request = $this->getRequest();
-
         $section = $document->getSection();
 
         if ($request->getMethod() == 'POST') {
@@ -93,7 +146,10 @@ class AdminController extends Controller
             if ($form->isValid()) {
                 $this->getDocumentManager()->save($document);
 
-                // return $this->redirect($this->generateUrl('anh_content_admin_document_list', array('section' => $section)));
+                return $this->redirect($this->generateUrl(
+                    'anh_content_admin_document_list',
+                    array('section' => $section)
+                ));
             }
         }
 
@@ -107,7 +163,7 @@ class AdminController extends Controller
             'thumbs' => $assetManager->getPath('thumbs')
         );
 
-        // getting all available tags from parser
+        // getting all available bbcode tags from parser
         $parser = $this->container->get('anh_markup.parser');
         $decoda = $parser->create('bbcode', '', array());
         $tags = array();
@@ -115,7 +171,7 @@ class AdminController extends Controller
             $tags = array_merge($tags, array_keys($filter->getTags()));
         }
 
-        // remove not valid tags
+        // remove not valid bbcode tags
         $tags = array_filter($tags, function($value) { return preg_match('/^[_a-z0-9]+$/', $value); });
 
         return $this->render($template, array(
@@ -140,7 +196,10 @@ class AdminController extends Controller
             }
         }
 
-        return $this->redirect($this->generateUrl('anh_content_admin_document_list', array('section' => $section)));
+        return $this->redirect($this->generateUrl(
+            'anh_content_admin_document_list',
+            array('section' => $section)
+        ));
     }
 
     public function categoryListAction()
@@ -164,21 +223,16 @@ class AdminController extends Controller
         return $this->categoryAddEdit($category, 'AnhContentBundle:Admin:category/add.html.twig');
     }
 
-    public function categoryEditAction($id)
+    public function categoryEditAction(Category $category)
     {
-        $category = $this->getCategoryManager()->find($id);
-
-        if (empty($category)) {
-            throw new \InvalidArgumentException('Category not found.');
-        }
-
-        return $this->categoryAddEdit($category, 'AnhContentBundle:Admin:category/edit.html.twig');
+        return $this->categoryAddEdit($category,
+            'AnhContentBundle:Admin:category/edit.html.twig'
+        );
     }
 
-    private function categoryAddEdit($category, $template)
+    private function categoryAddEdit(Category $category, $template)
     {
-        $form = $this->createCategoryForm($category);
-
+        $form = $this->createForm('anh_content_form_type_category', $category);
         $request = $this->getRequest();
 
         if ($request->getMethod() == 'POST') {
@@ -214,16 +268,6 @@ class AdminController extends Controller
         }
 
         return $this->redirect($this->generateUrl('anh_content_admin_category_list'));
-    }
-
-    private function createCategoryForm(Category $category)
-    {
-        return $this->createForm('anh_content_form_type_category', $category);
-    }
-
-    private function createDocumentForm(Document $document)
-    {
-        return $this->createForm('anh_content_form_type_document', $document);
     }
 
     private function getCategoryManager()
