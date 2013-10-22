@@ -57,15 +57,12 @@ class AnhContentExtension extends Extension implements PrependExtensionInterface
 
     public function prepend(ContainerBuilder $container)
     {
-        // $config = array(
-        //     'bundles' => array(
-        //         'AnhContentBundle'
-        //     )
-        // );
-        // $container->prependExtensionConfig('assetic', $config);
+        $container->prependExtensionConfig('assetic', array(
+            'bundles' => array(
+                'AnhContentBundle'
+            )
+        ));
 
-//         $bundles = $container->getParameter('assetic.bundles');
-// echo '<pre>'. print_r($bundles, true) . '</pre>';
         $config = array(
             'orm' => array(
                 'default' => array(
