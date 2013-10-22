@@ -6,7 +6,7 @@ use Anh\Bundle\ContentBundle\AbstractModelManager;
 use Doctrine\ORM\EntityManager;
 use Anh\Taggable\TaggableManager;
 
-class DocumentManager extends AbstractModelManager
+class PaperManager extends AbstractModelManager
 {
     protected $pager;
 

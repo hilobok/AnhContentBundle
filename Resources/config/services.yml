@@ -1,10 +1,10 @@
 parameters:
     anh_content.entity.category.class: Anh\Bundle\ContentBundle\Entity\Category
-    anh_content.entity.document.class: Anh\Bundle\ContentBundle\Entity\Document
+    anh_content.entity.paper.class: Anh\Bundle\ContentBundle\Entity\Paper
     anh_content.manager.category.class: Anh\Bundle\ContentBundle\Entity\CategoryManager
-    anh_content.manager.document.class: Anh\Bundle\ContentBundle\Entity\DocumentManager
+    anh_content.manager.paper.class: Anh\Bundle\ContentBundle\Entity\PaperManager
     anh_content.form.type.category.class: Anh\Bundle\ContentBundle\Form\CategoryType
-    anh_content.form.type.document.class: Anh\Bundle\ContentBundle\Form\DocumentType
+    anh_content.form.type.paper.class: Anh\Bundle\ContentBundle\Form\PaperType
     anh_content.bbcode_parser.class: Anh\Bundle\ContentBundle\EventListener\BbcodeParser
     anh_content.uploader.class: Anh\Bundle\ContentBundle\EventListener\Uploader
     anh_content.asset_remover.class: Anh\Bundle\ContentBundle\EventListener\AssetRemover
@@ -26,11 +26,11 @@ services:
             - @doctrine.orm.entity_manager
             - %anh_content.entity.category.class%
 
-    anh_content.manager.document:
-        class: %anh_content.manager.document.class%
+    anh_content.manager.paper:
+        class: %anh_content.manager.paper.class%
         arguments:
             - @doctrine.orm.entity_manager
-            - %anh_content.entity.document.class%
+            - %anh_content.entity.paper.class%
             - @anh_pager.pager
             - @anh_taggable.manager
 
@@ -42,15 +42,15 @@ services:
         tags:
             - { name: form.type, alias: anh_content_form_type_category }
 
-    anh_content.form.type.document:
-        class: %anh_content.form.type.document.class%
+    anh_content.form.type.paper:
+        class: %anh_content.form.type.paper.class%
         arguments:
-            - %anh_content.entity.document.class%
+            - %anh_content.entity.paper.class%
             - %anh_content.entity.category.class%
             - %anh_content.sections%
             - @anh_taggable.manager
         tags:
-            - { name: form.type, alias: anh_content_form_type_document }
+            - { name: form.type, alias: anh_content_form_type_paper }
 
     anh_content.uploader:
         class: %anh_content.uploader.class%

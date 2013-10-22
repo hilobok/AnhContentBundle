@@ -11,13 +11,13 @@ use Doctrine\ORM\EntityRepository;
 
 use Anh\Taggable\TaggableManager;
 
-class DocumentType extends AbstractType
+class PaperType extends AbstractType
 {
     /**
-     * Document entity class
+     * Paper entity class
      * @var string
      */
-    protected $documentClass;
+    protected $paperClass;
 
     /**
      * Category entity class
@@ -36,9 +36,9 @@ class DocumentType extends AbstractType
      * @var \Anh\Taggable\TaggableManager
      */
 
-    public function __construct($documentClass, $categoryClass, $sections, TaggableManager $taggableManager)
+    public function __construct($paperClass, $categoryClass, $sections, TaggableManager $taggableManager)
     {
-        $this->documentClass = $documentClass;
+        $this->paperClass = $paperClass;
         $this->categoryClass = $categoryClass;
         $this->sections = $sections;
         $this->taggableManager = $taggableManager;
@@ -129,12 +129,12 @@ class DocumentType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => $this->documentClass
+            'data_class' => $this->paperClass
         ));
     }
 
     public function getName()
     {
-        return 'anh_content_form_type_document';
+        return 'anh_content_form_type_paper';
     }
 }

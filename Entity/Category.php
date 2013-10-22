@@ -5,7 +5,7 @@ namespace Anh\Bundle\ContentBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
-use Anh\Bundle\ContentBundle\Entity\Document;
+use Anh\Bundle\ContentBundle\Entity\Paper;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -69,16 +69,16 @@ class Category
     protected $updatedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="Document", mappedBy="category", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="Paper", mappedBy="category", cascade={"remove"})
      */
-    protected $documents;
+    protected $papers;
 
     /**
      * Constructor
      */
     // public function __construct()
     // {
-    //     $this->documents = new ArrayCollection();
+    //     $this->papers = new ArrayCollection();
     // }
 
     /**
@@ -94,8 +94,8 @@ class Category
     /**
      * Set section
      *
-     * @param  string   $section
-     * @return Document
+     * @param  string $section
+     * @return Paper
      */
     public function setSection($section)
     {
@@ -207,35 +207,35 @@ class Category
     }
 
     // /**
-    //  * Add documents
+    //  * Add papers
     //  *
-    //  * @param  Document $documents
+    //  * @param  Paper $papers
     //  * @return Category
     //  */
-    // public function addDocument(Document $documents)
+    // public function addPaper(Paper $papers)
     // {
-    //     $this->documents[] = $documents;
+    //     $this->papers[] = $papers;
 
     //     return $this;
     // }
 
     // /**
-    //  * Remove documents
+    //  * Remove papers
     //  *
-    //  * @param Document $documents
+    //  * @param Paper $papers
     //  */
-    // public function removeDocument(Document $documents)
+    // public function removePaper(Paper $papers)
     // {
-    //     $this->documents->removeElement($documents);
+    //     $this->papers->removeElement($papers);
     // }
 
     /**
-     * Get documents
+     * Get papers
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getDocuments()
+    public function getPapers()
     {
-        return $this->documents = $this->documents ?: new ArrayCollection();
+        return $this->papers = $this->papers ?: new ArrayCollection();
     }
 }

@@ -21,9 +21,9 @@ class Configuration implements ConfigurationInterface
      * - assets - [asset=""]
      * - tags
      * - preview - [preview] [proceed]
-     * - image - allow separate image for document (usualy used with preview)
+     * - image - allow separate image for paper (usualy used with preview)
      * - comments
-     * - route - route name for view document, anh_content_{section}_view by default
+     * - route - route name for view paper, anh_content_{section}_view by default
      */
     public function getConfigTreeBuilder()
     {

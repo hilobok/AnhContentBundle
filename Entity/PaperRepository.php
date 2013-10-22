@@ -4,7 +4,7 @@ namespace Anh\Bundle\ContentBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
-class DocumentRepository extends EntityRepository
+class PaperRepository extends EntityRepository
 {
     public function findInSectionBySlugDQL($section, $slug)
     {

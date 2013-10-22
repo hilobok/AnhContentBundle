@@ -37,29 +37,29 @@ anh_content_admin_tags_delete:
     path: /tags-delete
     defaults: { _controller: AnhContentBundle:Admin:tagsDelete }
 
-anh_content_admin_document_list:
+anh_content_admin_paper_list:
     pattern: /{section}-list-{page}
-    defaults: { _controller: AnhContentBundle:Admin:documentList, page: 1 }
+    defaults: { _controller: AnhContentBundle:Admin:paperList, page: 1 }
     requirements:
         section: "[a-z\d]+"
         page: "\d+"
 
-anh_content_admin_document_add:
+anh_content_admin_paper_add:
     pattern: /{section}-add
-    defaults: { _controller: AnhContentBundle:Admin:documentAdd }
+    defaults: { _controller: AnhContentBundle:Admin:paperAdd }
     requirements:
         section: "[a-z\d]+"
 
-anh_content_admin_document_edit:
+anh_content_admin_paper_edit:
     pattern: /{section}-edit-{id}
-    defaults: { _controller: AnhContentBundle:Admin:documentEdit }
+    defaults: { _controller: AnhContentBundle:Admin:paperEdit }
     requirements:
         section: "[a-z\d]+"
         id: "\d+"
 
-anh_content_admin_document_delete:
+anh_content_admin_paper_delete:
     pattern: /{section}-delete
-    defaults: { _controller: AnhContentBundle:Admin:documentDelete }
+    defaults: { _controller: AnhContentBundle:Admin:paperDelete }
     methods: [ 'POST' ]
     requirements:
         section: "[a-z\d]+"

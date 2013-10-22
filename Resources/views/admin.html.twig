@@ -8,7 +8,7 @@
 
     Sections:
     {% for section, flags in sections %}
-        <a href="{{ url('anh_content_admin_document_list', { 'section': section }) }}">{{ section }}</a>
+        <a href="{{ url('anh_content_admin_paper_list', { 'section': section }) }}">{{ section }}</a>
     {% endfor %}
 
     {% if options.show_categories %}

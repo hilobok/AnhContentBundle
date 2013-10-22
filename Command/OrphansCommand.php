@@ -24,12 +24,12 @@ class OrphansCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $container = $this->getContainer();
-        $dm = $container->get('anh_content.manager.document');
+        $dm = $container->get('anh_content.manager.paper');
         $am = $container->get('anh_content.asset_manager');
 
         $assets = array();
-        foreach ($dm->findAll() as $document) {
-            foreach ($document->getAssets() as $asset) {
+        foreach ($dm->findAll() as $paper) {
+            foreach ($paper->getAssets() as $asset) {
                 $assets[] = $asset['fileName'];
             }
         }

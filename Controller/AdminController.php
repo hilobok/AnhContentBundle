@@ -5,7 +5,7 @@ namespace Anh\Bundle\ContentBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Anh\Bundle\ContentBundle\Entity\Category;
-use Anh\Bundle\ContentBundle\Entity\Document;
+use Anh\Bundle\ContentBundle\Entity\Paper;
 use Anh\Taggable\Entity\Tag;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +25,7 @@ class AdminController extends Controller
 
     public function tagsListAction($page = 1)
     {
-        $pager = $this->getDocumentManager()->paginateTags($page, 10);
+        $pager = $this->getPaperManager()->paginateTags($page, 10);
         $pagerUrl = str_replace('0', '{page}', $this->generateUrl('anh_content_admin_tags_list', array(
             'page' => 0
         )));
@@ -50,7 +50,7 @@ class AdminController extends Controller
             $form->bind($request);
 
             if ($form->isValid()) {
-                $this->getDocumentManager()->save($tag);
+                $this->getPaperManager()->save($tag);
 
                 return $this->redirect($this->generateUrl('anh_content_admin_tags_list'));
             }
@@ -74,7 +74,7 @@ class AdminController extends Controller
             $list = $request->request->get('id');
 
             if (!empty($list) and is_array($list)) {
-                $this->getDocumentManager()
+                $this->getPaperManager()
                     ->getTaggableManager()
                     ->deleteTagsByIdList($list)
                 ;
@@ -84,7 +84,7 @@ class AdminController extends Controller
         return $this->redirect($this->generateUrl('anh_content_admin_tags_list'));
     }
 
-    public function documentListAction($section, $page = 1)
+    public function paperListAction($section, $page = 1)
     {
         $sections = $this->container->getParameter('anh_content.sections');
 
@@ -94,13 +94,13 @@ class AdminController extends Controller
 
         $options = $this->container->getParameter('anh_content.options');
 
-        $pager = $this->getDocumentManager()->paginateInSection($section, $page, 10);
-        $pagerUrl = str_replace('0', '{page}', $this->generateUrl('anh_content_admin_document_list', array(
+        $pager = $this->getPaperManager()->paginateInSection($section, $page, 10);
+        $pagerUrl = str_replace('0', '{page}', $this->generateUrl('anh_content_admin_paper_list', array(
             'section' => $section,
             'page' => 0
         )));
 
-        return $this->render('AnhContentBundle:Admin:document/list.html.twig', array(
+        return $this->render('AnhContentBundle:Admin:paper/list.html.twig', array(
             'sections' => $sections,
             'options' => $options,
             'section' => $section,
@@ -109,7 +109,7 @@ class AdminController extends Controller
         ));
     }
 
-    public function documentAddAction($section)
+    public function paperAddAction($section)
     {
         $sections = $this->container->getParameter('anh_content.sections');
 
@@ -117,13 +117,13 @@ class AdminController extends Controller
             throw new \InvalidArgumentException("Section '{$section}' not configured.");
         }
 
-        $document = $this->getDocumentManager()->create();
-        $document->setSection($section);
+        $paper = $this->getPaperManager()->create();
+        $paper->setSection($section);
 
-        return $this->documentAddEdit($document, 'AnhContentBundle:Admin:document/add.html.twig');
+        return $this->paperAddEdit($paper, 'AnhContentBundle:Admin:paper/add.html.twig');
     }
 
-    public function documentEditAction($section, Document $document)
+    public function paperEditAction($section, Paper $paper)
     {
         $sections = $this->container->getParameter('anh_content.sections');
 
@@ -131,23 +131,23 @@ class AdminController extends Controller
             throw new \InvalidArgumentException("Section '{$section}' not configured.");
         }
 
-        return $this->documentAddEdit($document, 'AnhContentBundle:Admin:document/edit.html.twig');
+        return $this->paperAddEdit($paper, 'AnhContentBundle:Admin:paper/edit.html.twig');
     }
 
-    private function documentAddEdit(Document $document, $template)
+    private function paperAddEdit(Paper $paper, $template)
     {
-        $form = $this->createForm('anh_content_form_type_document', $document);
+        $form = $this->createForm('anh_content_form_type_paper', $paper);
         $request = $this->getRequest();
-        $section = $document->getSection();
+        $section = $paper->getSection();
 
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
 
             if ($form->isValid()) {
-                $this->getDocumentManager()->save($document);
+                $this->getPaperManager()->save($paper);
 
                 return $this->redirect($this->generateUrl(
-                    'anh_content_admin_document_list',
+                    'anh_content_admin_paper_list',
                     array('section' => $section)
                 ));
             }
@@ -184,7 +184,7 @@ class AdminController extends Controller
         ));
     }
 
-    public function documentDeleteAction($section)
+    public function paperDeleteAction($section)
     {
         $request = $this->getRequest();
 
@@ -192,12 +192,12 @@ class AdminController extends Controller
             $list = $request->request->get('id');
 
             if (!empty($list) and is_array($list)) {
-                $this->getDocumentManager()->deleteByIdList($list);
+                $this->getPaperManager()->deleteByIdList($list);
             }
         }
 
         return $this->redirect($this->generateUrl(
-            'anh_content_admin_document_list',
+            'anh_content_admin_paper_list',
             array('section' => $section)
         ));
     }
@@ -275,8 +275,8 @@ class AdminController extends Controller
         return $this->container->get('anh_content.manager.category');
     }
 
-    private function getDocumentManager()
+    private function getPaperManager()
     {
-        return $this->container->get('anh_content.manager.document');
+        return $this->container->get('anh_content.manager.paper');
     }
 }

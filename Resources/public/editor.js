@@ -135,7 +135,7 @@
 
                 $this.toggleClass('selected').show();
 
-                $('#anh_content_form_type_document_image').val(image);
+                $('#anh_content_form_type_paper_image').val(image);
             });
 
             // build toolbar
@@ -270,13 +270,13 @@
 
         // get already uploaded files
         var getAssets = function() {
-            var input = $('#anh_content_form_type_document_assets');
+            var input = $('#anh_content_form_type_paper_assets');
 
             return input.val().length ? $.parseJSON(input.val()) : [];
         };
 
         var setAssets = function(images) {
-            var input = $('#anh_content_form_type_document_assets');
+            var input = $('#anh_content_form_type_paper_assets');
             input.val(JSON.stringify(images));
         };
 
@@ -297,7 +297,7 @@
 
             ;
 
-            if ($('#anh_content_form_type_document_image').val() == image.fileName) {
+            if ($('#anh_content_form_type_paper_image').val() == image.fileName) {
                 $('a.editor-asset-star', $(i).closest('span')).addClass('selected');
             }
         };
@@ -307,8 +307,8 @@
             images = images.filter(function(v) { return v.fileName != image.fileName; });
             setAssets(images);
 
-            // check if image used as document thumb
-            var thumb = $('#anh_content_form_type_document_image');
+            // check if image used as paper thumb
+            var thumb = $('#anh_content_form_type_paper_image');
 
             if (thumb.val() == image.fileName) {
                 thumb.val('');

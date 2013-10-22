@@ -13,7 +13,7 @@ use Anh\Taggable\AbstractTaggable;
 use Anh\Taggable\TaggableInterface;
 
 /**
- * Document
+ * Paper
  *
  * @ORM\Table(indexes={
  *      @ORM\Index(name="idx_title", columns={ "title" }),
@@ -24,9 +24,9 @@ use Anh\Taggable\TaggableInterface;
  *      @ORM\Index(name="idx_publishedSince", columns={ "publishedSince" }),
  *      @ORM\Index(name="idx_isDraft", columns={ "isDraft" })
  * })
- * @ORM\Entity(repositoryClass="Anh\Bundle\ContentBundle\Entity\DocumentRepository")
+ * @ORM\Entity(repositoryClass="Anh\Bundle\ContentBundle\Entity\PaperRepository")
  */
-class Document extends AbstractTaggable implements TaggableInterface
+class Paper extends AbstractTaggable implements TaggableInterface
 {
     /**
      * @var integer
@@ -47,7 +47,7 @@ class Document extends AbstractTaggable implements TaggableInterface
     /**
      * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="documents")
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="papers")
      * @ORM\JoinColumn(name="categoryId", referencedColumnName="id")
      */
     protected $category;
@@ -161,8 +161,8 @@ class Document extends AbstractTaggable implements TaggableInterface
     /**
      * Set assets
      *
-     * @param  array    $assets
-     * @return Document
+     * @param  array $assets
+     * @return Paper
      */
     public function setAssets($assets)
     {
@@ -198,8 +198,8 @@ class Document extends AbstractTaggable implements TaggableInterface
     /**
      * Set section
      *
-     * @param  string   $section
-     * @return Document
+     * @param  string $section
+     * @return Paper
      */
     public function setSection($section)
     {
@@ -222,7 +222,7 @@ class Document extends AbstractTaggable implements TaggableInterface
      * Set createdAt
      *
      * @param  \DateTime $createdAt
-     * @return Document
+     * @return Paper
      */
     public function setCreatedAt($createdAt)
     {
@@ -245,7 +245,7 @@ class Document extends AbstractTaggable implements TaggableInterface
      * Set updatedAt
      *
      * @param  \DateTime $updatedAt
-     * @return Document
+     * @return Paper
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -268,7 +268,7 @@ class Document extends AbstractTaggable implements TaggableInterface
      * Set publishedSince
      *
      * @param  \DateTime $publishedSince
-     * @return Document
+     * @return Paper
      */
     public function setpublishedSince($publishedSince)
     {
@@ -290,8 +290,8 @@ class Document extends AbstractTaggable implements TaggableInterface
     /**
      * Set title
      *
-     * @param  string   $title
-     * @return Document
+     * @param  string $title
+     * @return Paper
      */
     public function setTitle($title)
     {
@@ -336,8 +336,8 @@ class Document extends AbstractTaggable implements TaggableInterface
     /**
      * Set markup
      *
-     * @param  string   $markup
-     * @return Document
+     * @param  string $markup
+     * @return Paper
      */
     public function setMarkup($markup)
     {
@@ -359,8 +359,8 @@ class Document extends AbstractTaggable implements TaggableInterface
     /**
      * Set content
      *
-     * @param  string   $content
-     * @return Document
+     * @param  string $content
+     * @return Paper
      */
     public function setContent($content)
     {
@@ -382,8 +382,8 @@ class Document extends AbstractTaggable implements TaggableInterface
     /**
      * Set preview
      *
-     * @param  string   $preview
-     * @return Document
+     * @param  string $preview
+     * @return Paper
      */
     public function setPreview($preview)
     {
@@ -405,8 +405,8 @@ class Document extends AbstractTaggable implements TaggableInterface
     /**
      * Set isDraft
      *
-     * @param  boolean  $isDraft
-     * @return Document
+     * @param  boolean $isDraft
+     * @return Paper
      */
     public function setIsDraft($isDraft)
     {
@@ -429,7 +429,7 @@ class Document extends AbstractTaggable implements TaggableInterface
      * Set category
      *
      * @param  Category $category
-     * @return Document
+     * @return Paper
      */
     public function setCategory(Category $category = null)
     {

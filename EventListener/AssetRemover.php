@@ -6,7 +6,7 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
-use Anh\Bundle\ContentBundle\Entity\Document;
+use Anh\Bundle\ContentBundle\Entity\Paper;
 use Anh\Bundle\ContentBundle\AssetManager;
 
 class AssetRemover implements EventSubscriber
@@ -28,7 +28,7 @@ class AssetRemover implements EventSubscriber
 
     public function preUpdate(PreUpdateEventArgs $args)
     {
-        if (!$args->getEntity() instanceof Document or !$args->hasChangedField('assets')) {
+        if (!$args->getEntity() instanceof Paper or !$args->hasChangedField('assets')) {
             return;
         }
 
@@ -52,11 +52,11 @@ class AssetRemover implements EventSubscriber
         $uow = $em->getUnitOfWork();
 
         foreach ($uow->getScheduledEntityDeletions() as $entity) {
-            if (!$entity instanceof Document) {
+            if (!$entity instanceof Paper) {
                 continue;
             }
 
-            // delete assets for deleted document
+            // delete assets for deleted paper
             $assets = $entity->getAssets();
 
             foreach ($assets as $asset) {
