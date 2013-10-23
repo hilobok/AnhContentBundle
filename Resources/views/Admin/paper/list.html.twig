@@ -1,5 +1,7 @@
 {% extends "AnhContentBundle::admin.html.twig" %}
 
+{% import "AnhTaggableBundle::macro.html.twig" as taggable %}
+
 {% block title %}Papers in {{ section }}{% endblock %}
 
 {% block content %}
@@ -16,6 +18,7 @@
                     <input type="checkbox" name="id[]" value="{{ paper.getId() }}" />
                     <a href="{{ url('anh_content_admin_paper_edit', { 'section': section, 'id': paper.getId() }) }}">{{ paper.getTitle() }}</a>
                     &middot; <a href="{{ url('anh_content_' ~ section ~ '_view', { 'id': paper.getId(), 'slug': paper.getSlug() }) }}">{{ paper.getSlug() }}</a>
+
                     {% if sections[section].category %}
                         &middot; {{ paper.getCategory().getTitle() }}
                     {% endif %}
@@ -27,6 +30,13 @@
                     &middot; {{ paper.getCreatedAt()|date }}
                     &middot; {{ paper.getUpdatedAt()|date }}
 #}
+                    {% if sections[section].preview %}
+                        <div>{{ paper.getPreview()|striptags[:100] ~ '...' }}</div>
+                    {% endif %}
+
+                    {% if sections[section].tags and not paper.getTags().isEmpty() %}
+                        <div>{{ taggable.listTags(paper.getTags()) }}</div>
+                    {% endif %}
                 </div>
             {% endfor %}
 
@@ -39,6 +49,7 @@
 
 {% block stylesheets %}
     {{ pagination.stylesheets() }}
+    {{ taggable.stylesheets() }}
 {% endblock %}
 
 {% block javascripts %}
