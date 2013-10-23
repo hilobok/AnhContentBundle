@@ -25,10 +25,13 @@ class AdminController extends Controller
 
     public function tagsListAction($page = 1)
     {
-        $pager = $this->getPaperManager()->paginateTags($page, 10);
-        $pagerUrl = str_replace('0', '{page}', $this->generateUrl('anh_content_admin_tags_list', array(
-            'page' => 0
-        )));
+        $pager = $this->getPaperManager()->paginateTags($page, 10)
+            ->setUrl(str_replace('0', '{page}',
+                $this->generateUrl('anh_content_admin_tags_list', array(
+                    'page' => 0
+                ))
+            ))
+        ;
 
         $options = $this->container->getParameter('anh_content.options');
         $sections = $this->container->getParameter('anh_content.sections');
@@ -36,8 +39,7 @@ class AdminController extends Controller
         return $this->render('AnhContentBundle:Admin:tags/list.html.twig', array(
             'sections' => $sections,
             'options' => $options,
-            'pager' => $pager,
-            'pagerUrl' => $pagerUrl
+            'pager' => $pager
         ));
     }
 
@@ -94,18 +96,20 @@ class AdminController extends Controller
 
         $options = $this->container->getParameter('anh_content.options');
 
-        $pager = $this->getPaperManager()->paginateInSection($section, $page, 10);
-        $pagerUrl = str_replace('0', '{page}', $this->generateUrl('anh_content_admin_paper_list', array(
-            'section' => $section,
-            'page' => 0
-        )));
+        $pager = $this->getPaperManager()->paginateInSection($section, $page, 10)
+            ->setUrl(str_replace('0', '{page}',
+                $this->generateUrl('anh_content_admin_paper_list', array(
+                    'section' => $section,
+                    'page' => 0
+                ))
+            ))
+        ;
 
         return $this->render('AnhContentBundle:Admin:paper/list.html.twig', array(
             'sections' => $sections,
             'options' => $options,
             'section' => $section,
-            'pager' => $pager,
-            'pagerUrl' => $pagerUrl
+            'pager' => $pager
         ));
     }
 
