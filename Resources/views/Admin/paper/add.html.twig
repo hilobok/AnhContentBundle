@@ -1,5 +1,9 @@
 {% extends "AnhContentBundle::admin.html.twig" %}
 
+{% import "AnhDateTimePickerBundle::macro.html.twig" as dateTimePicker %}
+{% import "AnhTaggableBundle::macro.html.twig" as taggable %}
+{% use "AnhContentBundle:Admin:paper/init-add-edit.html.twig" %}
+
 {% block title %}New paper in {{ section }}{% endblock %}
 
 {% block content %}

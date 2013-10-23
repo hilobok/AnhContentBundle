@@ -2,6 +2,7 @@
 
 {% import "AnhDateTimePickerBundle::macro.html.twig" as dateTimePicker %}
 {% import "AnhTaggableBundle::macro.html.twig" as taggable %}
+{% use "AnhContentBundle:Admin:paper/init-add-edit.html.twig" %}
 
 {% block title %}Edit paper in {{ section }}{% endblock %}
 
@@ -9,57 +10,4 @@
     <h2>Edit paper in {{ section }}</h2>
 
     {{ form(form) }}
-{% endblock %}
-
-{% block stylesheets %}
-    <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.min.css" rel="stylesheet">
-    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
-
-    {% stylesheets
-        '@AnhContentBundle/Resources/vendor/codemirror/lib/codemirror.css'
-        '@AnhContentBundle/Resources/vendor/fine-uploader/build/fineuploader.css'
-        '@AnhContentBundle/Resources/public/editor.css'
-    %}<link rel="stylesheet" href="{{ asset_url }}" />{% endstylesheets %}
-
-    {{ dateTimePicker.stylesheets() }}
-    {{ taggable.stylesheets() }}
-
-    <style>
-        .ui-widget { font-size: 13px; z-index: 10 !important; }
-    </style>
-{% endblock %}
-
-{% block javascripts %}
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-
-    {% javascripts
-        '@AnhContentBundle/Resources/vendor/codemirror/lib/codemirror.js'
-        '@AnhContentBundle/Resources/vendor/fine-uploader/build/jquery.fineuploader.js'
-        '@AnhContentBundle/Resources/public/editor-bbcode-tagset.js'
-        '@AnhContentBundle/Resources/public/editor.js'
-    %}<script src="{{ asset_url }}"></script>{% endjavascripts %}
-
-    {{ dateTimePicker.javascript() }}
-    {{ dateTimePicker.init() }}
-
-    {{ taggable.javascript() }}
-    {{ taggable.init() }}
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-            var ed = new $.editor({
-                textarea: $('.bbcode'),
-                tagList: $.parseJSON('{{ tags|json_encode()|raw }}'),
-                tagSet: editor_bbcode_tagset,
-                uploader: {
-                    endpoint: '{{ oneup_uploader_endpoint('anh_content_assets') }}'
-                },
-                path: {
-                    uploads: '{{ path.uploads }}',
-                    thumbs: '{{ path.thumbs }}'
-                }
-            });
-        });
-    </script>
 {% endblock %}
