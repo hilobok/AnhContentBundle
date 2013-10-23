@@ -19,8 +19,14 @@
                     {% if sections[section].category %}
                         &middot; {{ paper.getCategory().getTitle() }}
                     {% endif %}
+
+                    {% if sections[section].publishedSince %}
+                        &middot; {{ paper.getPublishedSince()|date }}
+                    {% endif %}
+{#
                     &middot; {{ paper.getCreatedAt()|date }}
                     &middot; {{ paper.getUpdatedAt()|date }}
+#}
                 </div>
             {% endfor %}
 
