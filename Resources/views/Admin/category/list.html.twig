@@ -3,7 +3,7 @@
 {% block title %}Categories{% endblock %}
 
 {% block content %}
-    <h2>Categories</h2>
+    <h2>{{ categories|length }} categories</h2>
 
     <form action="{{ url('anh_content_admin_category_delete') }}" method="post" id="fCategories">
         <div class="button_row">

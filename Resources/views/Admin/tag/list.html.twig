@@ -4,7 +4,7 @@
 
 {% block content %}
     {% if not pager.isEmpty() %}
-        <h2>Tags</h2>
+        <h2>{{ pager.getTotalRowsCount() }} tags</h2>
 
         <form action="{{ url('anh_content_admin_tag_delete') }}" method="post" id="fTags">
             <div class="button_row">
