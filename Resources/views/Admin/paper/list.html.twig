@@ -1,6 +1,7 @@
 {% extends "AnhContentBundle::admin.html.twig" %}
 
-{% import "AnhTaggableBundle::macro.html.twig" as taggable %}
+{% import 'AnhPagerBundle::macro.html.twig' as pagination %}
+{% import _self as taggable %}
 
 {% block title %}Papers in {{ section }}{% endblock %}
 
@@ -8,35 +9,58 @@
     <h2>{{ pager.getTotalRowsCount() }} papers in {{ section }}</h2>
 
     <form action="{{ url('anh_content_admin_paper_delete', { 'section': section }) }}" method="post" id="fPapers">
-        <a href="{{ url('anh_content_admin_paper_add', { 'section': section }) }}">Create new</a>
+        <div class="button_row">
+            <a href="{{ url('anh_content_admin_paper_add', { 'section': section }) }}">Create new</a>
+
+            {% if not pager.isEmpty() %}
+                <button class="danger" type="submit">Delete</button>
+            {% endif %}
+        </div>
 
         {% if not pager.isEmpty() %}
-            <button type="submit">Delete</button>
-
             {% for paper in pager.getResult() %}
-                <div>
-                    <input type="checkbox" name="id[]" value="{{ paper.getId() }}" />
-                    <a href="{{ url('anh_content_admin_paper_edit', { 'section': section, 'id': paper.getId() }) }}">{{ paper.getTitle() }}</a>
-                    &middot; <a href="{{ url('anh_content_' ~ section ~ '_view', { 'id': paper.getId(), 'slug': paper.getSlug() }) }}">{{ paper.getSlug() }}</a>
+                <div class="list_row">
+                    <div class="list_row_flags">
+                        <input type="checkbox" name="id[]" value="{{ paper.getId() }}" />
 
-                    {% if sections[section].category %}
-                        &middot; {{ paper.getCategory().getTitle() }}
-                    {% endif %}
+                        <a href="{{ url('anh_content_' ~ section ~ '_view', { 'id': paper.getId(), 'slug': paper.getSlug() }) }}"><i class="fa fa-eye"></i></a>
 
-                    {% if sections[section].publishedSince %}
-                        &middot; {{ paper.getPublishedSince()|date }}
-                    {% endif %}
-{#
-                    &middot; {{ paper.getCreatedAt()|date }}
-                    &middot; {{ paper.getUpdatedAt()|date }}
-#}
-                    {% if sections[section].preview %}
-                        <div>{{ paper.getPreview()|striptags[:100] ~ '...' }}</div>
-                    {% endif %}
+                        {% if paper.getIsDraft() %}
+                            <i class="fa fa-pencil is-draft"></i>
+                        {% endif %}
 
-                    {% if sections[section].tags and not paper.getTags().isEmpty() %}
-                        <div>{{ taggable.listTags(paper.getTags()) }}</div>
-                    {% endif %}
+                        {% if paper.getImage() %}
+                            <i class="fa fa-picture-o has-image"></i>
+                        {% endif %}
+                    </div>
+
+                    <div class="list_row_content">
+                        <a href="{{ url('anh_content_admin_paper_edit', { 'section': section, 'id': paper.getId() }) }}">{{ paper.getTitle() }}</a>
+
+                        <div>
+                            {% if sections[section].category %}
+                                <span>Category:</span> {{ paper.getCategory().getTitle() }}
+                            {% endif %}
+
+                            {% if sections[section].publishedSince %}
+                                <span>Published since:</span> {{ paper.getPublishedSince()|date }}
+                            {% endif %}
+                        </div>
+
+                        {% if sections[section].preview %}
+                            <div class="preview">{{ paper.getPreview()|striptags[:100] ~ '...' }}</div>
+                        {% endif %}
+
+                        {% if sections[section].tags and not paper.getTags().isEmpty() %}
+                            <div class="tags">{{ taggable.listTags(paper.getTags()) }}</div>
+                        {% endif %}
+
+                        <div class="created_updated">
+                            Created at: {{ paper.getCreatedAt()|date }}
+                            &middot;
+                            Updated at: {{ paper.getUpdatedAt()|date }}
+                        </div>
+                    </div>
                 </div>
             {% endfor %}
 
@@ -45,11 +69,11 @@
     </form>
 {% endblock %}
 
-{% import 'AnhPagerBundle::macro.html.twig' as pagination %}
-
 {% block stylesheets %}
     {{ pagination.stylesheets() }}
-    {{ taggable.stylesheets() }}
+    {% stylesheets
+        '@AnhContentBundle/Resources/public/style.css'
+    %}<link rel="stylesheet" href="{{ asset_url }}" />{% endstylesheets %}
 {% endblock %}
 
 {% block javascripts %}
@@ -76,3 +100,18 @@
         });
     --></script>
 {% endblock %}
+
+{% macro listTags(tags, url) %}
+    <i class="fa fa-tags"></i>
+    <ul>
+        {% for tag in tags %}
+            <li>
+                {% if url %}
+                    <a href="{{ url|replace({ '%name%': tag.getName() }) }}">{{ tag.getName() }}</a>{% if not loop.last %}, {% endif %}
+                {% else %}
+                    {{ tag.getName() }}{% if not loop.last %}, {% endif %}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}

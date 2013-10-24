@@ -1,0 +1,45 @@
+.list_row_content .preview, .list_row_content .tags {
+    font-size: 95%;
+    /*margin-bottom: 0.5em;*/
+}
+
+.list_row_content .preview {
+    /*margin-top: 0.2em;*/
+    color: #888;
+}
+
+.list_row_content .tags ul {
+    display: inline;
+    list-style-type: none;
+    padding: 0;
+}
+
+.list_row_content .tags li {
+    display: inline;
+}
+
+.list_row_content .tags i {
+    color: burlywood;
+}
+
+.list_row_content span {
+    font-size: 80%;
+    color: #aaa;
+}
+
+.list_row_content .created_updated {
+    text-align: right;
+    font-size: 80%;
+    color: #ccc;
+    /*margin-top: 1em;*/
+}
+
+/* flags */
+.list_row_flags .is-draft {
+    color: red;
+}
+
+.list_row_flags .has-image {
+    color: mediumseagreen;
+}
+

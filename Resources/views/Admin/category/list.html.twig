@@ -6,22 +6,42 @@
     <h2>Categories</h2>
 
     <form action="{{ url('anh_content_admin_category_delete') }}" method="post" id="fCategories">
-        <a href="{{ url('anh_content_admin_category_add') }}">Create new</a>
+        <div class="button_row">
+            <a href="{{ url('anh_content_admin_category_add') }}">Create new</a>
+
+            {% if categories %}
+                <button class="danger" type="submit">Delete</button>
+            {% endif %}
+        </div>
 
         {% if categories %}
-            <button type="submit">Delete</button>
-
             {% for category in categories %}
-                <div>
-                    <input type="checkbox" name="id[]" value="{{ category.getId() }}" />
-                    <a href="{{ url('anh_content_admin_category_edit', { 'id': category.getId() }) }}">{{ category.getTitle() }}</a>
-                    &middot; {{ category.getSection() }}
-                    &middot; {{ category.getCreatedAt()|date }}
-                    &middot; {{ category.getUpdatedAt()|date }}
+                <div class="list_row">
+                    <div class="list_row_flags">
+                        <input type="checkbox" name="id[]" value="{{ category.getId() }}" />
+                    </div>
+
+                    <div class="list_row_content">
+                        {{ category.getSection() }}
+                        &middot;
+                        <a href="{{ url('anh_content_admin_category_edit', { 'id': category.getId() }) }}">{{ category.getTitle() }}</a>
+
+                        <div class="created_updated">
+                            Created at: {{ category.getCreatedAt()|date }}
+                            &middot;
+                            Updated at: {{ category.getUpdatedAt()|date }}
+                        </div>
+                    </div>
                 </div>
             {% endfor %}
         {% endif %}
     </form>
+{% endblock %}
+
+{% block stylesheets %}
+    {% stylesheets
+        '@AnhContentBundle/Resources/public/style.css'
+    %}<link rel="stylesheet" href="{{ asset_url }}" />{% endstylesheets %}
 {% endblock %}
 
 {% block javascripts %}
