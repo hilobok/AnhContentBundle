@@ -213,3 +213,13 @@
 .editor-upload-button input {
     font-size: inherit !important;
 }
+
+.editor-uploader-toolbar {
+    margin: 5px;
+}
+
+.editor-upload-button {
+    padding: 4px 10px;
+    font-size: 12px;
+    border-radius: 3px;
+}

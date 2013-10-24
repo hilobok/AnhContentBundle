@@ -58,7 +58,7 @@
             ;
 
             $('.editor-uploader-toolbar')
-                .append('<span class="editor-upload-button">Uload</span>')
+                .append('<span class="editor-upload-button button">Upload</span>')
             ;
 
             // events
