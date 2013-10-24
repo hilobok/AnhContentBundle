@@ -23,11 +23,11 @@ class AdminController extends Controller
         ));
     }
 
-    public function tagsListAction($page = 1)
+    public function tagListAction($page = 1)
     {
         $pager = $this->getPaperManager()->paginateTags($page, 10)
             ->setUrl(str_replace('0', '{page}',
-                $this->generateUrl('anh_content_admin_tags_list', array(
+                $this->generateUrl('anh_content_admin_tag_list', array(
                     'page' => 0
                 ))
             ))
@@ -36,14 +36,14 @@ class AdminController extends Controller
         $options = $this->container->getParameter('anh_content.options');
         $sections = $this->container->getParameter('anh_content.sections');
 
-        return $this->render('AnhContentBundle:Admin:tags/list.html.twig', array(
+        return $this->render('AnhContentBundle:Admin:tag/list.html.twig', array(
             'sections' => $sections,
             'options' => $options,
             'pager' => $pager
         ));
     }
 
-    public function tagsEditAction(Tag $tag)
+    public function tagEditAction(Tag $tag)
     {
         $form = $this->createForm('anh_taggable_form_type_tag', $tag);
         $request = $this->getRequest();
@@ -54,21 +54,21 @@ class AdminController extends Controller
             if ($form->isValid()) {
                 $this->getPaperManager()->save($tag);
 
-                return $this->redirect($this->generateUrl('anh_content_admin_tags_list'));
+                return $this->redirect($this->generateUrl('anh_content_admin_tag_list'));
             }
         }
 
         $options = $this->container->getParameter('anh_content.options');
         $sections = $this->container->getParameter('anh_content.sections');
 
-        return $this->render('AnhContentBundle:Admin:tags/edit.html.twig', array(
+        return $this->render('AnhContentBundle:Admin:tag/edit.html.twig', array(
             'sections' => $sections,
             'options' => $options,
             'form' => $form->createView()
         ));
     }
 
-    public function tagsDeleteAction()
+    public function tagDeleteAction()
     {
         $request = $this->getRequest();
 

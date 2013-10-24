@@ -21,21 +21,21 @@ anh_content_admin_category_delete:
     defaults: { _controller: AnhContentBundle:Admin:categoryDelete }
     methods: [ 'POST' ]
 
-anh_content_admin_tags_list:
-    pattern: /tags-{page}
-    defaults: { _controller: AnhContentBundle:Admin:tagsList, page: 1 }
+anh_content_admin_tag_list:
+    pattern: /tag-list-{page}
+    defaults: { _controller: AnhContentBundle:Admin:tagList, page: 1 }
     requirements:
         page: "\d+"
 
-anh_content_admin_tags_edit:
-    pattern: /tags-edit-{id}
-    defaults: { _controller: AnhContentBundle:Admin:tagsEdit }
+anh_content_admin_tag_edit:
+    pattern: /tag-edit-{id}
+    defaults: { _controller: AnhContentBundle:Admin:tagEdit }
     requirements:
         id: "\d+"
 
-anh_content_admin_tags_delete:
-    path: /tags-delete
-    defaults: { _controller: AnhContentBundle:Admin:tagsDelete }
+anh_content_admin_tag_delete:
+    path: /tag-delete
+    defaults: { _controller: AnhContentBundle:Admin:tagDelete }
 
 anh_content_admin_paper_list:
     pattern: /{section}-list-{page}
