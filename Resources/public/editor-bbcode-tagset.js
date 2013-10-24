@@ -27,25 +27,25 @@ var editor_bbcode_tagset = [
 
     {
         tag: 'b',
-        text: '<i class="icon-bold" />',
+        text: '<i class="fa fa-bold" />',
         template: '[b]{selection}|[/b]'
     },
 
     {
         tag:  'i',
-        text: '<i class="icon-italic" />',
+        text: '<i class="fa fa-italic" />',
         template: '[i]{selection}|[/i]'
     },
 
     {
         tag: 'u',
-        text: '<i class="icon-underline" />',
+        text: '<i class="fa fa-underline" />',
         template: '[u]{selection}|[/u]'
     },
 
     {
         tag: 's',
-        text: '<i class="icon-strikethrough" />',
+        text: '<i class="fa fa-strikethrough" />',
         template: '[s]{selection}|[/s]'
     },
 
@@ -53,13 +53,13 @@ var editor_bbcode_tagset = [
 
     {
         tag: 'sup',
-        text: '<i class="icon-superscript" />',
+        text: '<i class="fa fa-superscript" />',
         template: '[sup]{selection}|[/sup]'
     },
 
     {
         tag: 'sub',
-        text: '<i class="icon-subscript" />',
+        text: '<i class="fa fa-subscript" />',
         template: '[sub]{selection}|[/sub]'
     },
 
@@ -67,13 +67,13 @@ var editor_bbcode_tagset = [
 
     {
         tag: 'size',
-        text: '<i class="icon-text-height" />',
+        text: '<i class="fa fa-text-height" />',
         template: '[size="|"]{selection}[/size]'
     },
 
     {
         tag: 'color',
-        text: '<i class="icon-tint" />',
+        text: '<i class="fa fa-tint" />',
         template: '[color="|"]{selection}[/color]'
     },
 
@@ -81,13 +81,13 @@ var editor_bbcode_tagset = [
 
     {
         tag: 'link',
-        text: '<i class="icon-link" />',
+        text: '<i class="fa fa-link" />',
         template: '[link="|"]{selection}[/link]'
     },
 
     {
         tag: 'image',
-        text: '<i class="icon-picture" />',
+        text: '<i class="fa fa-picture-o" />',
         template: '[image]|[/image]'
     },
 
@@ -95,7 +95,7 @@ var editor_bbcode_tagset = [
 
     {
         tag: 'video',
-        text: '<i class="icon-facetime-video" />',
+        text: '<i class="fa fa-video-camera" />',
         template: '[video="youtube"]|[/video]'
     },
 
@@ -103,13 +103,13 @@ var editor_bbcode_tagset = [
 
     {
         tag: 'list',
-        text: '<i class="icon-list-ul" />',
+        text: '<i class="fa fa-list-ul" />',
         template: '[list]|[/list]'
     },
 
     {
         tag: 'olist',
-        text: '<i class="icon-list-ol" />',
+        text: '<i class="fa fa-list-ol" />',
         template: '[olist]|[/olist]'
     },
 
@@ -123,13 +123,13 @@ var editor_bbcode_tagset = [
 
     {
         tag: 'preview',
-        text: '<i class="icon-eye-open" />',
+        text: '<i class="fa fa-eye" />',
         template: '[preview]{selection}|[/preview]'
     },
 
     {
         tag: 'proceed',
-        text: '<i class="icon-external-link" />',
+        text: '<i class="fa fa-external-link" />',
         template: '[proceed]{selection}|[/proceed]'
     },
 

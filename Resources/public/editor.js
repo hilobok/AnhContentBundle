@@ -167,7 +167,7 @@
             }
 
             // toggle bbcode tags button
-            $('<span class="editor-toggle-tags"><i class="icon-code" /></span>')
+            $('<span class="editor-toggle-tags"><i class="fa fa-code" /></span>')
                 .appendTo($('.editor-toolbar'))
                 .click(function(event) {
                     event.preventDefault();
@@ -179,7 +179,7 @@
             ;
 
             // toggle uploader button
-            $('<span class="editor-uploader-button"><i class="icon-upload-alt" /></span>')
+            $('<span class="editor-uploader-button"><i class="fa fa-upload" /></span>')
                 .appendTo($('.editor-toolbar'))
                 .click(function(event) {
                     event.preventDefault();
@@ -288,12 +288,12 @@
                 .data('image', image)
                 .appendTo($('.editor-uploader-list'))
                 .wrap('<span />')
-                .after('<a class="editor-asset-star" href=""><i class="icon-star"></i></a>')
-                .after('<a class="editor-asset-delete" href=""><i class="icon-remove"></i></a>')
-                .after('<a class="editor-asset-align-left" href=""><i class="icon-align-left"></i></a>')
-                .after('<a class="editor-asset-align-center" href=""><i class="icon-align-center"></i></a>')
-                .after('<a class="editor-asset-align-right" href=""><i class="icon-align-right"></i></a>')
-                .after('<a class="editor-asset-zoom" href="' + upload + '" target="_blank"><i class="icon-zoom-in"></i></a>')
+                .after('<a class="editor-asset-star" href=""><i class="fa fa-star"></i></a>')
+                .after('<a class="editor-asset-delete" href=""><i class="fa fa-minus"></a>')
+                .after('<a class="editor-asset-align-left" href=""><i class="fa fa-align-left"></i></a>')
+                .after('<a class="editor-asset-align-center" href=""><i class="fa fa-align-center"></i></a>')
+                .after('<a class="editor-asset-align-right" href=""><i class="fa fa-align-right"></i></a>')
+                .after('<a class="editor-asset-zoom" href="' + upload + '" target="_blank"><i class="fa fa-search-plus"></i></a>')
 
             ;
 
