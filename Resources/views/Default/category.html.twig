@@ -6,7 +6,7 @@
     {% for paper in papers %}
         <div>
             <a href="{{ url('anh_content_' ~ section ~ '_view', { 'section': section, 'slug': paper.getSlug() }) }}">{{ paper.getTitle() }}</a>
-            &middot; {{ paper.getPublishedSince()|date(datetime_format) }}
+            &middot; {{ paper.getPublishedSince()|date }}
             <div class="preview">
                 {{ paper.getPreview()|raw }}
             </div>
