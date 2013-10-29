@@ -19,7 +19,7 @@ class AssetManager
                 break;
 
             case 'thumbs':
-                $path = '/media/cache/anh_content_assets/media/uploads/anh_content_assets/';
+                $path = '/media/cache/anh_content_assets_thumb/media/uploads/anh_content_assets/';
                 break;
 
             default:

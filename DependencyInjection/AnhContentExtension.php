@@ -94,13 +94,16 @@ class AnhContentExtension extends Extension implements PrependExtensionInterface
 
         $config = array(
             'filter_sets' => array(
-                'anh_content_assets' => array( // assets thumbs
+                'anh_content_assets_thumb' => array( // assets thumbs
                     'quality' => 90,
                     'format' => 'jpeg',
                     'filters' => array(
+                        'upscale' => array(
+                            'min' => array(100, 100)
+                        ),
                         'thumbnail' => array(
                             'size' => array(100, 100),
-                            'mode' => 'outbound'
+                            'mode' => 'outbound',
                         )
                     )
                 )
