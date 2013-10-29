@@ -11,10 +11,10 @@
     ],
 
     "require": {
-        "stof/doctrine-extensions-bundle": "~1.1",
-        "oneup/uploader-bundle": "~0.9.7",
-        "liip/imagine-bundle": "~0.14.0",
-        "mjohnson/decoda": "~6.2.3",
+        "stof/doctrine-extensions-bundle": ">=1.1,<2.0",
+        "oneup/uploader-bundle": ">=0.9.7,<1.0",
+        "liip/imagine-bundle": ">=0.16.0,<1.0",
+        "mjohnson/decoda": ">=6.2.3,<7.0",
         "anh/admin-bundle": "~1.0.0",
         "anh/markup-bundle": "~1.0.0",
         "anh/pager-bundle": "~1.0.0"
