@@ -4,6 +4,7 @@ namespace Anh\Bundle\ContentBundle\Decoda\Filter;
 
 use Decoda\Decoda;
 use Decoda\Filter\AbstractFilter;
+use Anh\Bundle\ContentBundle\AssetManager;
 
 class AssetFilter extends AbstractFilter
 {
@@ -25,7 +26,8 @@ class AssetFilter extends AbstractFilter
                 'default' => self::ASSET,
                 'title' => self::WILDCARD,
                 'align' => self::ALIGN,
-                'alt' => self::WILDCARD
+                'alt' => self::WILDCARD,
+                'filter' => self::WILDCARD
             )
         )
     );
@@ -39,7 +41,15 @@ class AssetFilter extends AbstractFilter
      */
     public function asset(array $tag, $content)
     {
-        $tag['attributes']['src'] = $this->getConfig('path') . $tag['attributes']['default'];
+        $asset = $tag['attributes']['default'];
+
+        $filter = isset($tag['attributes']['filter']) ?
+            $tag['attributes']['filter'] : $this->getConfig('filter')
+        ;
+
+        $assetManager = $this->getConfig('assetManager');
+
+        $tag['attributes']['src'] = $assetManager->getUrl($asset, $filter);
 
         if (empty($tag['attributes']['align'])) {
             $tag['attributes']['align'] = 'center';

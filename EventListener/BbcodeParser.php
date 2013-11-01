@@ -61,39 +61,44 @@ class BbcodeParser implements EventSubscriberInterface
         $decoda->defaults();
         $decoda->addFilter(new \Decoda\Filter\TableFilter());
 
-        // generating url
-        if (!empty($options['previewOnly'])) {
-            $section = $options['extra']['section'];
+        // default image filter for section
+        $options['filter'] = (isset($options['data']['section']) and
+            isset($this->sections[$options['data']['section']]['filter'])) ?
+                $this->sections[$options['data']['section']]['filter'] : ''
+        ;
 
-            if (empty($this->sections[$section])) {
-                throw new \InvalidArgumentException(sprintf("Section '%s' not configured.", $section));
-            }
+        $sectionRoute = (isset($options['data']['section']) and
+            isset($this->sections[$options['data']['section']]['route'])) ?
+                $this->sections[$options['data']['section']]['route'] : ''
+        ;
 
-            $section = $this->sections[$section];
-            $route = $this->router->getRouteCollection()->get($section['route']);
+        // generating proceed url
+        if ($sectionRoute) {
+            $route = $this->router->getRouteCollection()->get($sectionRoute);
 
             if (!$route) {
-                throw new \InvalidArgumentException(sprintf("Unable to find route '%s'.", $section['route']));
+                throw new \InvalidArgumentException(sprintf("Unable to find route '%s'.", $sectionRoute));
             }
 
             $values = array_intersect_key(
-                $options['extra'],
+                $options['data'],
                 $route->getRequirements()
             );
 
-            $options['url'] = $this->router->generate($section['route'], $values);
+            $options['url'] = $this->router->generate($sectionRoute, $values);
         }
 
-        $options['path'] = $this->assetManager->getPath('uploads');
+        // assetManager for AssetFilter
+        $options['assetManager'] = $this->assetManager;
 
-        $engine = $decoda->getEngine();
-        $engine->addPath(__DIR__ . '/../Resources/decoda');
-
-        $decoda->setConfig($options);
-
+        // add custom filters
         $decoda->addFilter(new AssetFilter($options));
         $decoda->addFilter(new PreviewFilter($options));
 
+        // add custom decoda templates
+        $decoda->getEngine()->addPath(__DIR__ . '/../Resources/decoda');
+
+        $decoda->setConfig($options);
         $event->setOptions($options);
         $event->setParser($decoda);
     }

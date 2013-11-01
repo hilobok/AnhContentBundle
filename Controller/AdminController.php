@@ -160,12 +160,7 @@ class AdminController extends Controller
         $options = $this->container->getParameter('anh_content.options');
         $sections = $this->container->getParameter('anh_content.sections');
 
-        $assetManager = $this->container->get('anh_content.asset_manager');
-
-        $path = array(
-            'uploads' => $assetManager->getPath('uploads'),
-            'thumbs' => $assetManager->getPath('thumbs')
-        );
+        $assetManager = $this->container->get('anh_content.asset.manager');
 
         // getting all available bbcode tags from parser
         $parser = $this->container->get('anh_markup.parser');
@@ -183,8 +178,7 @@ class AdminController extends Controller
             'sections' => $sections,
             'options' => $options,
             'section' => $section,
-            'form' => $form->createView(),
-            'path' => $path
+            'form' => $form->createView()
         ));
     }
 

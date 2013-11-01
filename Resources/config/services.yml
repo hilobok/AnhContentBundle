@@ -7,8 +7,9 @@ parameters:
     anh_content.form.type.paper.class: Anh\Bundle\ContentBundle\Form\PaperType
     anh_content.bbcode_parser.class: Anh\Bundle\ContentBundle\EventListener\BbcodeParser
     anh_content.uploader.class: Anh\Bundle\ContentBundle\EventListener\Uploader
-    anh_content.asset_remover.class: Anh\Bundle\ContentBundle\EventListener\AssetRemover
-    anh_content.asset_manager.class: Anh\Bundle\ContentBundle\AssetManager
+    anh_content.asset.manager.class: Anh\Bundle\ContentBundle\AssetManager
+    anh_content.asset.listener.class: Anh\Bundle\ContentBundle\EventListener\AssetListener
+    anh_content.asset.storage.class: Anh\Bundle\ContentBundle\AssetUploaderStorage
 
 services:
     anh_content.bundle:
@@ -52,28 +53,47 @@ services:
         tags:
             - { name: form.type, alias: anh_content_form_type_paper }
 
-    anh_content.uploader:
-        class: %anh_content.uploader.class%
-        tags:
-            - { name: kernel.event_listener, event: oneup_uploader.post_persist, method: onUpload }
-
-    anh_content.asset_remover:
-        class: %anh_content.asset_remover.class%
+    anh_content.asset.manager:
+        class: %anh_content.asset.manager.class%
         arguments:
-            - @anh_content.asset_manager
+            - %anh_content.assets_dir%
+            - @liip_imagine.cache.manager
+            - %liip_imagine.filter_sets%
+
+    anh_content.asset.remove_listener:
+        class: %anh_content.asset.listener.class%
+        arguments:
+            - @anh_content.asset.manager
         tags:
             - { name: doctrine.event_subscriber }
 
-    anh_content.asset_manager:
-        class: %anh_content.asset_manager.class%
+    anh_content.asset.upload_listener:
+        class: %anh_content.asset.listener.class%
         arguments:
-            - %kernel.root_dir%
+            - @anh_content.asset.manager
+        tags:
+            - { name: kernel.event_listener, event: oneup_uploader.post_upload.anh_content_assets, method: onUpload }
 
     anh_content.bbcode_parser:
         class: %anh_content.bbcode_parser.class%
         arguments:
             - %anh_content.sections%
             - @router
-            - @anh_content.asset_manager
+            - @anh_content.asset.manager
         tags:
             - { name: kernel.event_subscriber }
+
+    anh_content.asset.storage:
+        class: %anh_content.asset.storage.class%
+        # class: %oneup_uploader.storage.filesystem.class%
+        arguments:
+            - %anh_content.assets_dir%
+
+    anh_content.asset.data_loader:
+        class: %liip_imagine.data.loader.filesystem.class%
+        arguments:
+            - @liip_imagine
+            - %liip_imagine.formats%
+            - %anh_content.assets_dir%
+        tags:
+            - { name: liip_imagine.data.loader, loader: anh_content_asset_data_loader }

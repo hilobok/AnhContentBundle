@@ -8,16 +8,30 @@ use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Anh\Bundle\ContentBundle\Entity\Paper;
 use Anh\Bundle\ContentBundle\AssetManager;
+use Oneup\UploaderBundle\Event\PostUploadEvent;
 
-class AssetRemover implements EventSubscriber
+class AssetListener implements EventSubscriber
 {
+    /**
+     * Asset manager
+     *
+     * @var AssetManager
+     */
     private $assetManager;
 
+    /**
+     * Constructor
+     *
+     * @param AssetManager $assetManager
+     */
     public function __construct(AssetManager $assetManager)
     {
         $this->assetManager = $assetManager;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getSubscribedEvents()
     {
         return array(
@@ -26,6 +40,9 @@ class AssetRemover implements EventSubscriber
         );
     }
 
+    /**
+     * Sync assets for edited papers
+     */
     public function preUpdate(PreUpdateEventArgs $args)
     {
         if (!$args->getEntity() instanceof Paper or !$args->hasChangedField('assets')) {
@@ -41,11 +58,14 @@ class AssetRemover implements EventSubscriber
 
         $diff = array_diff($oldAssets, $newAssets);
 
-        foreach ($diff as $fileName) {
-            $this->assetManager->delete($fileName);
+        foreach ($diff as $asset) {
+            $this->assetManager->remove($asset);
         }
     }
 
+    /**
+     * Deletes assets for deleted papers
+     */
     public function onFlush(OnFlushEventArgs $args)
     {
         $em = $args->getEntityManager();
@@ -60,8 +80,20 @@ class AssetRemover implements EventSubscriber
             $assets = $entity->getAssets();
 
             foreach ($assets as $asset) {
-                $this->assetManager->delete($asset['fileName']);
+                $this->assetManager->remove($asset['fileName']);
             }
+        }
+    }
+
+    /**
+     * Creates asset after file upload
+     */
+    public function onUpload(PostUploadEvent $event)
+    {
+        $response = $event->getResponse();
+
+        if ($response->getSuccess()) {
+            $response['asset'] = $this->assetManager->create($event->getFile());
         }
     }
 }

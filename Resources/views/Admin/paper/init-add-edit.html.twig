@@ -40,11 +40,12 @@
                 tagSet: editor_bbcode_tagset,
                 uploader: {
                     endpoint: '{{ oneup_uploader_endpoint('anh_content_assets') }}'
-                },
-                path: {
-                    uploads: '{{ path.uploads }}',
-                    thumbs: '{{ path.thumbs }}'
                 }
+                // ,
+                // path: {
+                //     uploads: '{#{ path.uploads }#}',
+                //     thumbs: '{#{ path.thumbs }#}'
+                // }
             });
         });
     </script>

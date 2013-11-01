@@ -10,11 +10,6 @@
 
             uploader: {
                 endpoint: '/some/path'  // uploader endpoint url (required)
-            },
-
-            path: {
-                uploads: '',     // web path to uploaded images dir (required)
-                thumbs: ''      // web path to thumbs dir (required)
             }
 
             // propertyName: 'value',
@@ -238,29 +233,22 @@
 
                         haveUnsavedUploads = true;
 
-                        var image = {
-                            fileName: response.fileName,
-                            originalFileName: fileName,
-                            size: response.size
-                        };
+                        var assets = getAssets();
+                        assets.push(response.asset);
+                        setAssets(assets);
 
-                        var images = getAssets();
-
-                        images.push(image);
-
-                        setAssets(images);
-                        add_image(image);
+                        add_image(response.asset);
                     }
                 }
             });
 
             // add uploaded images from entity
-            var images = getAssets();
+            var assets = getAssets();
 
             $('.editor-uploader-list').empty();
 
-            for (i in images) {
-                add_image(images[i]);
+            for (i in assets) {
+                add_image(assets[i]);
             }
         };
 
@@ -281,10 +269,7 @@
         };
 
         var add_image = function(image) {
-            var thumb = plugin.settings.path.thumbs + image.fileName;
-            var upload = plugin.settings.path.uploads + image.fileName;
-
-            var i = $('<img src="' + thumb + '" draggable="true" />')
+            var i = $('<img src="' + image.thumb + '" draggable="true" />')
                 .data('image', image)
                 .appendTo($('.editor-uploader-list'))
                 .wrap('<span />')
@@ -293,7 +278,7 @@
                 .after('<a class="editor-asset-align-left" href=""><i class="fa fa-align-left"></i></a>')
                 .after('<a class="editor-asset-align-center" href=""><i class="fa fa-align-center"></i></a>')
                 .after('<a class="editor-asset-align-right" href=""><i class="fa fa-align-right"></i></a>')
-                .after('<a class="editor-asset-zoom" href="' + upload + '" target="_blank"><i class="fa fa-search-plus"></i></a>')
+                .after('<a class="editor-asset-zoom" href="' + image.url + '" target="_blank"><i class="fa fa-search-plus"></i></a>')
 
             ;
 

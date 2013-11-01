@@ -25,7 +25,8 @@ class OrphansCommand extends ContainerAwareCommand
     {
         $container = $this->getContainer();
         $dm = $container->get('anh_content.manager.paper');
-        $am = $container->get('anh_content.asset_manager');
+        $am = $container->get('anh_content.asset.manager');
+        $assetsDir = $container->getParameter('anh_content.assets_dir');
 
         $assets = array();
         foreach ($dm->findAll() as $paper) {
@@ -34,7 +35,7 @@ class OrphansCommand extends ContainerAwareCommand
             }
         }
 
-        $finder = Finder::create()->files()->in($am->getPath('uploads', true));
+        $finder = Finder::create()->files()->in($assetsDir);
 
         $files = array_map(function($file) {
             return $file->getFilename();
@@ -42,23 +43,13 @@ class OrphansCommand extends ContainerAwareCommand
 
         $orphans = array_diff($files, $assets);
 
-        $paths = array(
-            'uploads' => $am->getPath('uploads', true),
-            'thumbs' => $am->getPath('thumbs', true)
-        );
-
         $output->writeln(sprintf('%d orphan(s) found.', count($orphans)));
 
         foreach ($orphans as $orphan) {
-            $output->writeln($paths['uploads'] . $orphan);
+            $output->writeln($orphan);
 
             if ($input->getOption('delete')) {
-                foreach ($paths as $path) {
-                    $file = $path . $orphan;
-                    if (is_file($file)) {
-                        unlink($file);
-                    }
-                }
+                $am->remove($orphan);
             }
         }
     }

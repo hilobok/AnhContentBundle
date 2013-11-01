@@ -4,8 +4,8 @@ namespace Anh\Bundle\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Anh\Bundle\MarkupBundle\Mapping\Annotation\Parsable as Markup;
-use Anh\Bundle\MarkupBundle\Validator\Markup as MarkupValidator;
+use Anh\Bundle\MarkupBundle\Mapping\Annotation\Parsable as ParseMarkup;
+use Anh\Bundle\MarkupBundle\Validator\Markup as ValidateMarkup;
 
 use Anh\Bundle\ContentBundle\Entity\Category;
 
@@ -95,7 +95,7 @@ class Paper extends AbstractTaggable implements TaggableInterface
      * @var string
      *
      * @ORM\Column(name="markup", type="text", nullable=true)
-     * @MarkupValidator(type="bbcode")
+     * @ValidateMarkup(type="bbcode")
      */
     protected $markup;
 
@@ -103,7 +103,7 @@ class Paper extends AbstractTaggable implements TaggableInterface
      * @var string
      *
      * @ORM\Column(name="content", type="text", nullable=true)
-     * @Markup(type="bbcode", field="markup")
+     * @ParseMarkup(type="bbcode", field="markup")
      */
     protected $content;
 
@@ -111,7 +111,7 @@ class Paper extends AbstractTaggable implements TaggableInterface
      * @var string
      *
      * @ORM\Column(name="preview", type="text", nullable=true)
-     * @Markup(type="bbcode", field="markup", options={"previewOnly"=true})
+     * @ParseMarkup(type="bbcode", field="markup", options={"previewOnly"=true})
      */
     protected $preview;
 
@@ -176,7 +176,7 @@ class Paper extends AbstractTaggable implements TaggableInterface
      *
      * @return array
      */
-    public function getMarkupExtraFields()
+    public function getMarkupData()
     {
         return array(
             'id' => $this->getId(),

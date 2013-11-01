@@ -8,8 +8,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
-use Anh\Bundle\ContentBundle\AssetManager;
-
 /**
  * This is the class that loads and manages your bundle configuration
  *
@@ -53,6 +51,7 @@ class AnhContentExtension extends Extension implements PrependExtensionInterface
 
         $container->setParameter('anh_content.sections', $config['sections']);
         $container->setParameter('anh_content.options', $options);
+        $container->setParameter('anh_content.assets_dir', $config['assets_dir']);
     }
 
     public function prepend(ContainerBuilder $container)
@@ -63,40 +62,34 @@ class AnhContentExtension extends Extension implements PrependExtensionInterface
             )
         ));
 
-        $config = array(
+        $container->prependExtensionConfig('stof_doctrine_extensions', array(
             'orm' => array(
                 'default' => array(
                     'sluggable' => true,
                     'timestampable' => true
                 )
             )
-        );
-        $container->prependExtensionConfig('stof_doctrine_extensions', $config);
+        ));
 
-        $configs = $container->getExtensionConfig($this->getAlias());
-        $this->load($configs, $container);
-        $assetManager = $container->get('anh_content.asset_manager');
-
-        $config = array(
+        $container->prependExtensionConfig('oneup_uploader', array(
             'mappings' => array(
                 'anh_content_assets' => array(
                     'frontend' => 'fineuploader',
                     'storage' => array(
-                        'directory' => '.' . $assetManager->getPath('uploads')
+                        'service' => 'anh_content.asset.storage'
                     ),
                     'allowed_extensions' => array('jpg', 'jpeg', 'png', 'gif'),
                     // 'max_size' => '20k',
-                    // 'error_handler' => 'anh_content.uploader_error_handler'
                 )
             )
-        );
-        $container->prependExtensionConfig('oneup_uploader', $config);
+        ));
 
-        $config = array(
+        $container->prependExtensionConfig('liip_imagine', array(
             'filter_sets' => array(
-                'anh_content_assets_thumb' => array( // assets thumbs
-                    'quality' => 90,
-                    'format' => 'jpeg',
+                'anh_content_assets_thumb' => array(
+                    // 'quality' => 90,
+                    // 'format' => 'jpeg',
+                    'data_loader' => 'anh_content_asset_data_loader',
                     'filters' => array(
                         'upscale' => array(
                             'min' => array(100, 100)
@@ -108,7 +101,6 @@ class AnhContentExtension extends Extension implements PrependExtensionInterface
                     )
                 )
             )
-        );
-        $container->prependExtensionConfig('liip_imagine', $config);
+        ));
     }
 }
