@@ -1,6 +1,6 @@
 <?php
 
-namespace Anh\Bundle\ContentBundle;
+namespace Anh\ContentBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -13,11 +13,11 @@ class AnhContentBundle extends Bundle
     public static function getRequiredBundles()
     {
         return array(
-            'Anh\Bundle\AdminBundle\AnhAdminBundle',
-            'Anh\Bundle\MarkupBundle\AnhMarkupBundle',
-            'Anh\Bundle\TaggableBundle\AnhTaggableBundle',
-            'Anh\Bundle\DateTimePickerBundle\AnhDateTimePickerBundle',
-            'Anh\Bundle\PagerBundle\AnhPagerBundle',
+            'Anh\AdminBundle\AnhAdminBundle',
+            'Anh\MarkupBundle\AnhMarkupBundle',
+            'Anh\TaggableBundle\AnhTaggableBundle',
+            'Anh\DateTimePickerBundle\AnhDateTimePickerBundle',
+            'Anh\PagerBundle\AnhPagerBundle',
             'Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle',
             'Oneup\UploaderBundle\OneupUploaderBundle',
             'Liip\ImagineBundle\LiipImagineBundle',

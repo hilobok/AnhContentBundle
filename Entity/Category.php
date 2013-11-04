@@ -1,11 +1,11 @@
 <?php
 
-namespace Anh\Bundle\ContentBundle\Entity;
+namespace Anh\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
-use Anh\Bundle\ContentBundle\Entity\Paper;
+use Anh\ContentBundle\Entity\Paper;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -17,7 +17,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *      @ORM\Index(name="idx_createdAt", columns={ "createdAt" }),
  *      @ORM\Index(name="idx_updatedAt", columns={ "updatedAt" })
  * })
- * @ORM\Entity(repositoryClass="Anh\Bundle\ContentBundle\Entity\CategoryRepository")
+ * @ORM\Entity(repositoryClass="Anh\ContentBundle\Entity\CategoryRepository")
  */
 class Category
 {

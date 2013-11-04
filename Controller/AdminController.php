@@ -1,11 +1,11 @@
 <?php
 
-namespace Anh\Bundle\ContentBundle\Controller;
+namespace Anh\ContentBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use Anh\Bundle\ContentBundle\Entity\Category;
-use Anh\Bundle\ContentBundle\Entity\Paper;
+use Anh\ContentBundle\Entity\Category;
+use Anh\ContentBundle\Entity\Paper;
 use Anh\Taggable\Entity\Tag;
 
 use Symfony\Component\HttpFoundation\Request;

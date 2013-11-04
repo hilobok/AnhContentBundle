@@ -1,10 +1,10 @@
 <?php
 
-namespace Anh\Bundle\ContentBundle\Decoda\Filter;
+namespace Anh\ContentBundle\Decoda\Filter;
 
 use Decoda\Decoda;
 use Decoda\Filter\AbstractFilter;
-use Anh\Bundle\ContentBundle\AssetManager;
+use Anh\ContentBundle\AssetManager;
 
 class AssetFilter extends AbstractFilter
 {

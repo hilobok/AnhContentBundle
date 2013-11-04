@@ -1,13 +1,13 @@
 <?php
 
-namespace Anh\Bundle\ContentBundle\Entity;
+namespace Anh\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Anh\Bundle\MarkupBundle\Mapping\Annotation\Parsable as ParseMarkup;
-use Anh\Bundle\MarkupBundle\Validator\Markup as ValidateMarkup;
+use Anh\MarkupBundle\Mapping\Annotation\Parsable as ParseMarkup;
+use Anh\MarkupBundle\Validator\Markup as ValidateMarkup;
 
-use Anh\Bundle\ContentBundle\Entity\Category;
+use Anh\ContentBundle\Entity\Category;
 
 use Anh\Taggable\AbstractTaggable;
 use Anh\Taggable\TaggableInterface;
@@ -24,7 +24,7 @@ use Anh\Taggable\TaggableInterface;
  *      @ORM\Index(name="idx_publishedSince", columns={ "publishedSince" }),
  *      @ORM\Index(name="idx_isDraft", columns={ "isDraft" })
  * })
- * @ORM\Entity(repositoryClass="Anh\Bundle\ContentBundle\Entity\PaperRepository")
+ * @ORM\Entity(repositoryClass="Anh\ContentBundle\Entity\PaperRepository")
  */
 class Paper extends AbstractTaggable implements TaggableInterface
 {

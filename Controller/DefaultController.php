@@ -1,6 +1,6 @@
 <?php
 
-namespace Anh\Bundle\ContentBundle\Controller;
+namespace Anh\ContentBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 

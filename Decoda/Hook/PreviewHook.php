@@ -1,6 +1,6 @@
 <?php
 
-namespace Anh\Bundle\ContentBundle\Decoda\Hook;
+namespace Anh\ContentBundle\Decoda\Hook;
 
 use Decoda\Hook\AbstractHook;
 

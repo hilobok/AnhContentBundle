@@ -1,6 +1,6 @@
 <?php
 
-namespace Anh\Bundle\ContentBundle;
+namespace Anh\ContentBundle;
 
 use Symfony\Component\HttpFoundation\File\File;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;

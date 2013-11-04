@@ -1,10 +1,10 @@
 <?php
 
-namespace Anh\Bundle\ContentBundle\Decoda\Filter;
+namespace Anh\ContentBundle\Decoda\Filter;
 
 use Decoda\Decoda;
 use Decoda\Filter\AbstractFilter;
-use Anh\Bundle\ContentBundle\Decoda\Hook\PreviewHook;
+use Anh\ContentBundle\Decoda\Hook\PreviewHook;
 
 class PreviewFilter extends AbstractFilter
 {
@@ -47,7 +47,7 @@ class PreviewFilter extends AbstractFilter
      * Add preview hook.
      *
      * @param  \Decoda\Decoda                                        $decoda
-     * @return \Anh\Bundle\ContentBundle\Decoda\Filter\PreviewFilter
+     * @return \Anh\ContentBundle\Decoda\Filter\PreviewFilter
      */
     public function setupHooks(Decoda $decoda)
     {

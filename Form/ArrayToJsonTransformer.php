@@ -1,6 +1,6 @@
 <?php
 
-namespace Anh\Bundle\ContentBundle\Form;
+namespace Anh\ContentBundle\Form;
 
 use Symfony\Component\Form\DataTransformerInterface;
 

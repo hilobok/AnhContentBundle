@@ -1,20 +1,20 @@
 <?php
 
-namespace Anh\Bundle\ContentBundle\EventListener;
+namespace Anh\ContentBundle\EventListener;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\RouterInterface;
 
-use Anh\Bundle\ContentBundle\AssetManager;
+use Anh\ContentBundle\AssetManager;
 
-use Anh\Bundle\MarkupBundle\Event\MarkupEvent;
-use Anh\Bundle\MarkupBundle\Event\MarkupCreateEvent;
-use Anh\Bundle\MarkupBundle\Event\MarkupParseEvent;
-use Anh\Bundle\MarkupBundle\Event\MarkupValidateEvent;
+use Anh\MarkupBundle\Event\MarkupEvent;
+use Anh\MarkupBundle\Event\MarkupCreateEvent;
+use Anh\MarkupBundle\Event\MarkupParseEvent;
+use Anh\MarkupBundle\Event\MarkupValidateEvent;
 
 use Decoda\Decoda;
-use Anh\Bundle\ContentBundle\Decoda\Filter\PreviewFilter;
-use Anh\Bundle\ContentBundle\Decoda\Filter\AssetFilter;
+use Anh\ContentBundle\Decoda\Filter\PreviewFilter;
+use Anh\ContentBundle\Decoda\Filter\AssetFilter;
 
 class BbcodeParser implements EventSubscriberInterface
 {

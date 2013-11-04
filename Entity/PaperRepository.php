@@ -1,6 +1,6 @@
 <?php
 
-namespace Anh\Bundle\ContentBundle\Entity;
+namespace Anh\ContentBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 

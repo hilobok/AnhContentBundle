@@ -1,6 +1,6 @@
 <?php
 
-namespace Anh\Bundle\ContentBundle;
+namespace Anh\ContentBundle;
 
 use Oneup\UploaderBundle\Uploader\Storage\FilesystemStorage;
 use Symfony\Component\HttpFoundation\File\File;

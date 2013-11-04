@@ -1,13 +1,13 @@
 <?php
 
-namespace Anh\Bundle\ContentBundle\EventListener;
+namespace Anh\ContentBundle\EventListener;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
-use Anh\Bundle\ContentBundle\Entity\Paper;
-use Anh\Bundle\ContentBundle\AssetManager;
+use Anh\ContentBundle\Entity\Paper;
+use Anh\ContentBundle\AssetManager;
 use Oneup\UploaderBundle\Event\PostUploadEvent;
 
 class AssetListener implements EventSubscriber

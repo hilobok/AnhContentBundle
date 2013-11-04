@@ -1,19 +1,19 @@
 parameters:
-    anh_content.entity.category.class: Anh\Bundle\ContentBundle\Entity\Category
-    anh_content.entity.paper.class: Anh\Bundle\ContentBundle\Entity\Paper
-    anh_content.manager.category.class: Anh\Bundle\ContentBundle\Entity\CategoryManager
-    anh_content.manager.paper.class: Anh\Bundle\ContentBundle\Entity\PaperManager
-    anh_content.form.type.category.class: Anh\Bundle\ContentBundle\Form\CategoryType
-    anh_content.form.type.paper.class: Anh\Bundle\ContentBundle\Form\PaperType
-    anh_content.bbcode_parser.class: Anh\Bundle\ContentBundle\EventListener\BbcodeParser
-    anh_content.uploader.class: Anh\Bundle\ContentBundle\EventListener\Uploader
-    anh_content.asset.manager.class: Anh\Bundle\ContentBundle\AssetManager
-    anh_content.asset.listener.class: Anh\Bundle\ContentBundle\EventListener\AssetListener
-    anh_content.asset.storage.class: Anh\Bundle\ContentBundle\AssetUploaderStorage
+    anh_content.entity.category.class: Anh\ContentBundle\Entity\Category
+    anh_content.entity.paper.class: Anh\ContentBundle\Entity\Paper
+    anh_content.manager.category.class: Anh\ContentBundle\Entity\CategoryManager
+    anh_content.manager.paper.class: Anh\ContentBundle\Entity\PaperManager
+    anh_content.form.type.category.class: Anh\ContentBundle\Form\CategoryType
+    anh_content.form.type.paper.class: Anh\ContentBundle\Form\PaperType
+    anh_content.bbcode_parser.class: Anh\ContentBundle\EventListener\BbcodeParser
+    anh_content.uploader.class: Anh\ContentBundle\EventListener\Uploader
+    anh_content.asset.manager.class: Anh\ContentBundle\AssetManager
+    anh_content.asset.listener.class: Anh\ContentBundle\EventListener\AssetListener
+    anh_content.asset.storage.class: Anh\ContentBundle\AssetUploaderStorage
 
 services:
     anh_content.bundle:
-        class: Anh\Bundle\ContentBundle\AnhContentBundle
+        class: Anh\ContentBundle\AnhContentBundle
         factory_service: kernel
         factory_method: getBundle
         arguments:

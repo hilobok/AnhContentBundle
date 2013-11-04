@@ -1,6 +1,6 @@
 <?php
 
-namespace Anh\Bundle\ContentBundle\Command;
+namespace Anh\ContentBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;

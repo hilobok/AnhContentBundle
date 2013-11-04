@@ -24,11 +24,11 @@
 
     "autoload": {
         "psr-0": {
-            "Anh\\Bundle\\ContentBundle": ""
+            "Anh\\ContentBundle": ""
         }
     },
 
-    "target-dir": "Anh/Bundle/ContentBundle",
+    "target-dir": "Anh/ContentBundle",
 
     "extra": {
         "branch-alias": {

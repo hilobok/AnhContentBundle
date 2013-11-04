@@ -1,8 +1,8 @@
 <?php
 
-namespace Anh\Bundle\ContentBundle\Entity;
+namespace Anh\ContentBundle\Entity;
 
-use Anh\Bundle\ContentBundle\AbstractModelManager;
+use Anh\ContentBundle\AbstractModelManager;
 
 class CategoryManager extends AbstractModelManager
 {

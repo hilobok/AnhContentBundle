@@ -1,8 +1,8 @@
 <?php
 
-namespace Anh\Bundle\ContentBundle\Entity;
+namespace Anh\ContentBundle\Entity;
 
-use Anh\Bundle\ContentBundle\AbstractModelManager;
+use Anh\ContentBundle\AbstractModelManager;
 use Doctrine\ORM\EntityManager;
 use Anh\Taggable\TaggableManager;
 
