@@ -83,7 +83,7 @@ class AdminController extends Controller
             }
         }
 
-        return $this->redirect($this->generateUrl('anh_content_admin_tags_list'));
+        return $this->redirect($this->generateUrl('anh_content_admin_tag_list'));
     }
 
     public function paperListAction($section, $page = 1)
