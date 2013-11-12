@@ -23,7 +23,7 @@
                     <div class="list_row_flags">
                         <input type="checkbox" name="id[]" value="{{ paper.getId() }}" />
 
-                        <a href="{{ url('anh_content_' ~ section ~ '_view', { 'id': paper.getId(), 'slug': paper.getSlug() }) }}"><i class="fa fa-eye"></i></a>
+                        <a href="{{ contentUrl(paper) }}"><i class="fa fa-eye"></i></a>
 
                         {% if paper.getIsDraft() %}
                             <i class="fa fa-pencil is-draft"></i>
