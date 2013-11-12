@@ -36,9 +36,12 @@ class AnhContentExtension extends Extension implements PrependExtensionInterface
         );
 
         foreach ($config['sections'] as $section => &$flags) {
-            if (empty($flags['route'])) {
-                $flags['route'] = sprintf('anh_content_%s_view', $section);
-            }
+            $flags['routes'] = (empty($falgs['routes']) ? array() : $flags['routes']) + array(
+                'paper' => sprintf('anh_content_%s_paper', $section),
+                'category' => sprintf('anh_content_%s_category', $section),
+                'papers' => sprintf('anh_content_%s_papers', $section),
+                'categories' => sprintf('anh_content_%s_categories', $section),
+            );
 
             if ($flags['category']) {
                 $options['show_categories'] = true;
@@ -54,6 +57,9 @@ class AnhContentExtension extends Extension implements PrependExtensionInterface
         $container->setParameter('anh_content.assets_dir', $config['assets_dir']);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function prepend(ContainerBuilder $container)
     {
         $container->prependExtensionConfig('assetic', array(
