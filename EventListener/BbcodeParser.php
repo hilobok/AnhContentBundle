@@ -3,8 +3,8 @@
 namespace Anh\ContentBundle\EventListener;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Routing\RouterInterface;
 
+use Anh\ContentBundle\UrlGenerator;
 use Anh\ContentBundle\AssetManager;
 
 use Anh\MarkupBundle\Event\MarkupEvent;
@@ -20,26 +20,35 @@ class BbcodeParser implements EventSubscriberInterface
 {
     /**
      * Sections config
+     * @var array
      */
     protected $sections;
 
     /**
-     * Router service
+     * Url generator service
+     * @var UrlGenerator
      */
-    protected $router;
+    protected $urlGenerator;
 
     /**
      * AssetManager service
+     * @var AssetManager
      */
     protected $assetManager;
 
-    public function __construct(array $sections, RouterInterface $router, AssetManager $assetManager)
+    /**
+     * Constructor
+     */
+    public function __construct(array $sections, UrlGenerator $urlGenerator, AssetManager $assetManager)
     {
-        $this->router = $router;
         $this->sections = $sections;
+        $this->urlGenerator = $urlGenerator;
         $this->assetManager = $assetManager;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public static function getSubscribedEvents()
     {
         return array(
@@ -49,6 +58,11 @@ class BbcodeParser implements EventSubscriberInterface
         );
     }
 
+    /**
+     * Creates and initializes bbcode markup parser
+     *
+     * @param MarkupCreateEvenet $event
+     */
     public function onCreate(MarkupCreateEvent $event)
     {
         if ($event->getType() != 'bbcode') {
@@ -67,25 +81,12 @@ class BbcodeParser implements EventSubscriberInterface
                 $this->sections[$options['data']['section']]['filter'] : ''
         ;
 
-        $sectionRoute = (isset($options['data']['section']) and
-            isset($this->sections[$options['data']['section']]['route'])) ?
-                $this->sections[$options['data']['section']]['route'] : ''
-        ;
-
         // generating proceed url
-        if ($sectionRoute) {
-            $route = $this->router->getRouteCollection()->get($sectionRoute);
-
-            if (!$route) {
-                throw new \InvalidArgumentException(sprintf("Unable to find route '%s'.", $sectionRoute));
-            }
-
-            $values = array_intersect_key(
-                $options['data'],
-                $route->getRequirements()
+        if (isset($options['data']['section'])) {
+            $options['url'] = $this->urlGenerator->generateViewUrl(
+                $options['data']['section'],
+                $options['data']
             );
-
-            $options['url'] = $this->router->generate($sectionRoute, $values);
         }
 
         // assetManager for AssetFilter
@@ -103,6 +104,11 @@ class BbcodeParser implements EventSubscriberInterface
         $event->setParser($decoda);
     }
 
+    /**
+     * Parses bbcode markup
+     *
+     * @param MarkupParseEvent $event
+     */
     public function onParse(MarkupParseEvent $event)
     {
         if ($event->getType() != 'bbcode') {
@@ -117,6 +123,11 @@ class BbcodeParser implements EventSubscriberInterface
         $event->setText($text);
     }
 
+    /**
+     * Validates bbcode markup
+     *
+     * @param MarkupValidateEvent
+     */
     public function onValidate(MarkupValidateEvent $event)
     {
         if ($event->getType() != 'bbcode') {

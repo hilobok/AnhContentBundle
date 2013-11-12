@@ -11,6 +11,7 @@ parameters:
     anh_content.asset.listener.class: Anh\ContentBundle\EventListener\AssetListener
     anh_content.asset.storage.class: Anh\ContentBundle\AssetUploaderStorage
     anh_content.url_generator.class: Anh\ContentBundle\UrlGenerator
+    anh_content.twig.content_extension.class: Anh\ContentBundle\Twig\ContentExtension
 
 services:
     anh_content.bundle:
@@ -79,7 +80,7 @@ services:
         class: %anh_content.bbcode_parser.class%
         arguments:
             - %anh_content.sections%
-            - @router
+            - @anh_content.url_generator
             - @anh_content.asset.manager
         tags:
             - { name: kernel.event_subscriber }
@@ -104,3 +105,12 @@ services:
         arguments:
             - %anh_content.sections%
             - @router
+
+    anh_content.twig.content_extension:
+        class: %anh_content.twig.content_extension.class%
+        arguments:
+            - @anh_content.url_generator
+            - @anh_content.asset.manager
+            - %anh_content.sections%
+        tags:
+            - { name: twig.extension }
