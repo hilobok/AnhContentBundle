@@ -73,6 +73,10 @@ class AssetManager
      */
     public function getUrl($asset, $filter = '')
     {
+        if (empty($asset)) {
+            return 'not-existent-path';
+        }
+
         return empty($filter) ?
             $this->getUrlToOriginal($asset) :
             $this->getUrlToFiltered($asset, $filter)
