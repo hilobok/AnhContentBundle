@@ -40,7 +40,7 @@ class PaperManager extends AbstractModelManager
         return $entity;
     }
 
-    public function paginateTags($page, $limit)
+    public function paginateTags($page, $limit) // XXX WTF why this is here???
     {
         $query = $this->taggableManager->getTagRepository()->findAllQB();
 
@@ -66,7 +66,8 @@ class PaperManager extends AbstractModelManager
     public function paginateInSection($section, $page, $limit)
     {
         $query = $this->repository
-            ->findInSectionDQL($section);
+            ->findInSectionDQL($section)
+        ;
 
         return $this->pager->paginate($query, $page, $limit);
     }
@@ -82,7 +83,8 @@ class PaperManager extends AbstractModelManager
     public function paginatePublishedInSection($section, $page, $limit)
     {
         $query = $this->repository
-            ->findPublishedInSectionDQL($section);
+            ->findPublishedInSectionDQL($section)
+        ;
 
         return $this->pager->paginate($query, $page, $limit);
     }
@@ -93,5 +95,14 @@ class PaperManager extends AbstractModelManager
             ->findPublishedInSectionAndCategoryDQL($section, $category)
             ->getResult()
         ;
+    }
+
+    public function paginatePublishedInSectionAndCategory($section, $category, $page, $limit)
+    {
+        $query = $this->repository
+            ->findPublishedInSectionAndCategoryDQL($section, $category)
+        ;
+
+        return $this->pager->paginate($query, $page, $limit);
     }
 }

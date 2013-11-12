@@ -13,4 +13,21 @@ class CategoryManager extends AbstractModelManager
             ->getSingleResult()
         ;
     }
+
+    public function findInSection($section)
+    {
+        return $this->repository
+            ->findInSectionDQL($section)
+            ->getResult()
+        ;
+    }
+
+    public function paginateInSection($section, $page, $limit)
+    {
+        $query = $this->repository
+            ->findInSectionDQL($section)
+        ;
+
+        return $this->pager->paginate($query, $page, $limit);
+    }
 }

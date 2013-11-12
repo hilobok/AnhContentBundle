@@ -18,4 +18,16 @@ class CategoryRepository extends EntityRepository
             ->getQuery()
         ;
     }
+
+    public function findInSectionDQL($section)
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.section = :section')
+            ->setParameters(array(
+                'section' => $section
+            ))
+            ->orderBy('c.title', 'ASC')
+            ->getQuery()
+        ;
+    }
 }
