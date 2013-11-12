@@ -1,0 +1,20 @@
+{% block paperPreview %}
+    <article class="paper preview">
+        <header>
+            <h1>
+                <a href="{{ contentUrl(paper) }}">{{ paper.getTitle() }}</a>
+            </h1>
+            <p>
+                {% if contentSections(section)['category'] %}
+                    <a href="{{ contentUrl(paper.getCategory()) }}">{{ paper.getCategory().getTitle() }}</a>
+                {% endif %}
+
+                &middot; {{ paper.getPublishedSince()|date }}
+            </p>
+        </header>
+
+        <div class="preview">
+            {{ paper.getPreview()|raw }}
+        </div>
+    </article>
+{% endblock %}

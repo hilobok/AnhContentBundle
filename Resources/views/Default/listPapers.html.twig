@@ -1,0 +1,11 @@
+{% extends 'AnhContentBundle:Default:layout.html.twig' %}
+
+{% use 'AnhContentBundle:Default:blockPaperPreview.html.twig' %}
+
+{% block content %}
+    <h1>{{ section }}</h1>
+
+    {% for paper in papers %}
+        {{ block('paperPreview') }}
+    {% endfor %}
+{% endblock %}

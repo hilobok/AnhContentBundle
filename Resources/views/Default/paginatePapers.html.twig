@@ -1,0 +1,23 @@
+{% extends 'AnhContentBundle:Default:layout.html.twig' %}
+
+{% use 'AnhContentBundle:Default:blockPaperPreview.html.twig' %}
+{% import 'AnhPagerBundle::macro.html.twig' as pagination %}
+
+{% block content %}
+    <h1>{{ section }}</h1>
+
+    {% for paper in pager.getResult() %}
+        {{ block('paperPreview') }}
+    {% endfor %}
+
+    <div id="pager" class="paginator"></div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ pagination.stylesheets() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ pagination.javascripts() }}
+    {{ pagination.init('pager', pager) }}
+{% endblock %}

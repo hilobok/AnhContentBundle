@@ -1,0 +1,24 @@
+{% extends 'AnhContentBundle:Default:layout.html.twig' %}
+
+{% import 'AnhPagerBundle::macro.html.twig' as pagination %}
+
+{% block content %}
+    <h1>{{ section }}</h1>
+
+    {% for category in pager.getResult() %}
+        <div>
+            <a href="{{ contentUrl(category) }}">{{ category.getTitle() }}</a>
+        </div>
+    {% endfor %}
+
+    <div id="pager" class="paginator"></div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ pagination.stylesheets() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ pagination.javascripts() }}
+    {{ pagination.init('pager', pager) }}
+{% endblock %}
