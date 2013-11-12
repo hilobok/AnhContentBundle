@@ -83,7 +83,8 @@ class BbcodeParser implements EventSubscriberInterface
 
         // generating proceed url
         if (isset($options['data']['section'])) {
-            $options['url'] = $this->urlGenerator->generateViewUrl(
+            $options['url'] = $this->urlGenerator->generateUrl(
+                'paper',
                 $options['data']['section'],
                 $options['data']
             );
