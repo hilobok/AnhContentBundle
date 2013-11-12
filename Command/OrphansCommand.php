@@ -8,34 +8,42 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 
+/**
+ * CLI command for listing/deleting orphaned assets
+ */
 class OrphansCommand extends ContainerAwareCommand
 {
-    private $connection;
-
+    /**
+     * {@inheritdoc}
+     */
     protected function configure()
     {
         $this
-            ->setName('content:orphans')
+            ->setName('anh:content:orphans')
             ->setDescription('List orphaned assets')
             ->addOption('delete', null, InputOption::VALUE_NONE, 'Delete orphans')
         ;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $container = $this->getContainer();
-        $dm = $container->get('anh_content.manager.paper');
+        $pm = $container->get('anh_content.manager.paper');
         $am = $container->get('anh_content.asset.manager');
-        $assetsDir = $container->getParameter('anh_content.assets_dir');
 
         $assets = array();
-        foreach ($dm->findAll() as $paper) {
+        foreach ($pm->findAll() as $paper) {
             foreach ($paper->getAssets() as $asset) {
                 $assets[] = $asset['fileName'];
             }
         }
 
-        $finder = Finder::create()->files()->in($assetsDir);
+        $finder = Finder::create()->files()->in(
+            $container->getParameter('anh_content.assets_dir')
+        );
 
         $files = array_map(function($file) {
             return $file->getFilename();
@@ -45,10 +53,11 @@ class OrphansCommand extends ContainerAwareCommand
 
         $output->writeln(sprintf('%d orphan(s) found.', count($orphans)));
 
+        $doDelete = $input->getOption('delete');
+
         foreach ($orphans as $orphan) {
             $output->writeln($orphan);
-
-            if ($input->getOption('delete')) {
+            if ($doDelete) {
                 $am->remove($orphan);
             }
         }
