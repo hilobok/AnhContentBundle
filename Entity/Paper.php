@@ -178,6 +178,16 @@ class Paper extends AbstractTaggable implements TaggableInterface
      */
     public function getMarkupData()
     {
+        return $this->getUrlParameters();
+    }
+
+    /**
+     * Returns parameters for url generation
+     *
+     * @return array
+     */
+    public function getUrlParameters()
+    {
         return array(
             'id' => $this->getId(),
             'slug' => $this->getSlug(),
