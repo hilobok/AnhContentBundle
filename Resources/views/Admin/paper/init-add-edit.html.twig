@@ -19,7 +19,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 
-    {% javascripts
+    {% javascripts filter="?closure"
         '@AnhContentBundle/Resources/vendor/codemirror/lib/codemirror.js'
         '@AnhContentBundle/Resources/vendor/fine-uploader/build/jquery.fineuploader.js'
         '@AnhContentBundle/Resources/public/editor-bbcode-tagset.js'
@@ -41,11 +41,6 @@
                 uploader: {
                     endpoint: '{{ oneup_uploader_endpoint('anh_content_assets') }}'
                 }
-                // ,
-                // path: {
-                //     uploads: '{#{ path.uploads }#}',
-                //     thumbs: '{#{ path.thumbs }#}'
-                // }
             });
         });
     </script>
