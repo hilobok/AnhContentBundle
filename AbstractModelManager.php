@@ -33,13 +33,21 @@ abstract class AbstractModelManager
     }
 
     /**
-     * Returns the user's fully qualified class name.
+     * Returns fully qualified class name.
      *
      * @return string
      */
     public function getClass()
     {
         return $this->class;
+    }
+
+    /**
+     * Returns repository
+     */
+    public function getRepository()
+    {
+        return $this->repository;
     }
 
     /**
