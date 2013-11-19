@@ -13,7 +13,7 @@ class DefaultController extends BaseController
      */
     public function listPapersAction($section)
     {
-        return $this->render('AnhContentBundle:Default:listPapers.html.twig', array(
+        return $this->render('AnhContentBundle:Default:_listPapers.html.twig', array(
             'section' => $section,
             'papers' => $this->getPublishedPapers($section)
         ));
@@ -38,7 +38,7 @@ class DefaultController extends BaseController
             ))
         ;
 
-        return $this->render('AnhContentBundle:Default:paginatePapers.html.twig', array(
+        return $this->render('AnhContentBundle:Default:_paginatePapers.html.twig', array(
             'section' => $section,
             'pager' => $pager
         ));
@@ -61,7 +61,7 @@ class DefaultController extends BaseController
             );
         }
 
-        return $this->render('AnhContentBundle:Default:listCategories.html.twig', array(
+        return $this->render('AnhContentBundle:Default:_listCategories.html.twig', array(
             'section' => $section,
             'categories' => $this->getCategories($section)
         ));
@@ -94,7 +94,7 @@ class DefaultController extends BaseController
             ))
         ;
 
-        return $this->render('AnhContentBundle:Default:paginateCategories.html.twig', array(
+        return $this->render('AnhContentBundle:Default:_paginateCategories.html.twig', array(
             'section' => $section,
             'pager' => $pager
         ));
@@ -110,7 +110,7 @@ class DefaultController extends BaseController
      */
     public function viewPaperAction($section, $slug)
     {
-        return $this->render('AnhContentBundle:Default:viewPaper.html.twig', array(
+        return $this->render('AnhContentBundle:Default:_viewPaper.html.twig', array(
             'section' => $section,
             'paper' => $this->getPaper($section, $slug)
         ));
@@ -137,7 +137,7 @@ class DefaultController extends BaseController
         $category = $this->getCategory($section, $slug);
         $papers = $this->getPublishedPapersInCategory($section, $category);
 
-        return $this->render('AnhContentBundle:Default:viewCategory.html.twig', array(
+        return $this->render('AnhContentBundle:Default:_viewCategory.html.twig', array(
             'section' => $section,
             'category' => $category,
             'papers' => $papers
@@ -172,7 +172,7 @@ class DefaultController extends BaseController
             ))
         ;
 
-        return $this->render('AnhContentBundle:Default:paginateCategory.html.twig', array(
+        return $this->render('AnhContentBundle:Default:_paginateCategory.html.twig', array(
             'section' => $section,
             'category' => $category,
             'pager' => $pager

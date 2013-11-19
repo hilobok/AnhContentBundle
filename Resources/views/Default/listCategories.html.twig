@@ -4,8 +4,6 @@
     <h1>{{ section }}</h1>
 
     {% for category in categories %}
-        <div>
-            <a href="{{ contentUrl(category) }}">{{ category.getTitle() }}</a>
-        </div>
+        {% include 'AnhContentBundle:Default:_blockCategory.html.twig' %}
     {% endfor %}
 {% endblock %}

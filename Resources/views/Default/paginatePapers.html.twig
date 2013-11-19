@@ -1,13 +1,12 @@
 {% extends 'AnhContentBundle:Default:layout.html.twig' %}
 
-{% use 'AnhContentBundle:Default:blockPaperPreview.html.twig' %}
 {% import 'AnhPagerBundle::macro.html.twig' as pagination %}
 
 {% block content %}
     <h1>{{ section }}</h1>
 
     {% for paper in pager.getResult() %}
-        {{ block('paperPreview') }}
+        {% include 'AnhContentBundle:Default:_blockPaperPreview.html.twig' %}
     {% endfor %}
 
     <div id="pager" class="paginator"></div>
