@@ -6,7 +6,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class AnhContentBundle extends Bundle
 {
-    const VERSION = '1.0.0-dev';
+    const VERSION = 'v1.0.1';
     const TITLE = 'AnhContentBundle';
     const DESCRIPTION = 'Bundle for content management';
 
