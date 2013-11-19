@@ -15,6 +15,7 @@ use Anh\MarkupBundle\Event\MarkupValidateEvent;
 use Decoda\Decoda;
 use Anh\ContentBundle\Decoda\Filter\PreviewFilter;
 use Anh\ContentBundle\Decoda\Filter\AssetFilter;
+use Anh\ContentBundle\Decoda\Hook\ConvertBreaksHook;
 
 class BbcodeParser implements EventSubscriberInterface
 {
@@ -74,6 +75,7 @@ class BbcodeParser implements EventSubscriberInterface
         $decoda = new Decoda($event->getMarkup(), $options);
         $decoda->defaults();
         $decoda->addFilter(new \Decoda\Filter\TableFilter());
+        $decoda->addHook(new ConvertBreaksHook());
 
         // default image filter for section
         $options['filter'] = (isset($options['data']['section']) and
