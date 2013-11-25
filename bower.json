@@ -3,6 +3,6 @@
     "private": true,
     "dependencies": {
         "codemirror": "~3.16.0",
-        "fine-uploader": "~3.8.0"
+        "fine-uploader": "git@github.com:hilobok/fine-uploader.git#3.8.2"
     }
 }
