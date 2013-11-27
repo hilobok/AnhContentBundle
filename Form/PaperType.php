@@ -80,7 +80,7 @@ class PaperType extends AbstractType
 
         if ($config['slug']) {
             $builder
-                ->add('slug', 'text')
+                ->add('slug', 'text', array('required' => false))
             ;
         }
 
@@ -90,7 +90,8 @@ class PaperType extends AbstractType
                     'picker' => true,
                     'format' => 'dd.MM.yyyy HH:mm:ss',
                     // 'format' => 'yyyy-MM-dd HH:mm:ss',
-                    'separator' => ' '
+                    'separator' => ' ',
+                    'required' => false
                 ))
             ;
         }
@@ -99,14 +100,15 @@ class PaperType extends AbstractType
             ->add('markup', 'textarea', array(
                 'attr' => array(
                     'class' => 'bbcode'
-                )
+                ),
+                'required' => false
             ))
-            ->add('isDraft', 'checkbox')
+            ->add('isDraft', 'checkbox', array('required' => false))
         ;
 
         if ($config['tags']) {
             $builder
-                ->add('tags', 'tags')
+                ->add('tags', 'tags', array('required' => false))
             ;
         }
 
