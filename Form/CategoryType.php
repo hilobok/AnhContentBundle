@@ -44,7 +44,7 @@ class CategoryType extends AbstractType
                     new NotBlank(),
                 )
             ))
-            ->add('slug', 'text')
+            ->add('slug', 'text', array('required' => false))
             ->add('submit', 'submit')
         ;
     }
