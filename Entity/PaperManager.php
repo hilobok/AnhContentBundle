@@ -105,4 +105,21 @@ class PaperManager extends AbstractModelManager
 
         return $this->pager->paginate($query, $page, $limit);
     }
+
+    public function findPublishedWithImageInSection($section)
+    {
+        return $this->repository
+            ->findPublishedWithImageInSectionDQL($section)
+            ->getResult()
+        ;
+    }
+
+    public function paginatePublishedWithImageInSection($section, $page, $limit)
+    {
+        $query = $this->repository
+            ->findPublishedWithImageInSectionDQL($section)
+        ;
+
+        return $this->pager->paginate($query, $page, $limit);
+    }
 }

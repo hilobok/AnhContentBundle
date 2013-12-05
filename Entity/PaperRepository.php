@@ -60,4 +60,21 @@ class PaperRepository extends EntityRepository
             ->getQuery()
         ;
     }
+
+    public function findPublishedWithImageInSectionDQL($section)
+    {
+        return $this->createQueryBuilder('d')
+            ->where('d.section = :section')
+            ->andWhere('d.isDraft = :isDraft')
+            ->andWhere('d.publishedSince <= current_timestamp()')
+            ->andWhere('d.image > :image')
+            ->setParameters(array(
+                'section' => $section,
+                'isDraft' => false,
+                'image' => ''
+            ))
+            ->orderBy('d.publishedSince', 'DESC')
+            ->getQuery()
+        ;
+    }
 }

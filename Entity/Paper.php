@@ -22,7 +22,8 @@ use Anh\Taggable\TaggableInterface;
  *      @ORM\Index(name="idx_createdAt", columns={ "createdAt" }),
  *      @ORM\Index(name="idx_updatedAt", columns={ "updatedAt" }),
  *      @ORM\Index(name="idx_publishedSince", columns={ "publishedSince" }),
- *      @ORM\Index(name="idx_isDraft", columns={ "isDraft" })
+ *      @ORM\Index(name="idx_isDraft", columns={ "isDraft" }),
+ *      @ORM\Index(name="idx_image", columns={ "image" })
  * })
  * @ORM\Entity(repositoryClass="Anh\ContentBundle\Entity\PaperRepository")
  */

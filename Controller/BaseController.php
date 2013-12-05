@@ -151,4 +151,34 @@ class BaseController extends Controller
             ->paginatePublishedInSectionAndCategory($section, $category, $page, $limit)
         ;
     }
+
+    /**
+     * Returns list of published papers with image
+     *
+     * @param string $section Section name
+     *
+     * @return \Anh\ContentBundle\Entity\Paper[]
+     */
+    protected function getPublishedWithImageInSection($section)
+    {
+        return $this->container->get('anh_content.manager.paper')
+            ->findPublishedWithImageInSection($section)
+        ;
+    }
+
+    /**
+     * Paginates list of published papers with image
+     *
+     * @param string $section Section name
+     * @param integer $page Number of page to fetch
+     * @param integer $limit Rows per page
+     *
+     * @return \Anh\PagerBundle\Pager
+     */
+    protected function paginatePublishedWithImageInSection($section, $page = 1, $limit = 10)
+    {
+        return $this->container->get('anh_content.manager.paper')
+            ->paginatePublishedWithImageInSection($section, $page, $limit)
+        ;
+    }
 }
