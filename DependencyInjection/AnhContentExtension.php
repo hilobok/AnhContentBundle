@@ -84,7 +84,12 @@ class AnhContentExtension extends Extension implements PrependExtensionInterface
                     'storage' => array(
                         'service' => 'anh_content.asset.storage'
                     ),
-                    'allowed_extensions' => array('jpg', 'jpeg', 'png', 'gif'),
+                    'allowed_extensions' => array(
+                        'jpg', 'JPG',
+                        'jpeg', 'JPEG',
+                        'png', 'PNG',
+                        'gif', 'GIF'
+                    ),
                     // 'max_size' => '20k',
                 )
             )
