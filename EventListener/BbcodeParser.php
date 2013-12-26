@@ -15,6 +15,7 @@ use Anh\MarkupBundle\Event\MarkupValidateEvent;
 use Decoda\Decoda;
 use Anh\ContentBundle\Decoda\Filter\PreviewFilter;
 use Anh\ContentBundle\Decoda\Filter\AssetFilter;
+use Anh\ContentBundle\Decoda\Filter\UrlFilter;
 use Anh\ContentBundle\Decoda\Hook\ConvertBreaksHook;
 
 class BbcodeParser implements EventSubscriberInterface
@@ -76,6 +77,10 @@ class BbcodeParser implements EventSubscriberInterface
         $decoda->defaults();
         $decoda->addFilter(new \Decoda\Filter\TableFilter());
         $decoda->addHook(new ConvertBreaksHook());
+
+        // original url filter is to restrictive, replace it with custom
+        $decoda->removeFilter('Url');
+        $decoda->addFilter(new UrlFilter());
 
         // default image filter for section
         $options['filter'] = (isset($options['data']['section']) and
