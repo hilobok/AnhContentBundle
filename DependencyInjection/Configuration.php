@@ -26,6 +26,7 @@ class Configuration implements ConfigurationInterface
      * - image - allow separate image for paper (usualy used with preview)
      * - comments
      * - filter - default filter for assets
+     * - meta - enable meta [author, description, keywords]
      * - routes
      *      - paper - route name for view paper, anh_content_{section}_paper by default
      *      - papers - route name for list papers, anh_content_{section}_papers by default
@@ -81,6 +82,10 @@ class Configuration implements ConfigurationInterface
                             ->end()
                             ->scalarNode('filter')
                                 ->info('Default filter for assets.')
+                            ->end()
+                            ->booleanNode('meta')
+                                ->defaultFalse()
+                                ->info('Enable meta [author, description, keywords] for papers in this section.')
                             ->end()
                             ->arrayNode('routes')
                                 ->info('Routes for this section. Assigned automaticaly if empty.')

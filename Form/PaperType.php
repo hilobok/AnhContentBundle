@@ -112,6 +112,14 @@ class PaperType extends AbstractType
             ;
         }
 
+        if ($config['meta']) {
+            $builder
+                ->add('metaAuthor', 'text')
+                ->add('metaDescription', 'text')
+                ->add('metaKeywords', 'text')
+            ;
+        }
+
         $builder
             ->add('submit', 'submit')
         ;

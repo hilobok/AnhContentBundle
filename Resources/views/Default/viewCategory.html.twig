@@ -1,5 +1,7 @@
 {% extends 'AnhContentBundle:Default:layout.html.twig' %}
 
+{% block title %}{{ category.getTitle() }}{% endblock %}
+
 {% block content %}
     <h1>{{ category.getTitle() }}</h1>
 

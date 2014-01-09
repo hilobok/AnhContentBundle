@@ -137,11 +137,112 @@ class Paper extends AbstractTaggable implements TaggableInterface
      */
     protected $assets;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="metaAuthor", type="string", nullable=true)
+     */
+    protected $metaAuthor;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="metaDescription", type="string", nullable=true)
+     */
+    protected $metaDescription;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="metaKeywords", type="string", nullable=true)
+     */
+    protected $metaKeywords;
+
+    /**
+     * Get metaAuthor
+     *
+     * @return string
+     */
+    public function getMetaAuthor()
+    {
+        return $this->metaAuthor;
+    }
+
+    /**
+     * Set metaAuthor
+     *
+     * @param string $metaAuthor
+     * @return Paper
+     */
+    public function setMetaAuthor($metaAuthor)
+    {
+        $this->metaAuthor = $metaAuthor;
+
+        return $this;
+    }
+
+    /**
+     * Get metaDescription
+     *
+     * @return string
+     */
+    public function getMetaDescription()
+    {
+        return $this->metaDescription;
+    }
+
+    /**
+     * Set metaDescription
+     *
+     * @param string $metaDescription
+     * @return Paper
+     */
+    public function setMetaDescription($metaDescription)
+    {
+        $this->metaDescription = $metaDescription;
+
+        return $this;
+    }
+
+    /**
+     * Get metaKeywords
+     *
+     * @return string
+     */
+    public function getMetaKeywords()
+    {
+        return $this->metaKeywords;
+    }
+
+    /**
+     * Set metaKeywords
+     *
+     * @param string $metaKeywords
+     * @return Paper
+     */
+    public function setMetaKeywords($metaKeywords)
+    {
+        $this->metaKeywords = $metaKeywords;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string
+     */
     public function getImage()
     {
         return $this->image;
     }
 
+    /**
+     * Set image
+     *
+     * @param string $image
+     * @return Paper
+     */
     public function setImage($image)
     {
         $this->image = $image;

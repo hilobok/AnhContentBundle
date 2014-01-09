@@ -1,6 +1,22 @@
 {% extends 'AnhContentBundle:Default:layout.html.twig' %}
 
+{% block title %}{{ paper.getTitle() }}{% endblock %}
+
 {% block content %}
     <h1>{{ paper.getTitle() }}</h1>
     <div>{{ paper.getContent()|raw }}</div>
+{% endblock %}
+
+{% block meta %}
+    {% if paper.getMetaAuthor() %}
+        <meta name="author" content="{{ paper.getMetaAuthor() }}" />
+    {% endif %}
+
+    {% if paper.getMetaDescription() %}
+        <meta name="description" content="{{ paper.getMetaDescription() }}" />
+    {% endif %}
+
+    {% if paper.getMetaKeywords() %}
+        <meta name="keywords" content="{{ paper.getMetaKeywords() }}" />
+    {% endif %}
 {% endblock %}

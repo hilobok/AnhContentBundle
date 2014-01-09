@@ -2,9 +2,9 @@
 
 {% import 'AnhPagerBundle::macro.html.twig' as pagination %}
 
-{% block content %}
-    <h1>{{ section }}</h1>
+{% block title %}Categories{% endblock %}
 
+{% block content %}
     {% for category in pager.getResult() %}
         {% include 'AnhContentBundle:Default:_blockCategory.html.twig' %}
     {% endfor %}

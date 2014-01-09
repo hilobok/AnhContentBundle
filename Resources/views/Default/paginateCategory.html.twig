@@ -2,9 +2,10 @@
 
 {% import 'AnhPagerBundle::macro.html.twig' as pagination %}
 
+{% block title %}{{ category.getTitle() }}{% endblock %}
+
 {% block content %}
-    <h1>{{ section }}</h1>
-    <h2>{{ category.getTitle() }}</h2>
+    <h1>{{ category.getTitle() }}</h1>
 
     {% for paper in pager.getResult() %}
         {% include 'AnhContentBundle:Default:_blockPaperPreview.html.twig' %}

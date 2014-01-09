@@ -1,8 +1,8 @@
 {% extends 'AnhContentBundle:Default:layout.html.twig' %}
 
-{% block content %}
-    <h1>{{ section }}</h1>
+{% block title %}Categories{% endblock %}
 
+{% block content %}
     {% for category in categories %}
         {% include 'AnhContentBundle:Default:_blockCategory.html.twig' %}
     {% endfor %}
