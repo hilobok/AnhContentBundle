@@ -1,5 +1,7 @@
 {% extends "AnhContentBundle:Admin:layout.html.twig" %}
 
+{% import 'AnhPagerBundle::macro.html.twig' as pagination %}
+
 {% block title %}Tags{% endblock %}
 
 {% block content %}
@@ -23,24 +25,25 @@
                 </div>
             {% endfor %}
 
-            <div id="pager" class="paginator"></div>
+            {{ pagination.build(pager) }}
         </form>
     {% else %}
         <h2>No tags</h2>
     {% endif %}
 {% endblock %}
 
-{% import 'AnhPagerBundle::macro.html.twig' as pagination %}
-
 {% block stylesheets %}
-    {{ pagination.stylesheets() }}
+    {% stylesheets
+        '@anh_pager_css'
+    %}<link rel="stylesheet" href="{{ asset_url }}" />{% endstylesheets %}
 {% endblock %}
 
 {% block javascripts %}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
-    {{ pagination.javascripts() }}
-    {{ pagination.init('pager', pager) }}
+    {% javascripts
+        '@anh_pager_js'
+    %}<script src="{{ asset_url }}"></script>{% endjavascripts %}
 
     <script><!--
         $(function() {

@@ -9,14 +9,17 @@
         {% include 'AnhContentBundle:Default:_blockPaperPreview.html.twig' %}
     {% endfor %}
 
-    <div id="pager" class="paginator"></div>
+    {{ pagination.build(pager) }}
 {% endblock %}
 
 {% block stylesheets %}
-    {{ pagination.stylesheets() }}
+    {% stylesheets
+        '@anh_pager_css'
+    %}<link rel="stylesheet" href="{{ asset_url }}" />{% endstylesheets %}
 {% endblock %}
 
 {% block javascripts %}
-    {{ pagination.javascripts() }}
-    {{ pagination.init('pager', pager) }}
+    {% javascripts
+        '@anh_pager_js'
+    %}<script src="{{ asset_url }}"></script>{% endjavascripts %}
 {% endblock %}
