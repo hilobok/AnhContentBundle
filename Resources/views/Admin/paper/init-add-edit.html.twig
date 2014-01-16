@@ -7,9 +7,8 @@
         '@AnhContentBundle/Resources/public/editor.css'
 
         '@anh_dateTimePicker_css'
+        '@anh_taggable_css'
     %}<link rel="stylesheet" href="{{ asset_url }}" />{% endstylesheets %}
-
-    {{ taggable.stylesheets() }}
 
     <style>
         .ui-widget { font-size: 13px; z-index: 10 !important; }
@@ -28,10 +27,8 @@
         '@AnhContentBundle/Resources/public/editor.js'
 
         '@anh_dateTimePicker_js'
+        '@anh_taggable_js'
     %}<script src="{{ asset_url }}"></script>{% endjavascripts %}
-
-    {{ taggable.javascript() }}
-    {{ taggable.init() }}
 
     <script type="text/javascript">
         $(document).ready(function() {
