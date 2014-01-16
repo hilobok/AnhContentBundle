@@ -2,10 +2,7 @@
     <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.min.css" rel="stylesheet">
 
     {% stylesheets
-        '@AnhContentBundle/Resources/vendor/codemirror/lib/codemirror.css'
-        '@AnhContentBundle/Resources/vendor/fine-uploader/fineuploader.css'
-        '@AnhContentBundle/Resources/public/editor.css'
-
+        '@anh_content_editor_css'
         '@anh_dateTimePicker_css'
         '@anh_taggable_css'
     %}<link rel="stylesheet" href="{{ asset_url }}" />{% endstylesheets %}
@@ -21,11 +18,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 
     {% javascripts filter="?closure"
-        '@AnhContentBundle/Resources/vendor/codemirror/lib/codemirror.js'
-        '@AnhContentBundle/Resources/vendor/fine-uploader/jquery.fineuploader.js'
-        '@AnhContentBundle/Resources/public/editor-bbcode-tagset.js'
-        '@AnhContentBundle/Resources/public/editor.js'
-
+        '@anh_content_editor_js'
         '@anh_dateTimePicker_js'
         '@anh_taggable_js'
     %}<script src="{{ asset_url }}"></script>{% endjavascripts %}

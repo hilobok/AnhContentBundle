@@ -1,8 +1,0 @@
-{
-    "name": "AnhContentBundle",
-    "private": true,
-    "dependencies": {
-        "codemirror": "~3.16.0",
-        "fine-uploader": "http://github.com/hilobok/fine-uploader.git#3.8.2"
-    }
-}

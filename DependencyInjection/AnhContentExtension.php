@@ -63,8 +63,37 @@ class AnhContentExtension extends Extension implements PrependExtensionInterface
     public function prepend(ContainerBuilder $container)
     {
         $container->prependExtensionConfig('assetic', array(
+            'assets' => array(
+                'anh_content_editor_css' => array(
+                    'inputs' => array(
+                        'bundles/anhcontent/components/codemirror/lib/codemirror.css',
+                        'bundles/anhcontent/components/fine-uploader/fineuploader.min.css',
+                        'bundles/anhcontent/editor.css'
+                    ),
+                    'filters' => array(
+                        'cssrewrite'
+                    )
+                ),
+                'anh_content_editor_js' => array(
+                    'inputs' => array(
+                        'bundles/anhcontent/components/codemirror/lib/codemirror.js',
+                        'bundles/anhcontent/components/fine-uploader/jquery.fineuploader.min.js',
+                        'bundles/anhcontent/editor-bbcode-tagset.js',
+                        'bundles/anhcontent/editor.js'
+                    )
+                )
+            ),
             'bundles' => array(
                 'AnhContentBundle'
+            )
+        ));
+
+        $container->prependExtensionConfig('sp_bower', array(
+            'assetic' => array(
+                'enabled' => false
+            ),
+            'bundles' => array(
+                'AnhContentBundle' => null
             )
         ));
 

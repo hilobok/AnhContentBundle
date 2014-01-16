@@ -21,6 +21,7 @@ class AnhContentBundle extends Bundle
             'Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle',
             'Oneup\UploaderBundle\OneupUploaderBundle',
             'Liip\ImagineBundle\LiipImagineBundle',
+            'Sp\BowerBundle\SpBowerBundle',
         );
     }
 }
