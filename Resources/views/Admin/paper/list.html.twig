@@ -77,9 +77,8 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-
     {% javascripts
+        '@jquery_js'
         '@anh_pager_js'
     %}<script src="{{ asset_url }}"></script>{% endjavascripts %}
 

@@ -1,7 +1,6 @@
 {% block stylesheets %}
-    <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.min.css" rel="stylesheet">
-
     {% stylesheets
+        '@jquery_ui_css'
         '@anh_content_editor_css'
         '@anh_dateTimePicker_css'
         '@anh_taggable_css'
@@ -14,10 +13,9 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-
     {% javascripts filter="?closure"
+        '@jquery_js'
+        '@jquery_ui_js'
         '@anh_content_editor_js'
         '@anh_dateTimePicker_js'
         '@anh_taggable_js'
