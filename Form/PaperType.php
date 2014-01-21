@@ -134,6 +134,10 @@ class PaperType extends AbstractType
             $builder->create('assets', 'hidden')
                 ->addModelTransformer(new ArrayToJsonTransformer())
         );
+
+        $builder->add('_redirect', 'hidden', array(
+            'mapped' => false
+        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

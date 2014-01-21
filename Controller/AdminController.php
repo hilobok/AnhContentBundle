@@ -135,12 +135,17 @@ class AdminController extends Controller
             throw new \InvalidArgumentException("Section '{$section}' not configured.");
         }
 
-        return $this->paperAddEdit($paper, 'AnhContentBundle:Admin:paper/edit.html.twig');
+        return $this->paperAddEdit($paper,
+            'AnhContentBundle:Admin:paper/edit.html.twig',
+            $this->getRequest()->server->get('HTTP_REFERER')
+        );
     }
 
-    private function paperAddEdit(Paper $paper, $template)
+    private function paperAddEdit(Paper $paper, $template, $redirect = null)
     {
         $form = $this->createForm('anh_content_form_type_paper', $paper);
+        $form->get('_redirect')->setData($redirect);
+
         $request = $this->getRequest();
         $section = $paper->getSection();
 
@@ -150,7 +155,7 @@ class AdminController extends Controller
             if ($form->isValid()) {
                 $this->getPaperManager()->save($paper);
 
-                return $this->redirect($this->generateUrl(
+                return $this->redirect($form->get('_redirect')->getData() ?: $this->generateUrl(
                     'anh_content_admin_paper_list',
                     array('section' => $section)
                 ));
