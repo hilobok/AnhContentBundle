@@ -51,10 +51,9 @@ anh_content_admin_paper_add:
         section: "[a-z\d]+"
 
 anh_content_admin_paper_edit:
-    pattern: /{section}-edit-{id}
+    pattern: /edit-{id}
     defaults: { _controller: AnhContentBundle:Admin:paperEdit }
     requirements:
-        section: "[a-z\d]+"
         id: "\d+"
 
 anh_content_admin_paper_delete:

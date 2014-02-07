@@ -127,14 +127,8 @@ class AdminController extends Controller
         return $this->paperAddEdit($paper, 'AnhContentBundle:Admin:paper/add.html.twig');
     }
 
-    public function paperEditAction($section, Paper $paper)
+    public function paperEditAction(Paper $paper)
     {
-        $sections = $this->container->getParameter('anh_content.sections');
-
-        if (!in_array($section, array_keys($sections))) {
-            throw new \InvalidArgumentException("Section '{$section}' not configured.");
-        }
-
         return $this->paperAddEdit($paper,
             'AnhContentBundle:Admin:paper/edit.html.twig',
             $this->getRequest()->server->get('HTTP_REFERER')
@@ -164,8 +158,6 @@ class AdminController extends Controller
 
         $options = $this->container->getParameter('anh_content.options');
         $sections = $this->container->getParameter('anh_content.sections');
-
-        $assetManager = $this->container->get('anh_content.asset.manager');
 
         // getting all available bbcode tags from parser
         $parser = $this->container->get('anh_markup.parser');
