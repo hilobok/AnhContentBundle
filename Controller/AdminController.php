@@ -169,14 +169,7 @@ class AdminController extends Controller
 
         // getting all available bbcode tags from parser
         $parser = $this->container->get('anh_markup.parser');
-        $decoda = $parser->create('bbcode', '', array());
-        $tags = array();
-        foreach ($decoda->getFilters() as $filter) {
-            $tags = array_merge($tags, array_keys($filter->getTags()));
-        }
-
-        // remove not valid bbcode tags
-        $tags = array_filter($tags, function($value) { return preg_match('/^[_a-z0-9]+$/', $value); });
+        $tags = $parser->command('getTags', 'bbcode');
 
         return $this->render($template, array(
             'tags' => $tags,

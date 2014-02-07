@@ -11,6 +11,7 @@ use Anh\MarkupBundle\Event\MarkupEvent;
 use Anh\MarkupBundle\Event\MarkupCreateEvent;
 use Anh\MarkupBundle\Event\MarkupParseEvent;
 use Anh\MarkupBundle\Event\MarkupValidateEvent;
+use Anh\MarkupBundle\Event\MarkupCommandEvent;
 
 use Decoda\Decoda;
 use Anh\ContentBundle\Decoda\Filter\PreviewFilter;
@@ -56,7 +57,8 @@ class BbcodeParser implements EventSubscriberInterface
         return array(
             MarkupEvent::CREATE => 'onCreate',
             MarkupEvent::PARSE => 'onParse',
-            MarkupEvent::VALIDATE => 'onValidate'
+            MarkupEvent::VALIDATE => 'onValidate',
+            MarkupEvent::COMMAND => 'onCommand'
         );
     }
 
@@ -182,5 +184,32 @@ class BbcodeParser implements EventSubscriberInterface
         }
 
         $event->setErrors($errors);
+    }
+
+    /**
+     * Processes extra commands
+     *
+     * @param MarkupCommandEvent
+     */
+    public function onCommand(MarkupCommandEvent $event)
+    {
+        if ($event->getType() != 'bbcode') {
+            return;
+        }
+
+        switch ($event->getCommand()) {
+            case 'getTags':
+                $tags = array();
+
+                foreach ($event->getParser()->getFilters() as $filter) {
+                    $tags = array_merge($tags, array_keys($filter->getTags()));
+                }
+
+                // leave only alphanumerical tags
+                $tags = array_filter($tags, function($value) { return preg_match('/^[_a-z0-9]+$/', $value); });
+
+                $event->setResult($tags);
+                break;
+        }
     }
 }
