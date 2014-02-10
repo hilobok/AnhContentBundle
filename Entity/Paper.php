@@ -5,7 +5,10 @@ namespace Anh\ContentBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Anh\MarkupBundle\Mapping\Annotation\Parsable as ParseMarkup;
-use Anh\MarkupBundle\Validator\Markup as ValidateMarkup;
+
+use Symfony\Component\Validator\Constraints as Assert;
+use Anh\ContentBundle\Validator\Constraints as PaperAssert;
+use Anh\MarkupBundle\Validator\Constraints as MarkupAssert;
 
 use Anh\ContentBundle\Entity\Category;
 
@@ -42,6 +45,8 @@ class Paper extends AbstractTaggable implements TaggableInterface
      * @var string
      *
      * @ORM\Column(name="section", type="string", length=50)
+     * @Assert\NotBlank
+     * @PaperAssert\SectionIsConfigured
      */
     protected $section;
 
@@ -81,6 +86,7 @@ class Paper extends AbstractTaggable implements TaggableInterface
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
+     * @Assert\NotBlank
      */
     protected $title;
 
@@ -96,7 +102,7 @@ class Paper extends AbstractTaggable implements TaggableInterface
      * @var string
      *
      * @ORM\Column(name="markup", type="text", nullable=true)
-     * @ValidateMarkup(type="bbcode")
+     * @MarkupAssert\MarkupIsValid(type="bbcode")
      */
     protected $markup;
 

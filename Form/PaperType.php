@@ -6,7 +6,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Doctrine\ORM\EntityRepository;
 
 use Anh\Taggable\TaggableManager;
@@ -71,11 +70,7 @@ class PaperType extends AbstractType
         }
 
         $builder
-            ->add('title', 'text', array(
-                'constraints' => array(
-                    new NotBlank(),
-                )
-            ))
+            ->add('title', 'text')
         ;
 
         if ($config['slug']) {

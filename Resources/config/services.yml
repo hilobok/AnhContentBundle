@@ -12,6 +12,7 @@ parameters:
     anh_content.asset.storage.class: Anh\ContentBundle\AssetUploaderStorage
     anh_content.url_generator.class: Anh\ContentBundle\UrlGenerator
     anh_content.twig.content_extension.class: Anh\ContentBundle\Twig\ContentExtension
+    anh_content.section_is_configured.validator.class: Anh\ContentBundle\Validator\Constraints\SectionIsConfiguredValidator
 
 services:
     anh_content.bundle:
@@ -114,3 +115,10 @@ services:
             - %anh_content.sections%
         tags:
             - { name: twig.extension }
+
+    anh_content.section_is_configured.validator:
+        class: %anh_content.section_is_configured.validator.class%
+        arguments:
+            - %anh_content.sections%
+        tags:
+            - { name: validator.constraint_validator, alias: anh_content_section_is_configured_validator }
