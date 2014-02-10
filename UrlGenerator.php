@@ -40,7 +40,7 @@ class UrlGenerator
     {
         if (!isset($this->sections[$section]['routes'][$alias])) {
             throw new \InvalidArgumentException(
-                sprintf("Unable to find route '%s' in section '%s'.", $section, $alias)
+                sprintf("Unable to find route for '%s' in section '%s'.", $alias, $section)
             );
         }
 
