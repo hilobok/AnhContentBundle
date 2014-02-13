@@ -127,7 +127,7 @@ class Paper extends AbstractTaggable implements TaggableInterface
      *
      * @ORM\Column(name="isDraft", type="boolean")
      */
-    protected $isDraft;
+    protected $isDraft = false;
 
     /**
      * @var string
