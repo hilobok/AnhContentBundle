@@ -82,10 +82,10 @@ class BaseController extends Controller
      *
      * @return \Anh\PagerBundle\Pager
      */
-    protected function paginateCategories($section)
+    protected function paginateCategories($section, $page = 1, $limit = 10)
     {
         return $this->container->get('anh_content.manager.category')
-            ->paginateInSection($section)
+            ->paginateInSection($section, $page, $limit)
         ;
     }
 
