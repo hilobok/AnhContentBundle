@@ -104,7 +104,7 @@ class ContentExtension extends \Twig_Extension
     }
 
     /**
-     * Returns config for section or all section if $section ommited
+     * Returns config for section or all sections if $section ommited
      *
      * @param string|null $section Section name
      *
