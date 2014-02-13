@@ -38,7 +38,7 @@
                         <a href="{{ url('anh_content_admin_paper_edit', { 'id': paper.getId() }) }}">{{ paper.getTitle() }}</a>
 
                         <div>
-                            {% if sections[section].category %}
+                            {% if sections[section].category and paper.getCategory() %}
                                 <span>Category:</span> {{ paper.getCategory().getTitle() }}
                             {% endif %}
 
