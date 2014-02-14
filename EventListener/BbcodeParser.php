@@ -84,27 +84,26 @@ class BbcodeParser implements EventSubscriberInterface
         $decoda->removeFilter('Url');
         $decoda->addFilter(new UrlFilter());
 
-        // default image filter for section
-        $options['filter'] = (isset($options['data']['section']) and
-            isset($this->sections[$options['data']['section']]['filter'])) ?
-                $this->sections[$options['data']['section']]['filter'] : ''
-        ;
-
-        // generating proceed url
-        if (isset($options['data']['section'])) {
+        // generate proceed url and add preview filter
+        if (isset($options['data']['section']) && $this->sections[$options['data']['section']]['preview']) {
             $options['url'] = $this->urlGenerator->generateUrl(
                 'paper',
                 $options['data']['section'],
                 $options['data']
             );
+            $decoda->addFilter(new PreviewFilter($options));
         }
 
-        // assetManager for AssetFilter
-        $options['assetManager'] = $this->assetManager;
+        // add asset manager and asset filter
+        if (isset($options['data']['section']) && $this->sections[$options['data']['section']]['assets']) {
+            // default filter for all assets without filter attribute
+            $options['filter'] = isset($this->sections[$options['data']['section']]['filter']) ?
+                $this->sections[$options['data']['section']]['filter'] : ''
+            ;
 
-        // add custom filters
-        $decoda->addFilter(new AssetFilter($options));
-        $decoda->addFilter(new PreviewFilter($options));
+            $options['assetManager'] = $this->assetManager;
+            $decoda->addFilter(new AssetFilter($options));
+        }
 
         // add custom decoda templates
         $decoda->getEngine()->addPath(__DIR__ . '/../Resources/decoda');
