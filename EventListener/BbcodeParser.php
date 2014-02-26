@@ -84,33 +84,40 @@ class BbcodeParser implements EventSubscriberInterface
         $decoda->removeFilter('Url');
         $decoda->addFilter(new UrlFilter());
 
+        // add custom decoda templates
+        $decoda->getEngine()->addPath(__DIR__ . '/../Resources/decoda');
+
+        $event->setParser($decoda);
+
+        if (empty($options['entity'])) {
+            return;
+        }
+
+        $entity = $options['entity'];
+        $section = $entity->getSection();
+
+        if (!isset($this->sections[$section])) {
+            return;
+        }
+
         // generate proceed url and add preview filter
-        if (isset($options['data']['section']) && $this->sections[$options['data']['section']]['preview']) {
-            $options['url'] = $this->urlGenerator->generateUrl(
-                'paper',
-                $options['data']['section'],
-                $options['data']
-            );
+        if ($this->sections[$section]['preview']) {
             $decoda->addFilter(new PreviewFilter($options));
         }
 
         // add asset manager and asset filter
-        if (isset($options['data']['section']) && $this->sections[$options['data']['section']]['assets']) {
+        if ($this->sections[$section]['assets']) {
             // default filter for all assets without filter attribute
-            $options['filter'] = isset($this->sections[$options['data']['section']]['filter']) ?
-                $this->sections[$options['data']['section']]['filter'] : ''
+            $options['filter'] = isset($this->sections[$section]['filter']) ?
+                $this->sections[$section]['filter'] : ''
             ;
 
             $options['assetManager'] = $this->assetManager;
             $decoda->addFilter(new AssetFilter($options));
         }
 
-        // add custom decoda templates
-        $decoda->getEngine()->addPath(__DIR__ . '/../Resources/decoda');
-
         $decoda->setConfig($options);
         $event->setOptions($options);
-        $event->setParser($decoda);
     }
 
     /**
@@ -124,9 +131,22 @@ class BbcodeParser implements EventSubscriberInterface
             return;
         }
 
+        $options = $event->getOptions();
         $decoda = $event->getParser();
+
+        if (isset($options['entity'])) {
+            $entity = $options['entity'];
+            $section = $entity->getSection();
+
+            if ($this->sections[$section]['preview']) {
+                $options['url'] = $this->urlGenerator->resolveAndGenerate($entity);
+                $decoda->getFilter('Preview')->setConfig($options);
+                $event->setOptions($options);
+            }
+        }
+
         $decoda->reset($event->getMarkup());
-        $decoda->setConfig($event->getOptions());
+        $decoda->setConfig($options);
         $text = $decoda->parse();
 
         $event->setText($text);
