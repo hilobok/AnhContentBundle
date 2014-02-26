@@ -74,33 +74,9 @@ class ContentExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function contentUrl($content, $name = null)
+    public function contentUrl($data)
     {
-        switch (true) {
-            case ($content instanceof Paper):
-                $name = 'paper';
-                $section = $content->getSection();
-                $parameters = $content->getUrlParameters();
-                break;
-
-            case ($content instanceof Category):
-                $name = 'category';
-                $section = $content->getSection();
-                $parameters = $content->getUrlParameters();
-                break;
-
-            case (in_array($content, array_keys($this->sections)) and in_array($name, array('papers', 'categories'))):
-                $section = $content;
-                $parameters = array();
-                break;
-
-            default:
-                throw new \InvalidArgumentException(
-                    sprintf("Unable to generate url for '%s'.", is_object($content) ? get_class($content) : $content)
-                );
-        }
-
-        return $this->urlGenerator->generateUrl($name, $section, $parameters);
+        return $this->urlGenerator->resolveAndGenerate($data);
     }
 
     /**

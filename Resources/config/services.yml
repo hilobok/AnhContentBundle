@@ -11,6 +11,7 @@ parameters:
     anh_content.asset.listener.class: Anh\ContentBundle\EventListener\AssetListener
     anh_content.asset.storage.class: Anh\ContentBundle\AssetUploaderStorage
     anh_content.url_generator.class: Anh\ContentBundle\UrlGenerator
+    anh_content.url_generator.listener.class: Anh\ContentBundle\EventListener\UrlGenerator
     anh_content.twig.content_extension.class: Anh\ContentBundle\Twig\ContentExtension
     anh_content.section_is_configured.validator.class: Anh\ContentBundle\Validator\Constraints\SectionIsConfiguredValidator
 
@@ -106,6 +107,14 @@ services:
         arguments:
             - %anh_content.sections%
             - @router
+            - @event_dispatcher
+
+    anh_content.url_generator.listener:
+        class: %anh_content.url_generator.listener.class%
+        arguments:
+            - %anh_content.sections%
+        tags:
+            - { name: kernel.event_subscriber }
 
     anh_content.twig.content_extension:
         class: %anh_content.twig.content_extension.class%

@@ -2,41 +2,74 @@
 
 namespace Anh\ContentBundle;
 
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Anh\ContentBundle\Event\GenerateUrlEvent;
 
 class UrlGenerator
 {
     /**
-     * Holds sections configs
+     * Content sections
      * @var array
      */
     protected $sections;
 
     /**
-     * Holds router service
+     * Router service
      * @var RouterInterface
      */
     protected $router;
 
     /**
+     * Event dispatcher service
+     * @var EventDispatcherInterface
+     */
+    protected $dispatcher;
+
+    /**
      * Constructor
      */
-    public function __construct(array $sections, RouterInterface $router)
+    public function __construct(array $sections, RouterInterface $router, EventDispatcherInterface $dispatcher)
     {
         $this->sections = $sections;
         $this->router = $router;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
-     * Generates url for content
+     * Resolves from supplied data needed arguments for url generation and generates url
      *
-     * @param string $alias Route alias
-     * @param string $section Section name
-     * @param array $parameters Route parameters
-     *
-     * @return string Generated url
+     * @param mixed $data
      */
-    public function generateUrl($alias, $section, array $parameters = array())
+    public function resolveAndGenerate($data)
+    {
+        $event = new GenerateUrlEvent($data);
+        $this->dispatcher->dispatch(GenerateUrlEvent::GENERATE_URL, $event);
+
+        if (!$event->isPropagationStopped()) {
+            throw new \InvalidArgumentException(
+                sprintf("Unable to generate url for '%s'.", is_object($data) ? get_class($data) : gettype($data))
+            );
+        }
+
+        if ($event->getUrl()) {
+            return $event->getUrl();
+        }
+
+        $arguments = $event->getArguments() + array(
+            'alias' => '',
+            'section' => '',
+            'parameters' => ''
+        );
+
+        return $this->generateUrl(
+            $arguments['alias'],
+            $arguments['section'],
+            $arguments['parameters']
+        );
+    }
+
+    public function generateUrl($alias, $section, $parameters)
     {
         if (!isset($this->sections[$section]['routes'][$alias])) {
             throw new \InvalidArgumentException(
