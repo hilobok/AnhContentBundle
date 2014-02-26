@@ -36,7 +36,7 @@ class AnhContentExtension extends Extension implements PrependExtensionInterface
         );
 
         foreach ($config['sections'] as $section => &$flags) {
-            $flags['routes'] = (empty($falgs['routes']) ? array() : $flags['routes']) + array(
+            $flags['routes'] = (isset($flags['routes']) ? $flags['routes'] : array()) + array(
                 'paper' => sprintf('anh_content_%s_paper', $section),
                 'category' => sprintf('anh_content_%s_category', $section),
                 'papers' => sprintf('anh_content_%s_papers', $section),
