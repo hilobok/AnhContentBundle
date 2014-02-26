@@ -53,7 +53,7 @@ class PaperType extends AbstractType
 
         $config = $this->sections[$section];
 
-        if ($config['category']) {
+        if ($config['category'] && !in_array('category', $options['hidden_fields'])) {
             $builder
                 ->add('category', 'entity', array(
                     'class' => $this->categoryClass,
@@ -79,7 +79,7 @@ class PaperType extends AbstractType
             ;
         }
 
-        if ($config['publishedSince']) {
+        if ($config['publishedSince'] && !in_array('publishedSince', $options['hidden_fields'])) {
             $builder
                 ->add('publishedSince', 'datetime', array(
                     'picker' => true,
@@ -98,8 +98,13 @@ class PaperType extends AbstractType
                 ),
                 'required' => false
             ))
-            ->add('isDraft', 'checkbox', array('required' => false))
         ;
+
+        if(!in_array('isDraft', $options['hidden_fields'])) {
+            $builder
+                ->add('isDraft', 'checkbox', array('required' => false))
+            ;
+        }
 
         if ($config['tags']) {
             $builder
@@ -138,7 +143,8 @@ class PaperType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => $this->paperClass
+            'data_class' => $this->paperClass,
+            'hidden_fields' => array()
         ));
     }
 
