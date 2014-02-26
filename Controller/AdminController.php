@@ -148,7 +148,7 @@ class AdminController extends Controller
             if ($form->isValid()) {
                 $this->getPaperManager()->save($paper);
 
-                // return $this->redirect($form->get('_redirect')->getData());
+                return $this->redirect($form->get('_redirect')->getData());
             }
         }
 
