@@ -115,27 +115,26 @@ class AdminController extends Controller
 
     public function paperAddAction($section)
     {
-        $sections = $this->container->getParameter('anh_content.sections');
-
-        if (!in_array($section, array_keys($sections))) {
-            throw new \InvalidArgumentException("Section '{$section}' not configured.");
-        }
-
         $paper = $this->getPaperManager()->create();
         $paper->setSection($section);
 
-        return $this->paperAddEdit($paper, 'AnhContentBundle:Admin:paper/add.html.twig');
+        return $this->paperAddEdit(
+            $paper,
+            'AnhContentBundle:Admin:paper/add.html.twig',
+            $this->generateUrl('anh_content_admin_paper_list', array('section' => $section))
+        );
     }
 
     public function paperEditAction(Paper $paper)
     {
-        return $this->paperAddEdit($paper,
+        return $this->paperAddEdit(
+            $paper,
             'AnhContentBundle:Admin:paper/edit.html.twig',
             $this->getRequest()->server->get('HTTP_REFERER')
         );
     }
 
-    private function paperAddEdit(Paper $paper, $template, $redirect = null)
+    protected function paperAddEdit(Paper $paper, $template, $redirect)
     {
         $form = $this->createForm('anh_content_form_type_paper', $paper);
         $form->get('_redirect')->setData($redirect);
@@ -149,10 +148,7 @@ class AdminController extends Controller
             if ($form->isValid()) {
                 $this->getPaperManager()->save($paper);
 
-                return $this->redirect($form->get('_redirect')->getData() ?: $this->generateUrl(
-                    'anh_content_admin_paper_list',
-                    array('section' => $section)
-                ));
+                // return $this->redirect($form->get('_redirect')->getData());
             }
         }
 
@@ -161,7 +157,9 @@ class AdminController extends Controller
 
         // getting all available bbcode tags from parser
         $parser = $this->container->get('anh_markup.parser');
-        $tags = $parser->command('getTags', 'bbcode');
+        $tags = $parser->command('getTags', 'bbcode', '', array(
+            'entity' => $paper
+        ));
 
         return $this->render($template, array(
             'tags' => $tags,
@@ -218,7 +216,7 @@ class AdminController extends Controller
         );
     }
 
-    private function categoryAddEdit(Category $category, $template)
+    protected function categoryAddEdit(Category $category, $template)
     {
         $form = $this->createForm('anh_content_form_type_category', $category);
         $request = $this->getRequest();
@@ -258,12 +256,12 @@ class AdminController extends Controller
         return $this->redirect($this->generateUrl('anh_content_admin_category_list'));
     }
 
-    private function getCategoryManager()
+    protected function getCategoryManager()
     {
         return $this->container->get('anh_content.manager.category');
     }
 
-    private function getPaperManager()
+    protected function getPaperManager()
     {
         return $this->container->get('anh_content.manager.paper');
     }
