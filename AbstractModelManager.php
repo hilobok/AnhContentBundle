@@ -33,6 +33,16 @@ abstract class AbstractModelManager
     }
 
     /**
+     * Returns entity manager
+     *
+     * @return EntityManager
+     */
+    public function getEntityManager()
+    {
+        return $this->em;
+    }
+
+    /**
      * Returns fully qualified class name.
      *
      * @return string
