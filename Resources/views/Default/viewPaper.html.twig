@@ -4,7 +4,7 @@
 
 {% block content %}
     <h1>{{ paper.getTitle() }}</h1>
-    <div>{{ paper.getContent()|raw }}</div>
+    <div class="bbcode">{{ paper.getContent()|raw }}</div>
 {% endblock %}
 
 {% block meta %}
