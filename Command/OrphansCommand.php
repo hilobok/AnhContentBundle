@@ -30,6 +30,7 @@ class OrphansCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        ini_set('memory_limit', '-1');
         $container = $this->getContainer();
         $pm = $container->get('anh_content.manager.paper');
         $am = $container->get('anh_content.asset.manager');
