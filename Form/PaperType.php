@@ -113,11 +113,23 @@ class PaperType extends AbstractType
         }
 
         if ($config['meta']) {
-            $builder
-                ->add('metaAuthor', 'text', array('required' => false))
-                ->add('metaDescription', 'text', array('required' => false))
-                ->add('metaKeywords', 'text', array('required' => false))
-            ;
+            if (!in_array('metaAuthor', $options['hidden_fields'])) {
+                $builder
+                    ->add('metaAuthor', 'text', array('required' => false))
+                ;
+            }
+
+            if (!in_array('metaDescription', $options['hidden_fields'])) {
+                $builder
+                    ->add('metaDescription', 'text', array('required' => false))
+                ;
+            }
+
+            if (!in_array('metaKeywords', $options['hidden_fields'])) {
+                $builder
+                    ->add('metaKeywords', 'text', array('required' => false))
+                ;
+            }
         }
 
         $builder
