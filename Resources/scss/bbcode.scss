@@ -1,0 +1,43 @@
+@import "compass/utilities/general/clearfix";
+
+.bbcode {
+    @include clearfix();
+    line-height: 1.6;
+
+    figure.image {
+        display: block;
+
+        img {
+            // display: block;
+            padding: 3px;
+            border: 1px solid #efefef;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        &.align-left {
+            float: left;
+            margin: 1em 1em 1em 0;
+        }
+
+        &.align-right {
+            float: right;
+            margin: 1em 0 1em 1em;
+        }
+
+        &.align-center {
+            text-align: center;
+        }
+
+        &.align-inline {
+            display: inline-block;
+        }
+    }
+
+    figcaption {
+        text-align: center;
+        font-size: 13px;
+        color: #999;
+        margin-top: 0.8em;
+    }
+}
