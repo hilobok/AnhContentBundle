@@ -42,7 +42,7 @@ class UrlGenerator implements EventSubscriberInterface
             );
         } elseif (
             is_array($data) &&
-            isset($data['section']) && in_array($data['section'], $this->sections) &&
+            isset($data['section']) && in_array($data['section'], array_keys($this->sections)) &&
             isset($data['alias']) && in_array($data['alias'], array('papers', 'categories'))
         ) {
             $arguments = $data + array('parameters' => array());
