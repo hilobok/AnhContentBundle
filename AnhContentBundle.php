@@ -8,7 +8,7 @@ use Anh\ContentBundle\DependencyInjection\Compiler\FeedsCompilerPass;
 
 class AnhContentBundle extends Bundle
 {
-    const VERSION = 'v1.1.7';
+    const VERSION = 'v1.1.8';
     const TITLE = 'AnhContentBundle';
     const DESCRIPTION = 'Bundle for content management';
 
