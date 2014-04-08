@@ -20,7 +20,8 @@
         "anh/markup-bundle": "~1.0",
         "anh/pager-bundle": "~1.1",
         "anh/taggable-bundle": "~1.1",
-        "anh/datetimepicker-bundle": "~1.1"
+        "anh/datetimepicker-bundle": "~1.1",
+        "anh/feed-bundle": "~1.0"
     },
 
     "minimum-stability": "stable",

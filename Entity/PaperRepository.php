@@ -29,9 +29,9 @@ class PaperRepository extends EntityRepository
         ;
     }
 
-    public function findPublishedInSectionDQL($section)
+    public function findPublishedInSectionDQL($section, $modifiedSince = null)
     {
-        return $this->createQueryBuilder('d')
+        $query = $this->createQueryBuilder('d')
             ->where('d.section = :section')
             ->andWhere('d.isDraft = :isDraft')
             ->andWhere('d.publishedSince <= current_timestamp()')
@@ -40,13 +40,21 @@ class PaperRepository extends EntityRepository
                 'isDraft' => false
             ))
             ->orderBy('d.publishedSince', 'DESC')
-            ->getQuery()
         ;
+
+        if ($modifiedSince) {
+            $query
+                ->andWhere('d.updatedAt > :modifiedSince')
+                ->setParameter('modifiedSince', $modifiedSince)
+            ;
+        }
+
+        return $query->getQuery();
     }
 
-    public function findPublishedInSectionAndCategoryDQL($section, $category)
+    public function findPublishedInSectionAndCategoryDQL($section, Category $category, $modifiedSince = null)
     {
-        return $this->createQueryBuilder('d')
+        $query = $this->createQueryBuilder('d')
             ->where('d.section = :section')
             ->andWhere('d.isDraft = :isDraft')
             ->andWhere('d.publishedSince <= current_timestamp()')
@@ -57,8 +65,16 @@ class PaperRepository extends EntityRepository
                 'category' => $category
             ))
             ->orderBy('d.publishedSince', 'DESC')
-            ->getQuery()
         ;
+
+        if ($modifiedSince) {
+            $query
+                ->andWhere('d.updatedAt > :modifiedSince')
+                ->setParameter('modifiedSince', $modifiedSince)
+            ;
+        }
+
+        return $query->getQuery();
     }
 
     public function findPublishedWithImageInSectionDQL($section)
@@ -74,6 +90,38 @@ class PaperRepository extends EntityRepository
                 'image' => ''
             ))
             ->orderBy('d.publishedSince', 'DESC')
+            ->getQuery()
+        ;
+    }
+
+    public function findMaxPublishedUpdatedAtInSectionDQL($section)
+    {
+        return $this->createQueryBuilder('d')
+            ->select('max(d.updatedAt)')
+            ->where('d.section = :section')
+            ->andWhere('d.isDraft = :isDraft')
+            ->andWhere('d.publishedSince <= current_timestamp()')
+            ->setParameters(array(
+                'section' => $section,
+                'isDraft' => false
+            ))
+            ->getQuery()
+        ;
+    }
+
+    public function findMaxPublishedUpdatedAtInSectionAndCategoryDQL($section, Category $category)
+    {
+        return $this->createQueryBuilder('d')
+            ->select('max(d.updatedAt)')
+            ->where('d.section = :section')
+            ->andWhere('d.isDraft = :isDraft')
+            ->andWhere('d.publishedSince <= current_timestamp()')
+            ->andWhere('d.category = :category')
+            ->setParameters(array(
+                'section' => $section,
+                'isDraft' => false,
+                'category' => $category
+            ))
             ->getQuery()
         ;
     }

@@ -72,10 +72,10 @@ class PaperManager extends AbstractModelManager
         return $this->pager->paginate($query, $page, $limit);
     }
 
-    public function findPublishedInSection($section)
+    public function findPublishedInSection($section, $modifiedSince = null)
     {
         return $this->repository
-            ->findPublishedInSectionDQL($section)
+            ->findPublishedInSectionDQL($section, $modifiedSince)
             ->getResult()
         ;
     }
@@ -89,10 +89,10 @@ class PaperManager extends AbstractModelManager
         return $this->pager->paginate($query, $page, $limit);
     }
 
-    public function findPublishedInSectionAndCategory($section, $category)
+    public function findPublishedInSectionAndCategory($section, Category $category, $modifiedSince = null)
     {
         return $this->repository
-            ->findPublishedInSectionAndCategoryDQL($section, $category)
+            ->findPublishedInSectionAndCategoryDQL($section, $category, $modifiedSince)
             ->getResult()
         ;
     }
@@ -121,5 +121,21 @@ class PaperManager extends AbstractModelManager
         ;
 
         return $this->pager->paginate($query, $page, $limit);
+    }
+
+    public function findMaxPublishedUpdatedAtInSection($section)
+    {
+        return $this->repository
+            ->findMaxPublishedUpdatedAtInSectionDQL($section)
+            ->getSingleScalarResult()
+        ;
+    }
+
+    public function findMaxPublishedUpdatedAtInSectionAndCategory($section, Category $category)
+    {
+        return $this->repository
+            ->findMaxPublishedUpdatedAtInSectionAndCategoryDQL($section, $category)
+            ->getSingleScalarResult()
+        ;
     }
 }

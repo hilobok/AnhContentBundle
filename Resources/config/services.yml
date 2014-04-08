@@ -14,6 +14,7 @@ parameters:
     anh_content.url_generator.listener.class: Anh\ContentBundle\EventListener\UrlGenerator
     anh_content.twig.content_extension.class: Anh\ContentBundle\Twig\ContentExtension
     anh_content.section_is_configured.validator.class: Anh\ContentBundle\Validator\Constraints\SectionIsConfiguredValidator
+    anh_content.feed_data_provider.class: Anh\ContentBundle\FeedDataProvider
 
 services:
     anh_content.bundle:

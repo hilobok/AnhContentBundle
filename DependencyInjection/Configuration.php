@@ -32,6 +32,10 @@ class Configuration implements ConfigurationInterface
      *      - papers - route name for list papers, anh_content_{section}_papers by default
      *      - category - route name for view category, anh_content_{section}_category by default
      *      - categories - route name for list categories, anh_content_{section}_categories by default
+     * - feeds
+     *      name
+     *          - condistions: {}
+     *          - options: {}
      */
     public function getConfigTreeBuilder()
     {
@@ -104,7 +108,26 @@ class Configuration implements ConfigurationInterface
                                 //     ->scalarNode('categories')
                                 //         ->info('Route name for list categories. Defaults to anh_content_{section}_categories')
                                 //     ->end()
-                                // ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+                ->arrayNode('feeds')
+                    ->info('Feeds for content.')
+                    ->useAttributeAsKey('name')
+                    ->defaultValue(array())
+                    ->prototype('array')
+                        ->children()
+                            ->arrayNode('conditions')
+                                ->defaultValue(array())
+                                ->prototype('variable')
+                                ->end()
+                            ->end()
+                            ->arrayNode('options')
+                                ->defaultValue(array())
+                                ->prototype('variable')
+                                ->end()
                             ->end()
                         ->end()
                     ->end()

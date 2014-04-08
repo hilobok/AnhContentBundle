@@ -52,6 +52,7 @@ class AnhContentExtension extends Extension implements PrependExtensionInterface
             }
         }
 
+        $container->setParameter('anh_content.feeds', $config['feeds']);
         $container->setParameter('anh_content.sections', $config['sections']);
         $container->setParameter('anh_content.options', $options);
         $container->setParameter('anh_content.assets_dir', $config['assets_dir']);
