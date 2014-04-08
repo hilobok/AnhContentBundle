@@ -41,7 +41,7 @@ class UrlGenerator
      *
      * @param mixed $data
      */
-    public function resolveAndGenerate($data)
+    public function resolveAndGenerate($data, $absolute = false)
     {
         $event = new GenerateUrlEvent($data);
         $this->dispatcher->dispatch(GenerateUrlEvent::GENERATE_URL, $event);
@@ -65,11 +65,12 @@ class UrlGenerator
         return $this->generateUrl(
             $arguments['alias'],
             $arguments['section'],
-            $arguments['parameters']
+            $arguments['parameters'],
+            $absolute
         );
     }
 
-    public function generateUrl($alias, $section, $parameters)
+    public function generateUrl($alias, $section, $parameters, $absolute = false)
     {
         if (!isset($this->sections[$section]['routes'][$alias])) {
             throw new \InvalidArgumentException(
@@ -81,7 +82,8 @@ class UrlGenerator
 
         return $this->router->generate(
             $routeName,
-            $this->prepareParameters($routeName, $parameters)
+            $this->prepareParameters($routeName, $parameters),
+            $absolute
         );
     }
 

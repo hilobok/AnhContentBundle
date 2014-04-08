@@ -74,9 +74,9 @@ class ContentExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function contentUrl($data)
+    public function contentUrl($data, $absolute = false)
     {
-        return $this->urlGenerator->resolveAndGenerate($data);
+        return $this->urlGenerator->resolveAndGenerate($data, $absolute);
     }
 
     /**
