@@ -94,7 +94,7 @@ class FeedDataProvider extends AbstractDataProvider
     protected function generateFeed($link, $parameters)
     {
         $data = array(
-            'link' => array(
+            'link0' => array(
                 'rel' => 'self',
                 'href' => $link
             ),
@@ -108,6 +108,10 @@ class FeedDataProvider extends AbstractDataProvider
 
         if ($this->options->has('title')) {
             $data['title'] = $this->options->get('title');
+        }
+
+        if ($this->options->has('link')) {
+            $data['link1'] = $this->options->get('link');
         }
 
         if ($this->options->has('copyright')) {
