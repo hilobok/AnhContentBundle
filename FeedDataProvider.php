@@ -96,6 +96,7 @@ class FeedDataProvider extends AbstractDataProvider
         $data = array(
             'link0' => array(
                 'rel' => 'self',
+                'type' => 'application/atom+xml',
                 'href' => $link
             ),
             'id' => $link,
@@ -111,7 +112,11 @@ class FeedDataProvider extends AbstractDataProvider
         }
 
         if ($this->options->has('link')) {
-            $data['link1'] = $this->options->get('link');
+            $data['link1'] = array(
+                'type' => 'text/html',
+                'rel' => 'alternate',
+                $this->options->get('link')
+            );
         }
 
         if ($this->options->has('copyright')) {
@@ -142,7 +147,11 @@ class FeedDataProvider extends AbstractDataProvider
             $data[$key] = array(
                 'title' => $paper->getTitle(),
                 'id' => $link,
-                'link' => $link,
+                'link' => array(
+                    'rel' => 'alternate',
+                    $link,
+                ),
+                'published' => $paper->getPublishedSince(),
                 'updated' => $paper->getUpdatedAt(),
             );
 
