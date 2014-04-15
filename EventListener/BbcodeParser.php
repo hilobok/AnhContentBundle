@@ -77,8 +77,7 @@ class BbcodeParser implements EventSubscriberInterface
 
         $decoda = new Decoda($event->getMarkup(), $options);
         $decoda->defaults();
-        // $decoda->addFilter(new \Decoda\Filter\TableFilter());
-        $decoda->addFilter(new \Anh\ContentBundle\Decoda\Filter\TableFilter());
+        $decoda->addFilter(new \Decoda\Filter\TableFilter());
         $decoda->addHook(new ConvertBreaksHook());
 
         // original url filter is to restrictive, replace it with custom
