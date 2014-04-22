@@ -54,13 +54,25 @@ class AssetManager
 
         return array(
             'fileName' => $asset,
-            'thumb' => $this->getUrl($asset, 'anh_content_assets_thumb'),
+            'thumb' => $this->getThumbUrl($asset),
             'url' => $this->getUrl($asset),
             'size' => $file->getSize(),
             'originalFileName' => empty($file->originalFileName) ?
                 $file->getFilename() :
                 $file->originalFileName
         );
+    }
+
+    public function getThumbUrl(File $file)
+    {
+        $mime = $file->getMimeType();
+        $thumb = '/bundles/anhcontent/i/file-icon.png';
+
+        if ($mime && strpos($mime, 'image/') === 0) {
+            $thumb = $this->getUrl($file->getFilename(), 'anh_content_assets_thumb');
+        }
+
+        return $thumb;
     }
 
     /**

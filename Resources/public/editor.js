@@ -273,6 +273,7 @@
                 .data('image', image)
                 .appendTo($('.editor-uploader-list'))
                 .wrap('<span />')
+                .after('<span class="original-file-name">' + image.originalFileName + '</span>')
                 .after('<a class="editor-asset-star" href=""><i class="fa fa-star"></i></a>')
                 .after('<a class="editor-asset-delete" href=""><i class="fa fa-minus"></a>')
                 .after('<a class="editor-asset-align-left" href=""><i class="fa fa-align-left"></i></a>')
