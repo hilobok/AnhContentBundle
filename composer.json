@@ -12,8 +12,8 @@
 
     "require": {
         "stof/doctrine-extensions-bundle": "~1.1",
-        "oneup/uploader-bundle": "~1.0",
-        "liip/imagine-bundle": "~0.16",
+        "oneup/uploader-bundle": "~1.2",
+        "liip/imagine-bundle": "~0.21",
         "mjohnson/decoda": "~6.5",
         "sp/bower-bundle": "~0.9",
         "anh/admin-bundle": "~1.0",
