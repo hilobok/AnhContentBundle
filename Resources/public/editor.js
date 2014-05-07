@@ -21,7 +21,8 @@
         var codemirror = {};
         var uploader = {};
 
-        var haveUnsavedUploads = false;
+        var hasUnsavedUploads = false;
+        var hasChanges = false;
         var readOnly = false;
 
         // public
@@ -89,11 +90,16 @@
                 var span = $(this).closest('span');
                 var image = $('img', span).data('image');
 
-                var aligns = ['left', 'center', 'right'];
+                var aligns = ['left', 'center', 'right', 'none'];
 
                 for (var i in aligns) {
                     if ($(this).hasClass('editor-asset-align-' + aligns[i])) {
-                        insertAssetTag(image, { align: aligns[i] });
+                        var title = assetIsImage(image.fileName) ? '' : image.originalFileName;
+                        insertTag('asset', {
+                            asset: image.fileName,
+                            align: aligns[i],
+                            title: title
+                        });
                         break;
                     }
                 }
@@ -106,9 +112,10 @@
                 var span = $(this).closest('span');
                 var image = $('img', span).data('image');
 
-                delete_image(image);
-
+                deleteAsset(image);
                 span.remove();
+
+                hasChanges = true;
             });
 
             // mark asset as starred
@@ -131,6 +138,8 @@
                 $this.toggleClass('selected').show();
 
                 $('#anh_content_form_type_paper_image').val(image);
+
+                hasChanges = true;
             });
 
             // build toolbar
@@ -192,20 +201,56 @@
             codemirror.on('change', function(cm) {
                 var text = cm.getValue().replace(/\[(.*?)\]|\s/g, "");
                 $('.editor-chars-counter').text(text.length);
+                hasChanges = true;
+            });
+
+            codemirror.on('cursorActivity', function(cm) {
+                var pos = cm.getCursor();
+                var line = cm.getLine(pos.line);
+                var chunks = line.split(/\[|\]/);
+                var len = 0;
+
+                for (var i = 0; i < chunks.length; i++) {
+                    if (len > pos.ch) {
+                        break;
+                    }
+
+                    len = len + chunks[i].length + 1;
+
+                    if (len <= pos.ch) {
+                        continue;
+                    }
+
+                    var match = chunks[i].match(/^asset="(.+?)"/);
+                    if (match) {
+                        $('.editor-uploader-list img').removeClass('highlighted');
+                        var thumb = findThumb(match[1]);
+                        $(thumb).addClass('highlighted');
+                        return;
+                    }
+                }
+
+                $('.editor-uploader-list img').removeClass('highlighted');
             });
 
             CodeMirror.signal(codemirror, 'change', codemirror);
+            hasChanges = false;
 
             // warn about unsaved uploads
             $(window).bind('beforeunload', function(event) {
-                if (haveUnsavedUploads) {
+                if (hasUnsavedUploads) {
                     return 'You have unsaved attachments. Are you sure?';
+                }
+
+                if (hasChanges) {
+                    return 'You have unsaved changes. Are you sure?';
                 }
             });
 
             // prevent from displaying warning about unsaved uploads on form submit
             $(plugin.settings.textarea).closest('form').submit(function() {
-                haveUnsavedUploads = false;
+                hasUnsavedUploads = false;
+                hasChanges = false;
             });
 
             // init uploader
@@ -231,13 +276,13 @@
                             return;
                         }
 
-                        haveUnsavedUploads = true;
+                        hasUnsavedUploads = true;
 
                         var assets = getAssets();
                         assets.push(response.asset);
                         setAssets(assets);
 
-                        add_image(response.asset);
+                        addAsset(response.asset);
                     }
                 }
             });
@@ -248,7 +293,7 @@
             $('.editor-uploader-list').empty();
 
             for (i in assets) {
-                add_image(assets[i]);
+                addAsset(assets[i]);
             }
         };
 
@@ -263,42 +308,69 @@
             return input.val().length ? $.parseJSON(input.val()) : [];
         };
 
-        var setAssets = function(images) {
+        var setAssets = function(assets) {
             var input = $('#anh_content_form_type_paper_assets');
-            input.val(JSON.stringify(images));
+            input.val(JSON.stringify(assets));
         };
 
-        var add_image = function(image) {
-            var i = $('<img src="' + image.thumb + '" draggable="true" />')
-                .data('image', image)
+        var addAsset = function(asset) {
+            var html = '<span class="original-file-name">' + asset.originalFileName + '</span>';
+
+            if ($('#anh_content_form_type_paper_image').length > 0) {
+                html += '<a class="editor-asset-star" href=""><i class="fa fa-star"></i></a>';
+            }
+
+            html += '<a class="editor-asset-delete" href=""><i class="fa fa-minus"></i></a>';
+
+            if (assetIsImage(asset.fileName)) {
+                html += '<a class="editor-asset-align-left" href=""><i class="fa fa-align-left"></i></a>';
+                html += '<a class="editor-asset-align-center" href=""><i class="fa fa-align-center"></i></a>';
+                html += '<a class="editor-asset-align-right" href=""><i class="fa fa-align-right"></i></a>';
+                html += '<a class="editor-asset-align-none" href=""><i class="fa fa-align-justify"></i></a>';
+            } else {
+                html += '<a class="editor-asset-align-none single" href=""><i class="fa fa-align-justify"></i></a>';
+            }
+
+            html += '<a class="editor-asset-zoom" href="' + asset.url + '" target="_blank"><i class="fa fa-search-plus"></i></a>';
+
+            var i = $('<img src="' + asset.thumb + '" draggable="true" />')
+                .data('image', asset)
                 .appendTo($('.editor-uploader-list'))
                 .wrap('<span />')
-                .after('<span class="original-file-name">' + image.originalFileName + '</span>')
-                .after('<a class="editor-asset-star" href=""><i class="fa fa-star"></i></a>')
-                .after('<a class="editor-asset-delete" href=""><i class="fa fa-minus"></a>')
-                .after('<a class="editor-asset-align-left" href=""><i class="fa fa-align-left"></i></a>')
-                .after('<a class="editor-asset-align-center" href=""><i class="fa fa-align-center"></i></a>')
-                .after('<a class="editor-asset-align-right" href=""><i class="fa fa-align-right"></i></a>')
-                .after('<a class="editor-asset-zoom" href="' + image.url + '" target="_blank"><i class="fa fa-search-plus"></i></a>')
-
+                .after(html)
             ;
 
-            if ($('#anh_content_form_type_paper_image').val() == image.fileName) {
+            if ($('#anh_content_form_type_paper_image').val() == asset.fileName) {
                 $('a.editor-asset-star', $(i).closest('span')).addClass('selected');
             }
         };
 
-        var delete_image = function(image) {
-            var images = getAssets();
-            images = images.filter(function(v) { return v.fileName != image.fileName; });
-            setAssets(images);
+        var deleteAsset = function(asset) {
+            var assets = getAssets();
+            assets = assets.filter(function(v) { return v.fileName != asset.fileName; });
+            setAssets(assets);
 
-            // check if image used as paper thumb
+            // check if asset used as paper thumb
             var thumb = $('#anh_content_form_type_paper_image');
 
-            if (thumb.val() == image.fileName) {
+            if (thumb.val() == asset.fileName) {
                 thumb.val('');
             }
+        };
+
+        var findThumb = function(fileName) {
+            return $('.editor-uploader-list img').filter(function() {
+                var data = $(this).data('image');
+                return data.fileName == fileName;
+            });
+        };
+
+        var assetIsImage = function(fileName) {
+            var re = /(?:\.([^.]+))?$/;
+            var extension = re.exec(fileName)[1];
+            var validExtensions = /(jpg|jpeg|png|bmp|gif)$/i;
+
+            return validExtensions.test(extension);
         };
 
         // button click
@@ -327,13 +399,6 @@
             }
 
             codemirror.focus();
-        };
-
-        var insertAssetTag = function(image, values) {
-            insertTag('asset', {
-                asset: image.fileName,
-                align: values.align
-            });
         };
 
         var renderTag = function(tagName, values) {

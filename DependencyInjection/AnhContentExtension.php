@@ -107,6 +107,9 @@ class AnhContentExtension extends Extension implements PrependExtensionInterface
             )
         ));
 
+        $configs = $container->getExtensionConfig($this->getAlias());
+        $config = $this->processConfiguration(new Configuration(), $configs);
+
         $container->prependExtensionConfig('oneup_uploader', array(
             'mappings' => array(
                 'anh_content_assets' => array(
@@ -114,13 +117,8 @@ class AnhContentExtension extends Extension implements PrependExtensionInterface
                     'storage' => array(
                         'service' => 'anh_content.asset.storage'
                     ),
-                    'allowed_extensions' => array(
-                        'jpg', 'JPG',
-                        'jpeg', 'JPEG',
-                        'png', 'PNG',
-                        'gif', 'GIF'
-                    ),
-                    // 'max_size' => '20k',
+                    'allowed_mimetypes' => $config['assets_mime_types'],
+                    'max_size' => $config['assets_max_size'],
                 )
             )
         ));

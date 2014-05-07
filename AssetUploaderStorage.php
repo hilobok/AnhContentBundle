@@ -3,7 +3,7 @@
 namespace Anh\ContentBundle;
 
 use Oneup\UploaderBundle\Uploader\Storage\FilesystemStorage;
-use Symfony\Component\HttpFoundation\File\File;
+use Oneup\UploaderBundle\Uploader\File\FileInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AssetUploaderStorage extends FilesystemStorage
@@ -13,7 +13,7 @@ class AssetUploaderStorage extends FilesystemStorage
      *
      * Saves original file name.
      */
-    public function upload(File $file, $name, $path = null)
+    public function upload(FileInterface $file, $name, $path = null)
     {
         $originalFileName = ($file instanceof UploadedFile) ?
             $file->getClientOriginalName() : ''

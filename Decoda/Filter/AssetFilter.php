@@ -8,8 +8,7 @@ use Anh\ContentBundle\AssetManager;
 
 class AssetFilter extends AbstractFilter
 {
-    const ASSET = '/^(.+?)\.(jpg|jpeg|png|gif|bmp)$/i';
-    const ALIGN = '/^(left|right|center|inline)$/';
+    const ALIGN = '/^(left|right|center|none)$/';
 
     /**
      * Supported tags.
@@ -23,7 +22,7 @@ class AssetFilter extends AbstractFilter
             'displayType' => Decoda::TYPE_BLOCK,
             'allowedTypes' => Decoda::TYPE_NONE,
             'attributes' => array(
-                'default' => self::ASSET,
+                'default' => self::WILDCARD,
                 'title' => self::WILDCARD,
                 'align' => self::ALIGN,
                 'alt' => self::WILDCARD,
@@ -47,6 +46,14 @@ class AssetFilter extends AbstractFilter
             $tag['attributes']['filter'] : $this->getConfig('filter')
         ;
 
+        $isImage = $this->isImage($asset);
+
+        if (!$isImage) {
+            $filter = '';
+        }
+
+        $tag['attributes']['isImage'] = $isImage;
+
         $assetManager = $this->getConfig('assetManager');
 
         $tag['attributes']['src'] = $assetManager->getUrl($asset, $filter);
@@ -60,5 +67,14 @@ class AssetFilter extends AbstractFilter
         }
 
         return array($tag, $content);
+    }
+
+    protected function isImage($asset)
+    {
+        return in_array(
+            strtolower(pathinfo($asset, PATHINFO_EXTENSION)),
+            array('jpg', 'jpeg', 'png', 'gif', 'bmp'),
+            true
+        );
     }
 }

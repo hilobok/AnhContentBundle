@@ -138,6 +138,6 @@ var editor_bbcode_tagset = [
     {
         tag: 'asset',
         hidden: true,
-        template: '[asset="{asset}" title="|" align="{align}" /]'
+        template: '[asset="{asset}" title="|{title}" align="{align}" /]'
     }
 ];

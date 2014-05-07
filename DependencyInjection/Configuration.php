@@ -48,6 +48,21 @@ class Configuration implements ConfigurationInterface
                     ->info('Absolute path to directory where assets are stored.')
                     ->defaultValue('%kernel.root_dir%/../web/media/content')
                 ->end()
+                ->arrayNode('assets_mime_types')
+                    ->info('Allowed mime types for assets.')
+                    ->defaultValue(array(
+                        'image/jpeg',
+                        'image/png',
+                        'image/gif',
+                        'image/bmp'
+                    ))
+                    ->prototype('scalar')
+                    ->end()
+                ->end()
+                ->scalarNode('assets_max_size')
+                    ->info('Assets max file size.')
+                    ->defaultValue(5242880) // 5MB
+                ->end()
                 ->arrayNode('sections')
                     ->useAttributeAsKey('name')
                     ->prototype('array')

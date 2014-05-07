@@ -54,12 +54,11 @@ class AssetManager
 
         return array(
             'fileName' => $asset,
-            'thumb' => $this->getThumbUrl($asset),
+            'thumb' => $this->getThumbUrl($file),
             'url' => $this->getUrl($asset),
             'size' => $file->getSize(),
             'originalFileName' => empty($file->originalFileName) ?
-                $file->getFilename() :
-                $file->originalFileName
+                $asset : $file->originalFileName
         );
     }
 
