@@ -8,9 +8,11 @@ class PaperRepository extends EntityRepository
 {
     public function findInSectionBySlugDQL($section, $slug)
     {
-        return $this->createQueryBuilder('d')
-            ->where('d.section = :section')
-            ->andWhere('d.slug = :slug')
+        return $this->createQueryBuilder('paper')
+            ->select('paper, category')
+            ->leftJoin('paper.category', 'category')
+            ->where('paper.section = :section')
+            ->andWhere('paper.slug = :slug')
             ->setParameters(array(
                 'section' => $section,
                 'slug' => $slug
@@ -21,30 +23,32 @@ class PaperRepository extends EntityRepository
 
     public function findInSectionDQL($section)
     {
-        return $this->createQueryBuilder('d')
-            ->where('d.section = :section')
+        return $this->createQueryBuilder('paper')
+            ->select('paper, category')
+            ->leftJoin('paper.category', 'category')
+            ->where('paper.section = :section')
             ->setParameter('section', $section)
-            ->orderBy('d.publishedSince', 'DESC')
+            ->orderBy('paper.publishedSince', 'DESC')
             ->getQuery()
         ;
     }
 
     public function findPublishedInSectionDQL($section, $modifiedSince = null)
     {
-        $query = $this->createQueryBuilder('d')
-            ->where('d.section = :section')
-            ->andWhere('d.isDraft = :isDraft')
-            ->andWhere('d.publishedSince <= current_timestamp()')
+        $query = $this->createQueryBuilder('paper')
+            ->where('paper.section = :section')
+            ->andWhere('paper.isDraft = :isDraft')
+            ->andWhere('paper.publishedSince <= current_timestamp()')
             ->setParameters(array(
                 'section' => $section,
                 'isDraft' => false
             ))
-            ->orderBy('d.publishedSince', 'DESC')
+            ->orderBy('paper.publishedSince', 'DESC')
         ;
 
         if ($modifiedSince) {
             $query
-                ->andWhere('d.updatedAt > :modifiedSince')
+                ->andWhere('paper.updatedAt > :modifiedSince')
                 ->setParameter('modifiedSince', $modifiedSince)
             ;
         }
@@ -54,22 +58,24 @@ class PaperRepository extends EntityRepository
 
     public function findPublishedInSectionAndCategoryDQL($section, Category $category, $modifiedSince = null)
     {
-        $query = $this->createQueryBuilder('d')
-            ->where('d.section = :section')
-            ->andWhere('d.isDraft = :isDraft')
-            ->andWhere('d.publishedSince <= current_timestamp()')
-            ->andWhere('d.category = :category')
+        $query = $this->createQueryBuilder('paper')
+            ->select('paper, category')
+            ->leftJoin('paper.category', 'category')
+            ->where('paper.section = :section')
+            ->andWhere('paper.isDraft = :isDraft')
+            ->andWhere('paper.publishedSince <= current_timestamp()')
+            ->andWhere('paper.category = :category')
             ->setParameters(array(
                 'section' => $section,
                 'isDraft' => false,
                 'category' => $category
             ))
-            ->orderBy('d.publishedSince', 'DESC')
+            ->orderBy('paper.publishedSince', 'DESC')
         ;
 
         if ($modifiedSince) {
             $query
-                ->andWhere('d.updatedAt > :modifiedSince')
+                ->andWhere('paper.updatedAt > :modifiedSince')
                 ->setParameter('modifiedSince', $modifiedSince)
             ;
         }
@@ -79,28 +85,30 @@ class PaperRepository extends EntityRepository
 
     public function findPublishedWithImageInSectionDQL($section)
     {
-        return $this->createQueryBuilder('d')
-            ->where('d.section = :section')
-            ->andWhere('d.isDraft = :isDraft')
-            ->andWhere('d.publishedSince <= current_timestamp()')
-            ->andWhere('d.image > :image')
+        return $this->createQueryBuilder('paper')
+            ->select('paper, category')
+            ->leftJoin('paper.category', 'category')
+            ->where('paper.section = :section')
+            ->andWhere('paper.isDraft = :isDraft')
+            ->andWhere('paper.publishedSince <= current_timestamp()')
+            ->andWhere('paper.image > :image')
             ->setParameters(array(
                 'section' => $section,
                 'isDraft' => false,
                 'image' => ''
             ))
-            ->orderBy('d.publishedSince', 'DESC')
+            ->orderBy('paper.publishedSince', 'DESC')
             ->getQuery()
         ;
     }
 
     public function findMaxPublishedUpdatedAtInSectionDQL($section)
     {
-        return $this->createQueryBuilder('d')
-            ->select('max(d.updatedAt)')
-            ->where('d.section = :section')
-            ->andWhere('d.isDraft = :isDraft')
-            ->andWhere('d.publishedSince <= current_timestamp()')
+        return $this->createQueryBuilder('paper')
+            ->select('max(paper.updatedAt)')
+            ->where('paper.section = :section')
+            ->andWhere('paper.isDraft = :isDraft')
+            ->andWhere('paper.publishedSince <= current_timestamp()')
             ->setParameters(array(
                 'section' => $section,
                 'isDraft' => false
@@ -111,12 +119,12 @@ class PaperRepository extends EntityRepository
 
     public function findMaxPublishedUpdatedAtInSectionAndCategoryDQL($section, Category $category)
     {
-        return $this->createQueryBuilder('d')
-            ->select('max(d.updatedAt)')
-            ->where('d.section = :section')
-            ->andWhere('d.isDraft = :isDraft')
-            ->andWhere('d.publishedSince <= current_timestamp()')
-            ->andWhere('d.category = :category')
+        return $this->createQueryBuilder('paper')
+            ->select('max(paper.updatedAt)')
+            ->where('paper.section = :section')
+            ->andWhere('paper.isDraft = :isDraft')
+            ->andWhere('paper.publishedSince <= current_timestamp()')
+            ->andWhere('paper.category = :category')
             ->setParameters(array(
                 'section' => $section,
                 'isDraft' => false,
