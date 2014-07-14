@@ -84,6 +84,12 @@ class BbcodeParser implements EventSubscriberInterface
         $decoda->removeFilter('Url');
         $decoda->addFilter(new UrlFilter());
 
+        // remove unused hooks
+        $decoda->removeHook(array(
+            'Censor',
+            'Clickable',
+        ));
+
         // add custom decoda templates
         $decoda->getEngine()->addPath(__DIR__ . '/../Resources/decoda');
 
