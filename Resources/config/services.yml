@@ -1,8 +1,6 @@
 parameters:
     anh_content.entity.category.class: Anh\ContentBundle\Entity\Category
     anh_content.entity.paper.class: Anh\ContentBundle\Entity\Paper
-    anh_content.manager.category.class: Anh\ContentBundle\Entity\CategoryManager
-    anh_content.manager.paper.class: Anh\ContentBundle\Entity\PaperManager
     anh_content.form.type.category.class: Anh\ContentBundle\Form\CategoryType
     anh_content.form.type.paper.class: Anh\ContentBundle\Form\PaperType
     anh_content.bbcode_parser.class: Anh\ContentBundle\EventListener\BbcodeParser
@@ -15,6 +13,7 @@ parameters:
     anh_content.twig.content_extension.class: Anh\ContentBundle\Twig\ContentExtension
     anh_content.section_is_configured.validator.class: Anh\ContentBundle\Validator\Constraints\SectionIsConfiguredValidator
     anh_content.feed_data_provider.class: Anh\ContentBundle\FeedDataProvider
+    anh_content.filter.admin_paper_list.class: Anh\ContentBundle\Filter\PaperFilter
 
 services:
     anh_content.bundle:
@@ -25,20 +24,6 @@ services:
             - 'AnhContentBundle'
         tags:
             - { name: anh_admin.bundle }
-
-    anh_content.manager.category:
-        class: %anh_content.manager.category.class%
-        arguments:
-            - @doctrine.orm.entity_manager
-            - %anh_content.entity.category.class%
-
-    anh_content.manager.paper:
-        class: %anh_content.manager.paper.class%
-        arguments:
-            - @doctrine.orm.entity_manager
-            - %anh_content.entity.paper.class%
-            - @anh_pager.pager
-            - @anh_taggable.manager
 
     anh_content.form.type.category:
         class: %anh_content.form.type.category.class%
@@ -132,3 +117,9 @@ services:
             - %anh_content.sections%
         tags:
             - { name: validator.constraint_validator, alias: anh_content_section_is_configured_validator }
+
+    anh_content.filter.admin_paper_list:
+        class: %anh_content.filter.admin_paper_list.class%
+        arguments:
+            - %anh_content.entity.category.class%
+            - %anh_content.sections%

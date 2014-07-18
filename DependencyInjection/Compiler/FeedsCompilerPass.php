@@ -16,8 +16,8 @@ class FeedsCompilerPass implements CompilerPassInterface
         foreach ($feeds as $feed => $value) {
             $definition = new Definition('Anh\ContentBundle\FeedDataProvider');
 
-            $definition->addArgument(new Reference('anh_content.manager.paper'));
-            $definition->addArgument(new Reference('anh_content.manager.category'));
+            $definition->addArgument(new Reference('anh_content.paper.repository'));
+            $definition->addArgument(new Reference('anh_content.category.repository'));
             $definition->addArgument(new Reference('anh_content.url_generator'));
             $definition->addArgument(new Reference('anh_feed.url_generator'));
 

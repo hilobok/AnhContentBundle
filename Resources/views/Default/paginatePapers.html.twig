@@ -1,25 +1,17 @@
 {% extends 'AnhContentBundle:Default:layout.html.twig' %}
 
-{% import 'AnhPagerBundle::macro.html.twig' as pagination %}
-
 {% block title %}Papers{% endblock %}
 
 {% block content %}
-    {% for paper in pager.getResult() %}
+    {% for paper in resources %}
         {% include 'AnhContentBundle:Default:_blockPaperPreview.html.twig' %}
     {% endfor %}
 
-    {{ pagination.build(pager) }}
+    {{ anh_paginator_view(resources) }}
 {% endblock %}
 
 {% block stylesheets %}
     {% stylesheets
-        '@anh_pager_css'
+        '@anh_paginator_css'
     %}<link rel="stylesheet" href="{{ asset_url }}" />{% endstylesheets %}
-{% endblock %}
-
-{% block javascripts %}
-    {% javascripts
-        '@anh_pager_js'
-    %}<script src="{{ asset_url }}"></script>{% endjavascripts %}
 {% endblock %}

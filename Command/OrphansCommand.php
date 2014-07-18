@@ -32,11 +32,11 @@ class OrphansCommand extends ContainerAwareCommand
     {
         ini_set('memory_limit', '-1');
         $container = $this->getContainer();
-        $pm = $container->get('anh_content.manager.paper');
-        $am = $container->get('anh_content.asset.manager');
+        $repository = $container->get('anh_content.paper.repository');
+        $assetManager = $container->get('anh_content.asset.manager');
 
         $assets = array();
-        foreach ($pm->findAll() as $paper) {
+        foreach ($repository->findAll() as $paper) {
             foreach ($paper->getAssets() as $asset) {
                 $assets[] = $asset['fileName'];
             }
@@ -59,7 +59,7 @@ class OrphansCommand extends ContainerAwareCommand
         foreach ($orphans as $orphan) {
             $output->writeln($orphan);
             if ($doDelete) {
-                $am->remove($orphan);
+                $assetManager->remove($orphan);
             }
         }
     }

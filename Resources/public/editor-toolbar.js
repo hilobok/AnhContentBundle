@@ -1,4 +1,4 @@
-var editor_bbcode_tagset = [
+var editor_toolbar = [
     {
         tag: 'h1',
         text: 'H1',

@@ -1,77 +1,78 @@
 {% extends "AnhContentBundle:Admin:layout.html.twig" %}
 
-{% import 'AnhPagerBundle::macro.html.twig' as pagination %}
 {% import _self as taggable %}
 
 {% block title %}Papers in {{ section }}{% endblock %}
 
+{% form_theme filter 'AnhDoctrineResourceBundle:Form:filter.html.twig' %}
+
 {% block content %}
-    <h2>{{ pager.getTotalRowsCount() }} papers in {{ section }}</h2>
+    <h2>{{ resources.getTotalCount() }} papers in {{ section }}</h2>
+
+    {{ form(filter) }}
 
     <form action="{{ url('anh_content_admin_paper_delete', { 'section': section }) }}" method="post" id="fPapers">
         <div class="button_row">
             <a href="{{ url('anh_content_admin_paper_add', { 'section': section }) }}">Create new</a>
 
-            {% if not pager.isEmpty() %}
+            {% if not resources.isEmpty() %}
                 <button class="danger" type="submit">Delete</button>
             {% endif %}
         </div>
 
-        {% if not pager.isEmpty() %}
-            {% for paper in pager.getResult() %}
+        {% if not resources.isEmpty() %}
+            {% for paper in resources %}
                 <div class="list_row">
                     <div class="list_row_flags">
-                        <input type="checkbox" name="id[]" value="{{ paper.getId() }}" />
+                        <input type="checkbox" name="id[]" value="{{ paper.id }}" />
 
                         <a href="{{ contentUrl(paper) }}"><i class="fa fa-eye"></i></a>
 
-                        {% if paper.getIsDraft() %}
+                        {% if paper.isDraft %}
                             <i class="fa fa-pencil is-draft"></i>
                         {% endif %}
 
-                        {% if paper.getImage() %}
+                        {% if paper.image %}
                             <i class="fa fa-picture-o has-image"></i>
                         {% endif %}
                     </div>
 
                     <div class="list_row_content">
-                        <a href="{{ url('anh_content_admin_paper_edit', { 'id': paper.getId() }) }}">{{ paper.getTitle() }}</a>
+                        <a href="{{ url('anh_content_admin_paper_edit', { 'section': section, 'id': paper.id }) }}">{{ paper.title }}</a>
 
                         <div>
-                            {% if sections[section].category and paper.getCategory() %}
-                                <span>Category:</span> {{ paper.getCategory().getTitle() }}
+                            {% if sections[section].category and paper.category %}
+                                <span>Category:</span> {{ paper.category.title }}
                             {% endif %}
 
                             {% if sections[section].publishedSince %}
-                                <span>Published since:</span> {{ paper.getPublishedSince()|date }}
+                                <span>Published since:</span> {{ paper.publishedSince|date }}
                             {% endif %}
                         </div>
 
-                        {% if sections[section].preview %}
-                            <div class="preview">{{ paper.getPreview()|striptags[:100] ~ '...' }}</div>
-                        {% endif %}
+                        <div class="preview">{{ paper.preview()|striptags[:100] ~ '...' }}</div>
 
-                        {% if sections[section].tags and not paper.getTags().isEmpty() %}
-                            <div class="tags">{{ taggable.listTags(paper.getTags()) }}</div>
+                        {% if sections[section].tags and not paper.tags.isEmpty() %}
+                            <div class="tags">{{ taggable.listTags(paper.tags) }}</div>
                         {% endif %}
 
                         <div class="created_updated">
-                            Created at: {{ paper.getCreatedAt()|date }}
+                            Created at: {{ paper.createdAt|date }}
                             &middot;
-                            Updated at: {{ paper.getUpdatedAt()|date }}
+                            Updated at: {{ paper.updatedAt|date }}
                         </div>
                     </div>
                 </div>
             {% endfor %}
 
-            {{ pagination.build(pager) }}
+            {{ anh_paginator_view(resources) }}
         {% endif %}
     </form>
 {% endblock %}
 
 {% block stylesheets %}
     {% stylesheets
-        '@anh_pager_css'
+        '@anh_paginator_css'
         '@AnhContentBundle/Resources/public/style.css'
     %}<link rel="stylesheet" href="{{ asset_url }}" />{% endstylesheets %}
 {% endblock %}
@@ -79,7 +80,6 @@
 {% block javascripts %}
     {% javascripts
         '@jquery_js'
-        '@anh_pager_js'
     %}<script src="{{ asset_url }}"></script>{% endjavascripts %}
 
     <script><!--
@@ -107,9 +107,9 @@
         {% for tag in tags %}
             <li>
                 {% if url %}
-                    <a href="{{ url|replace({ '%name%': tag.getName() }) }}">{{ tag.getName() }}</a>{% if not loop.last %}, {% endif %}
+                    <a href="{{ url|replace({ '%name%': tag.name }) }}">{{ tag.name }}</a>{% if not loop.last %}, {% endif %}
                 {% else %}
-                    {{ tag.getName() }}{% if not loop.last %}, {% endif %}
+                    {{ tag.name }}{% if not loop.last %}, {% endif %}
                 {% endif %}
             </li>
         {% endfor %}

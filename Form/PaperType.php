@@ -45,11 +45,11 @@ class PaperType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $section = $builder->getData()->getSection();
+        $section = $options['section'];
 
-        if (empty($this->sections[$section])) {
-            throw new \InvalidArgumentException("Section '{$section}' not configured.");
-        }
+        $builder->add('section', 'hidden', array(
+            'data' => $section,
+        ));
 
         $config = $this->sections[$section];
 
@@ -58,12 +58,11 @@ class PaperType extends AbstractType
                 ->add('category', 'entity', array(
                     'class' => $this->categoryClass,
                     'property' => 'title',
-                    'query_builder' => function(EntityRepository $er) use ($section) {
-                        return $er->createQueryBuilder('c')
-                            ->where('c.section = :section')
-                            ->setParameter('section', $section)
-                            ->orderBy('c.title', 'ASC')
-                        ;
+                    'query_builder' => function(EntityRepository $repository) use ($section) {
+                        return $repository->prepareQueryBuilder(
+                            [ 'section' => $section ], // criteria
+                            [ 'title' => 'asc' ] // sorting
+                        );
                     }
                 ))
             ;
@@ -73,11 +72,9 @@ class PaperType extends AbstractType
             ->add('title', 'text')
         ;
 
-        if ($config['slug']) {
-            $builder
-                ->add('slug', 'text', array('required' => false))
-            ;
-        }
+        $builder
+            ->add('slug', 'text', array('required' => false))
+        ;
 
         if ($config['publishedSince'] && !in_array('publishedSince', $options['hidden_fields'])) {
             $builder
@@ -136,20 +133,22 @@ class PaperType extends AbstractType
             ->add('submit', 'submit')
         ;
 
-        if ($config['image']) {
-            $builder
-                ->add('image', 'hidden')
-            ;
-        }
+        $builder
+            ->add('image', 'hidden', array(
+                'attr' => array(
+                    'class' => 'anh_content_editor_image',
+                ),
+            ))
+        ;
 
         $builder->add(
-            $builder->create('assets', 'hidden')
+            $builder->create('assets', 'hidden', array(
+                    'attr' => array(
+                        'class' => 'anh_content_editor_assets',
+                    ),
+                ))
                 ->addModelTransformer(new ArrayToJsonTransformer())
         );
-
-        $builder->add('_redirect', 'hidden', array(
-            'mapped' => false
-        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -157,6 +156,14 @@ class PaperType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => $this->paperClass,
             'hidden_fields' => array()
+        ));
+
+        $resolver->setRequired(array(
+            'section',
+        ));
+
+        $resolver->setAllowedValues(array(
+            'section' => array_keys($this->sections),
         ));
     }
 

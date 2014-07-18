@@ -2,32 +2,8 @@
 
 namespace Anh\ContentBundle\Entity;
 
-use Doctrine\ORM\EntityRepository;
+use Anh\DoctrineResource\ORM\ResourceRepository;
 
-class CategoryRepository extends EntityRepository
+class CategoryRepository extends ResourceRepository
 {
-    public function findInSectionBySlugDQL($section, $slug)
-    {
-        return $this->createQueryBuilder('c')
-            ->where('c.section = :section')
-            ->andWhere('c.slug = :slug')
-            ->setParameters(array(
-                'section' => $section,
-                'slug' => $slug
-            ))
-            ->getQuery()
-        ;
-    }
-
-    public function findInSectionDQL($section)
-    {
-        return $this->createQueryBuilder('c')
-            ->where('c.section = :section')
-            ->setParameters(array(
-                'section' => $section
-            ))
-            ->orderBy('c.title', 'ASC')
-            ->getQuery()
-        ;
-    }
 }

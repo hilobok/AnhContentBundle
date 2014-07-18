@@ -16,10 +16,11 @@
         "liip/imagine-bundle": "~0.21",
         "mjohnson/decoda": "~6.5",
         "sp/bower-bundle": "~0.9",
+        "anh/doctrine-resource-bundle": "0.2.*",
         "anh/admin-bundle": "~1.0",
         "anh/markup-bundle": "~1.0",
-        "anh/pager-bundle": "~1.1",
-        "anh/taggable-bundle": "~1.1",
+        "anh/paginator-bundle": "0.1.*",
+        "anh/taggable-bundle": "~1.2",
         "anh/datetimepicker-bundle": "~1.1",
         "anh/feed-bundle": "~1.0"
     },
@@ -36,7 +37,7 @@
 
     "extra": {
         "branch-alias": {
-            "dev-master": "1.2-dev"
+            "dev-master": "2.0.x-dev"
         }
     }
 }

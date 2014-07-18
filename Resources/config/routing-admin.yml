@@ -1,64 +1,158 @@
 anh_content_admin:
     path: /
-    defaults: { _controller: AnhContentBundle:Admin:index }
+    defaults:
+        _controller: anh_content.paper.controller:dummyAction
+        _anh_resource:
+            view: AnhContentBundle:Admin:index.html.twig
+            viewVars:
+                options: container.getParameter("anh_content.options")
+                sections: container.getParameter("anh_content.sections")
 
 anh_content_admin_category_list:
     path: /category-list
-    defaults: { _controller: AnhContentBundle:Admin:categoryList }
+    defaults:
+        _controller: anh_content.category.controller:listAction
+        _anh_resource:
+            view: AnhContentBundle:Admin:category/list.html.twig
+            viewVars:
+                options: container.getParameter("anh_content.options")
+                sections: container.getParameter("anh_content.sections")
 
 anh_content_admin_category_add:
     path: /category-add
-    defaults: { _controller: AnhContentBundle:Admin:categoryAdd }
+    defaults:
+        _controller: anh_content.category.controller:createAction
+        _anh_resource:
+            form: anh_content_form_type_category
+            redirect: anh_content_admin_category_list
+            view: AnhContentBundle:Admin:category/add.html.twig
+            viewVars:
+                options: container.getParameter("anh_content.options")
+                sections: container.getParameter("anh_content.sections")
 
 anh_content_admin_category_edit:
     pattern: /category-edit-{id}
-    defaults: { _controller: AnhContentBundle:Admin:categoryEdit }
+    defaults:
+        _controller: anh_content.category.controller:updateAction
+        _anh_resource:
+            form: anh_content_form_type_category
+            redirect: anh_content_admin_category_list
+            view: AnhContentBundle:Admin:category/edit.html.twig
+            viewVars:
+                options: container.getParameter("anh_content.options")
+                sections: container.getParameter("anh_content.sections")
     requirements:
         id: "\d+"
 
 anh_content_admin_category_delete:
     path: /category-delete
-    defaults: { _controller: AnhContentBundle:Admin:categoryDelete }
     methods: [ 'POST' ]
+    defaults:
+        _controller: anh_content.category.controller:deleteAction
+        _anh_resource:
+            redirect: anh_content_admin_category_list
 
 anh_content_admin_tag_list:
     pattern: /tag-list-{page}
-    defaults: { _controller: AnhContentBundle:Admin:tagList, page: 1 }
+    defaults:
+        page: 1
+        _controller: anh_taggable.tag.controller:listAction
+        _anh_resource:
+            page: request.attributes.get("page")
+            view: AnhContentBundle:Admin:tag/list.html.twig
+            viewVars:
+                options: container.getParameter("anh_content.options")
+                sections: container.getParameter("anh_content.sections")
     requirements:
         page: "\d+"
 
 anh_content_admin_tag_edit:
     pattern: /tag-edit-{id}
-    defaults: { _controller: AnhContentBundle:Admin:tagEdit }
+    defaults:
+        _controller: anh_taggable.tag.controller:updateAction
+        _anh_resource:
+            form: anh_taggable_form_type_tag
+            redirect: anh_content_admin_tag_list
+            view: AnhContentBundle:Admin:tag/edit.html.twig
+            viewVars:
+                options: container.getParameter("anh_content.options")
+                sections: container.getParameter("anh_content.sections")
     requirements:
         id: "\d+"
 
 anh_content_admin_tag_delete:
     path: /tag-delete
-    defaults: { _controller: AnhContentBundle:Admin:tagDelete }
+    methods: [ 'POST' ]
+    defaults:
+        _controller: anh_taggable.tag.controller:deleteAction
+        _anh_resource:
+            redirect: anh_content_admin_tag_list
 
 anh_content_admin_paper_list:
     pattern: /{section}-list-{page}
-    defaults: { _controller: AnhContentBundle:Admin:paperList, page: 1 }
+    defaults:
+        page: 1
+        _controller: anh_content.paper.controller:listAction
+        _anh_resource:
+            filter:
+                instance: 'container.get("anh_content.filter.admin_paper_list")'
+                parameters:
+                    section: 'request.attributes.get("section")'
+            criteria:
+                section: 'request.attributes.get("section")'
+            page: 'request.attributes.get("page")'
+            view: AnhContentBundle:Admin:paper/list.html.twig
+            viewVars:
+                options: 'container.getParameter("anh_content.options")'
+                section: 'request.attributes.get("section")'
+                sections: 'container.getParameter("anh_content.sections")'
     requirements:
         section: "[a-z\d]+"
         page: "\d+"
 
 anh_content_admin_paper_add:
     pattern: /{section}-add
-    defaults: { _controller: AnhContentBundle:Admin:paperAdd }
+    defaults:
+        _controller: anh_content.paper.controller:createAction
+        _anh_resource:
+            form: anh_content_form_type_paper
+            form_options:
+                section: request.attributes.get('section')
+            redirect: referer
+            view: AnhContentBundle:Admin:paper/add.html.twig
+            viewVars:
+                options: 'container.getParameter("anh_content.options")'
+                section: 'request.attributes.get("section")'
+                sections: 'container.getParameter("anh_content.sections")'
     requirements:
         section: "[a-z\d]+"
 
 anh_content_admin_paper_edit:
-    pattern: /edit-{id}
-    defaults: { _controller: AnhContentBundle:Admin:paperEdit }
+    pattern: /{section}-edit-{id}
+    defaults:
+        _controller: anh_content.paper.controller:updateAction
+        _anh_resource:
+            form: anh_content_form_type_paper
+            form_options:
+                section: request.attributes.get('section')
+            redirect: referer
+            view: AnhContentBundle:Admin:paper/edit.html.twig
+            viewVars:
+                options: 'container.getParameter("anh_content.options")'
+                section: 'request.attributes.get("section")'
+                sections: 'container.getParameter("anh_content.sections")'
     requirements:
+        section: "[a-z\d]+"
         id: "\d+"
 
 anh_content_admin_paper_delete:
     pattern: /{section}-delete
-    defaults: { _controller: AnhContentBundle:Admin:paperDelete }
-    methods: [ 'POST' ]
+    defaults:
+        _controller: anh_content.paper.controller:deleteAction
+        _anh_resource:
+            redirect:
+                route: anh_content_admin_paper_list
+                parameters:
+                    section: request.attributes.get("section")
     requirements:
         section: "[a-z\d]+"

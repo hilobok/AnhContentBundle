@@ -1,11 +1,11 @@
 {% extends 'AnhContentBundle:Default:layout.html.twig' %}
 
-{% block title %}{{ category.getTitle() }}{% endblock %}
+{% block title %}{{ category.title }}{% endblock %}
 
 {% block content %}
-    <h1>{{ category.getTitle() }}</h1>
+    <h1>{{ category.title }}</h1>
 
-    {% for paper in papers %}
+    {% for paper in resource %}
         {% include 'AnhContentBundle:Default:_blockPaperPreview.html.twig' %}
     {% endfor %}
 {% endblock %}

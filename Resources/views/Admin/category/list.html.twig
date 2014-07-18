@@ -3,35 +3,35 @@
 {% block title %}Categories{% endblock %}
 
 {% block content %}
-    <h2>{{ categories|length }} categories</h2>
+    <h2>{{ resources|length }} categories</h2>
 
     <form action="{{ url('anh_content_admin_category_delete') }}" method="post" id="fCategories">
         <div class="button_row">
             <a href="{{ url('anh_content_admin_category_add') }}">Create new</a>
 
-            {% if categories %}
+            {% if resources %}
                 <button class="danger" type="submit">Delete</button>
             {% endif %}
         </div>
 
-        {% if categories %}
-            {% for category in categories %}
+        {% if resources %}
+            {% for category in resources %}
                 <div class="list_row">
                     <div class="list_row_flags">
-                        <input type="checkbox" name="id[]" value="{{ category.getId() }}" />
+                        <input type="checkbox" name="id[]" value="{{ category.id }}" />
                     </div>
 
                     <div class="list_row_content">
-                        {{ category.getSection() }}
+                        {{ category.section }}
                         &middot;
-                        <a href="{{ url('anh_content_admin_category_edit', { 'id': category.getId() }) }}">{{ category.getTitle() }}</a>
+                        <a href="{{ url('anh_content_admin_category_edit', { 'id': category.id }) }}">{{ category.title }}</a>
                         &middot;
-                        <a href="{{ contentUrl(category) }}">{{ category.getSlug() }}</a>
+                        <a href="{{ contentUrl(category) }}">{{ category.slug }}</a>
 
                         <div class="created_updated">
-                            Created at: {{ category.getCreatedAt()|date }}
+                            Created at: {{ category.createdAt|date }}
                             &middot;
-                            Updated at: {{ category.getUpdatedAt()|date }}
+                            Updated at: {{ category.updatedAt|date }}
                         </div>
                     </div>
                 </div>

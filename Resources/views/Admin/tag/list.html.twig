@@ -1,31 +1,29 @@
 {% extends "AnhContentBundle:Admin:layout.html.twig" %}
 
-{% import 'AnhPagerBundle::macro.html.twig' as pagination %}
-
 {% block title %}Tags{% endblock %}
 
 {% block content %}
-    {% if not pager.isEmpty() %}
-        <h2>{{ pager.getTotalRowsCount() }} tags</h2>
+    {% if not resources.isEmpty() %}
+        <h2>{{ resources.getTotalCount() }} tags</h2>
 
         <form action="{{ url('anh_content_admin_tag_delete') }}" method="post" id="fTags">
             <div class="button_row">
                 <button class="danger" type="submit">Delete</button>
             </div>
 
-            {% for tag in pager.getResult() %}
+            {% for tag in resources %}
                 <div class="list_row">
                     <div class="list_row_flags">
-                        <input type="checkbox" name="id[]" value="{{ tag.getId() }}" />
+                        <input type="checkbox" name="id[]" value="{{ tag.id }}" />
                     </div>
 
                     <div class="list_row_content">
-                        <a href="{{ url('anh_content_admin_tag_edit', { id: tag.getId() }) }}">{{ tag.getName() }}</a>
+                        <a href="{{ url('anh_content_admin_tag_edit', { id: tag.id }) }}">{{ tag.name }}</a>
                     </div>
                 </div>
             {% endfor %}
 
-            {{ pagination.build(pager) }}
+            {{ anh_paginator_view(resources) }}
         </form>
     {% else %}
         <h2>No tags</h2>
@@ -34,14 +32,13 @@
 
 {% block stylesheets %}
     {% stylesheets
-        '@anh_pager_css'
+        '@anh_paginator_css'
     %}<link rel="stylesheet" href="{{ asset_url }}" />{% endstylesheets %}
 {% endblock %}
 
 {% block javascripts %}
     {% javascripts
         '@jquery_js'
-        '@anh_pager_js'
     %}<script src="{{ asset_url }}"></script>{% endjavascripts %}
 
     <script><!--

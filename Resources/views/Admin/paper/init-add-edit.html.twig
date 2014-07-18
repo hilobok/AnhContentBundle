@@ -25,8 +25,8 @@
         $(document).ready(function() {
             var ed = new $.editor({
                 textarea: $('.bbcode'),
-                tagList: $.parseJSON('{{ tags|json_encode()|raw }}'),
-                tagSet: editor_bbcode_tagset,
+                tagList: editor_tags,
+                tagSet: editor_toolbar,
                 uploader: {
                     endpoint: '{{ oneup_uploader_endpoint('anh_content_assets') }}'
                 }

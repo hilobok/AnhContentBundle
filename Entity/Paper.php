@@ -5,13 +5,10 @@ namespace Anh\ContentBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Anh\MarkupBundle\Mapping\Annotation\Parsable as ParseMarkup;
-
 use Symfony\Component\Validator\Constraints as Assert;
 use Anh\ContentBundle\Validator\Constraints as PaperAssert;
 use Anh\MarkupBundle\Validator\Constraints as MarkupAssert;
-
 use Anh\ContentBundle\Entity\Category;
-
 use Anh\Taggable\AbstractTaggable;
 use Anh\Taggable\TaggableInterface;
 
@@ -53,7 +50,7 @@ class Paper extends AbstractTaggable implements TaggableInterface
     /**
      * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="papers")
+     * @ORM\ManyToOne(targetEntity="Category", fetch="EAGER")
      * @ORM\JoinColumn(name="categoryId", referencedColumnName="id")
      */
     protected $category;
@@ -297,7 +294,6 @@ class Paper extends AbstractTaggable implements TaggableInterface
     public function getUrlParameters()
     {
         return array(
-            'id' => $this->getId(),
             'slug' => $this->getSlug(),
             'section' => $this->getSection()
         );

@@ -137,7 +137,7 @@
 
                 $this.toggleClass('selected').show();
 
-                $('#anh_content_form_type_paper_image').val(image);
+                $('.anh_content_editor_image').val(image);
 
                 hasChanges = true;
             });
@@ -303,20 +303,20 @@
 
         // get already uploaded files
         var getAssets = function() {
-            var input = $('#anh_content_form_type_paper_assets');
+            var input = $('.anh_content_editor_assets');
 
             return input.val().length ? $.parseJSON(input.val()) : [];
         };
 
         var setAssets = function(assets) {
-            var input = $('#anh_content_form_type_paper_assets');
+            var input = $('.anh_content_editor_assets');
             input.val(JSON.stringify(assets));
         };
 
         var addAsset = function(asset) {
             var html = '<span class="original-file-name">' + asset.originalFileName + '</span>';
 
-            if ($('#anh_content_form_type_paper_image').length > 0) {
+            if ($('.anh_content_editor_image').length > 0) {
                 html += '<a class="editor-asset-star" href=""><i class="fa fa-star"></i></a>';
             }
 
@@ -340,7 +340,7 @@
                 .after(html)
             ;
 
-            if ($('#anh_content_form_type_paper_image').val() == asset.fileName) {
+            if ($('.anh_content_editor_image').val() == asset.fileName) {
                 $('a.editor-asset-star', $(i).closest('span')).addClass('selected');
             }
         };
@@ -351,7 +351,7 @@
             setAssets(assets);
 
             // check if asset used as paper thumb
-            var thumb = $('#anh_content_form_type_paper_image');
+            var thumb = $('.anh_content_editor_image');
 
             if (thumb.val() == asset.fileName) {
                 thumb.val('');

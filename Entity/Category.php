@@ -74,14 +74,6 @@ class Category
     protected $papers;
 
     /**
-     * Constructor
-     */
-    // public function __construct()
-    // {
-    //     $this->papers = new ArrayCollection();
-    // }
-
-    /**
      * Returns parameters for url generation
      *
      * @return array
@@ -89,7 +81,6 @@ class Category
     public function getUrlParameters()
     {
         return array(
-            'id' => $this->getId(),
             'slug' => $this->getSlug(),
             'section' => $this->getSection()
         );
@@ -218,38 +209,5 @@ class Category
     public function getUpdatedAt()
     {
         return $this->updatedAt;
-    }
-
-    // /**
-    //  * Add papers
-    //  *
-    //  * @param  Paper $papers
-    //  * @return Category
-    //  */
-    // public function addPaper(Paper $papers)
-    // {
-    //     $this->papers[] = $papers;
-
-    //     return $this;
-    // }
-
-    // /**
-    //  * Remove papers
-    //  *
-    //  * @param Paper $papers
-    //  */
-    // public function removePaper(Paper $papers)
-    // {
-    //     $this->papers->removeElement($papers);
-    // }
-
-    /**
-     * Get papers
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPapers()
-    {
-        return $this->papers = $this->papers ?: new ArrayCollection();
     }
 }

@@ -18,14 +18,8 @@ class Configuration implements ConfigurationInterface
      * assets_dir - absolute path to directory where assets are stored
      * Config options for each section:
      * - category
-     * - slug
      * - publishedSince
-     * - assets - [asset=""]
      * - tags
-     * - preview - [preview] [proceed]
-     * - image - allow separate image for paper (usualy used with preview)
-     * - comments
-     * - filter - default filter for assets
      * - meta - enable meta [author, description, keywords]
      * - routes
      *      - paper - route name for view paper, anh_content_{section}_paper by default
@@ -34,7 +28,7 @@ class Configuration implements ConfigurationInterface
      *      - categories - route name for list categories, anh_content_{section}_categories by default
      * - feeds
      *      name
-     *          - condistions: {}
+     *          - conditions: {}
      *          - options: {}
      */
     public function getConfigTreeBuilder()
@@ -71,36 +65,13 @@ class Configuration implements ConfigurationInterface
                                 ->defaultFalse()
                                 ->info('Paper can have category.')
                             ->end()
-                            ->booleanNode('slug')
-                                ->defaultFalse()
-                                ->info('Paper can have slug.')
-                            ->end()
                             ->booleanNode('publishedSince')
                                 ->defaultFalse()
                                 ->info('Enable delayed publication.')
                             ->end()
-                            ->booleanNode('assets')
-                                ->defaultFalse()
-                                ->info('Enable assets for papers in this section.')
-                            ->end()
                             ->booleanNode('tags')
                                 ->defaultFalse()
                                 ->info('Enable tagging for papers in this section.')
-                            ->end()
-                            ->booleanNode('preview')
-                                ->defaultFalse()
-                                ->info('Enable preview for papers in this section.')
-                            ->end()
-                            ->booleanNode('image')
-                                ->defaultFalse()
-                                ->info('Enable preview image for papers in this section.')
-                            ->end()
-                            ->booleanNode('comments')
-                                ->defaultFalse()
-                                ->info('Enable comments for papers in this section.')
-                            ->end()
-                            ->scalarNode('filter')
-                                ->info('Default filter for assets.')
                             ->end()
                             ->booleanNode('meta')
                                 ->defaultFalse()
@@ -110,19 +81,6 @@ class Configuration implements ConfigurationInterface
                                 ->info('Routes for this section (paper, papers, category, categories). Assigned automaticaly if empty.')
                                 ->useAttributeAsKey('name')
                                 ->prototype('scalar')
-                                // ->children()
-                                //     ->scalarNode('paper')
-                                //         ->info('Route name for view paper. Defaults to anh_content_{section}_paper')
-                                //     ->end()
-                                //     ->scalarNode('papers')
-                                //         ->info('Route name for list papers. Defaults to anh_content_{section}_papers')
-                                //     ->end()
-                                //     ->scalarNode('category')
-                                //         ->info('Route name for view category. Defaults to anh_content_{section}_category')
-                                //     ->end()
-                                //     ->scalarNode('categories')
-                                //         ->info('Route name for list categories. Defaults to anh_content_{section}_categories')
-                                //     ->end()
                                 ->end()
                             ->end()
                         ->end()

@@ -93,36 +93,18 @@ class BbcodeParser implements EventSubscriberInterface
         // add custom decoda templates
         $decoda->getEngine()->addPath(__DIR__ . '/../Resources/decoda');
 
-        $event->setParser($decoda);
+        $decoda->addFilter(new PreviewFilter($options));
 
-        if (empty($options['entity'])) {
-            return;
-        }
-
-        $entity = $options['entity'];
-        $section = $entity->getSection();
-
-        if (!isset($this->sections[$section])) {
-            return;
-        }
-
-        // generate proceed url and add preview filter
-        if ($this->sections[$section]['preview']) {
-            $decoda->addFilter(new PreviewFilter($options));
-        }
-
-        // add asset manager and asset filter
-        if ($this->sections[$section]['assets']) {
-            // default filter for all assets without filter attribute
-            $options['filter'] = isset($this->sections[$section]['filter']) ?
-                $this->sections[$section]['filter'] : ''
-            ;
-
-            $options['assetManager'] = $this->assetManager;
-            $decoda->addFilter(new AssetFilter($options));
-        }
+        // $options['filter'] = isset($this->sections[$section]['filter']) ?
+        //     $this->sections[$section]['filter'] : ''
+        // ;
+        $options['filter'] = '';
+        $options['assetManager'] = $this->assetManager;
+        $decoda->addFilter(new AssetFilter($options));
 
         $decoda->setConfig($options);
+
+        $event->setParser($decoda);
         $event->setOptions($options);
     }
 
@@ -141,14 +123,9 @@ class BbcodeParser implements EventSubscriberInterface
         $decoda = $event->getParser();
 
         if (isset($options['entity'])) {
-            $entity = $options['entity'];
-            $section = $entity->getSection();
-
-            if ($this->sections[$section]['preview']) {
-                $options['url'] = $this->urlGenerator->resolveAndGenerate($entity);
-                $decoda->getFilter('Preview')->setConfig($options);
-                $event->setOptions($options);
-            }
+            $options['url'] = $this->urlGenerator->resolveAndGenerate($options['entity']);
+            $decoda->getFilter('Preview')->setConfig($options);
+            $event->setOptions($options);
         }
 
         $decoda->reset($event->getMarkup());

@@ -1,25 +1,27 @@
 {% extends 'AnhContentBundle:Default:layout.html.twig' %}
 
-{% block title %}{{ paper.title }}{% endblock %}
+{% block title %}{{ resource.title }}{% endblock %}
 
 {% block content %}
     <h1>
-        {{ paper.title }}
-        {% if is_granted('ROLE_ADMIN') %}<a href="{{ url('anh_content_admin_paper_edit', { 'id': paper.id }) }}">edit</a>{% endif %}
+        {{ resource.title }}
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ url('anh_content_admin_paper_edit', { 'section': resource.section, 'id': resource.id }) }}">edit</a>
+        {% endif %}
     </h1>
-    <div class="bbcode">{{ paper.content|raw }}</div>
+    <div class="bbcode">{{ resource.content|raw }}</div>
 {% endblock %}
 
 {% block meta %}
-    {% if paper.metaAuthor %}
-        <meta name="author" content="{{ paper.metaAuthor }}" />
+    {% if resource.metaAuthor %}
+        <meta name="author" content="{{ resource.metaAuthor }}" />
     {% endif %}
 
-    {% if paper.metaDescription %}
-        <meta name="description" content="{{ paper.metaDescription }}" />
+    {% if resource.metaDescription %}
+        <meta name="description" content="{{ resource.metaDescription }}" />
     {% endif %}
 
-    {% if paper.metaKeywords() %}
-        <meta name="keywords" content="{{ paper.metaKeywords }}" />
+    {% if resource.metaKeywords() %}
+        <meta name="keywords" content="{{ resource.metaKeywords }}" />
     {% endif %}
 {% endblock %}

@@ -1,24 +1,18 @@
 <article class="paperPreview">
     <header>
         <h1>
-            <a href="{{ contentUrl(paper) }}">{{ paper.getTitle() }}</a>
+            <a href="{{ contentUrl(paper) }}">{{ paper.title }}</a>
         </h1>
         <div>
-            {% set config = contentSections(section) %}
+            {{ paper.publishedSince|date }}
 
-            {% if config['category'] %}
-                <a href="{{ contentUrl(paper.getCategory()) }}">{{ paper.getCategory().getTitle() }}</a>
-            {% endif %}
-
-            {% if config['publishedSince'] %}
-                {{ paper.getPublishedSince()|date }}
+            {% if paper.category %}
+                &middot; <a href="{{ contentUrl(paper.category) }}">{{ paper.category.title }}</a>
             {% endif %}
         </div>
     </header>
 
-    {% if config['preview'] %}
-        <div class="preview">
-            {{ paper.getPreview()|raw }}
-        </div>
-    {% endif %}
+    <div class="preview">
+        {{ paper.preview|raw }}
+    </div>
 </article>

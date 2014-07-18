@@ -79,7 +79,8 @@ class AnhContentExtension extends Extension implements PrependExtensionInterface
                     'inputs' => array(
                         'bundles/anhcontent/components/codemirror/lib/codemirror.js',
                         'bundles/anhcontent/components/fine-uploader/jquery.fineuploader.min.js',
-                        'bundles/anhcontent/editor-bbcode-tagset.js',
+                        'bundles/anhcontent/editor-toolbar.js',
+                        'bundles/anhcontent/editor-tags.js',
                         'bundles/anhcontent/editor.js'
                     )
                 )
@@ -139,6 +140,27 @@ class AnhContentExtension extends Extension implements PrependExtensionInterface
                         )
                     )
                 )
+            )
+        ));
+
+        $container->prependExtensionConfig('anh_doctrine_resource', array(
+            'resources' => array(
+                'anh_content.paper' => array(
+                    'model' => '%anh_content.entity.paper.class%',
+                    'driver' => 'orm',
+                    'controller' => 'Anh\ContentBundle\Controller\PaperController',
+                    'rules' => array(
+                        'isPublished' => array(
+                            'isDraft' => false,
+                            'r.publishedSince <= current_timestamp()',
+                        ),
+                    ),
+                ),
+                'anh_content.category' => array(
+                    'model' => '%anh_content.entity.category.class%',
+                    'driver' => 'orm',
+                    'controller' => 'Anh\ContentBundle\Controller\CategoryController',
+                ),
             )
         ));
     }

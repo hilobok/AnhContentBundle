@@ -4,8 +4,8 @@ namespace Anh\ContentBundle;
 
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Anh\FeedBundle\AbstractDataProvider;
-use Anh\ContentBundle\Entity\PaperManager;
-use Anh\ContentBundle\Entity\CategoryManager;
+use Anh\ContentBundle\Entity\PaperRepository;
+use Anh\ContentBundle\Entity\CategoryRepository;
 use Anh\ContentBundle\UrlGenerator as ContentUrlGenerator;
 use Anh\FeedBundle\UrlGenerator as FeedUrlGenerator;
 use DateTime;
@@ -16,18 +16,20 @@ class FeedDataProvider extends AbstractDataProvider
 
     protected $options;
 
-    protected $feedName;
-
-    protected $paperManager;
+    protected $paperRepository;
+    protected $categoryRepository;
 
     protected $contentUrlGenerator;
-
     protected $feedUrlGenerator;
 
-    public function __construct(PaperManager $paperManager, CategoryManager $categoryManager, ContentUrlGenerator $contentUrlGenerator, FeedUrlGenerator $feedUrlGenerator)
-    {
-        $this->paperManager = $paperManager;
-        $this->categoryManager = $categoryManager;
+    public function __construct(
+        PaperRepository $paperRepository,
+        CategoryRepository $categoryRepository,
+        ContentUrlGenerator $contentUrlGenerator,
+        FeedUrlGenerator $feedUrlGenerator
+    ) {
+        $this->paperRepository = $paperRepository;
+        $this->categoryRepository = $categoryRepository;
 
         $this->contentUrlGenerator = $contentUrlGenerator;
         $this->feedUrlGenerator = $feedUrlGenerator;
@@ -45,25 +47,21 @@ class FeedDataProvider extends AbstractDataProvider
     {
         $updatedAt = null;
 
+        $criteria = array(
+            'section' => $this->conditions->get('section'),
+            '[isPublished]',
+        );
+
         if (isset($parameters['category'])) {
-            $category = $this->findCategory(
-                $this->conditions->get('section'),
+            $criteria['category'] = $this->findCategory(
+                $criteria['section'],
                 $parameters['category']
             );
-
-            $updatedAt = $this->paperManager
-                ->findMaxPublishedUpdatedAtInSectionAndCategory(
-                    $this->conditions->get('section'),
-                    $category
-                )
-            ;
-        } else {
-            $updatedAt = $this->paperManager
-                ->findMaxPublishedUpdatedAtInSection(
-                    $this->conditions->get('section')
-                )
-            ;
         }
+
+        $updatedAt = $this->paperRepository
+            ->findLatestUpdateDate($criteria)
+        ;
 
         return new DateTime($updatedAt);
     }
@@ -185,38 +183,38 @@ class FeedDataProvider extends AbstractDataProvider
 
     protected function getPapers(array $parameters)
     {
-        $section = $this->conditions->get('section');
-        $modifiedSince = isset($parameters['modifiedSince']) ? $parameters['modifiedSince'] : null;
+        $sorting = array('publishedSince' => 'DESC');
 
+        $modifiedSince = isset($parameters['modifiedSince']) ? $parameters['modifiedSince'] : null;
         if (is_string($modifiedSince)) {
             $modifiedSince = new DateTime($modifiedSince);
         }
 
-        if (isset($parameters['category'])) {
-            $category = $this->findCategory(
-                $section,
-                $parameters['category']
-            );
+        $criteria = array(
+            'section' => $this->conditions->get('section'),
+            '[isPublished]',
+        );
 
-            return $this->paperManager->findPublishedInSectionAndCategory(
-                $section,
-                $category,
-                $modifiedSince
+        if (isset($parameters['category'])) {
+            $criteria['category'] = $this->findCategory(
+                $criteria['section'],
+                $parameters['category']
             );
         }
 
-        return $this->paperManager->findPublishedInSection(
-            $this->conditions->get('section'),
-            $modifiedSince
-        );
+        if ($modifiedSince) {
+            $criteria['%updatedAt'] = array('>' => $modifiedSince);
+        }
+
+        return $this->paperRepository->fetch($criteria, $sorting);
     }
 
     protected function findCategory($section, $slug)
     {
-        $category = $this->categoryManager->findInSectionBySlug(
-            $section,
-            $slug
-        );
+        $category = $this->categoryRepository->findOneBy(array(
+            'section' => $section,
+            'slug' => $slug,
+        ));
 
         return $category;
     }
