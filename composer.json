@@ -28,12 +28,10 @@
     "minimum-stability": "stable",
 
     "autoload": {
-        "psr-0": {
-            "Anh\\ContentBundle": ""
+        "psr-4": {
+            "Anh\\ContentBundle\\": ""
         }
     },
-
-    "target-dir": "Anh/ContentBundle",
 
     "extra": {
         "branch-alias": {
