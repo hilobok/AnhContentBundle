@@ -2,8 +2,12 @@
 
 {% block title %}Categories{% endblock %}
 
+{% form_theme filter 'AnhDoctrineResourceBundle:Form:filter.html.twig' %}
+
 {% block content %}
     <h2>{{ resources|length }} categories</h2>
+
+    {{ form(filter) }}
 
     <form action="{{ url('anh_content_admin_category_delete') }}" method="post" id="fCategories">
         <div class="button_row">

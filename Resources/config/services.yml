@@ -14,6 +14,7 @@ parameters:
     anh_content.section_is_configured.validator.class: Anh\ContentBundle\Validator\Constraints\SectionIsConfiguredValidator
     anh_content.feed_data_provider.class: Anh\ContentBundle\FeedDataProvider
     anh_content.filter.admin_paper_list.class: Anh\ContentBundle\Filter\PaperFilter
+    anh_content.filter.admin_category_list.class: Anh\ContentBundle\Filter\CategoryFilter
 
 services:
     anh_content.bundle:
@@ -122,4 +123,9 @@ services:
         class: %anh_content.filter.admin_paper_list.class%
         arguments:
             - %anh_content.entity.category.class%
+            - %anh_content.sections%
+
+    anh_content.filter.admin_category_list:
+        class: %anh_content.filter.admin_category_list.class%
+        arguments:
             - %anh_content.sections%

@@ -13,6 +13,7 @@ anh_content_admin_category_list:
     defaults:
         _controller: anh_content.category.controller:listAction
         _anh_resource:
+            filter: 'container.get("anh_content.filter.admin_category_list")'
             view: AnhContentBundle:Admin:category/list.html.twig
             viewVars:
                 options: container.getParameter("anh_content.options")
@@ -36,7 +37,7 @@ anh_content_admin_category_edit:
         _controller: anh_content.category.controller:updateAction
         _anh_resource:
             form: anh_content_form_type_category
-            redirect: anh_content_admin_category_list
+            redirect: referer
             view: AnhContentBundle:Admin:category/edit.html.twig
             viewVars:
                 options: container.getParameter("anh_content.options")
@@ -50,7 +51,7 @@ anh_content_admin_category_delete:
     defaults:
         _controller: anh_content.category.controller:deleteAction
         _anh_resource:
-            redirect: anh_content_admin_category_list
+            redirect: referer
 
 anh_content_admin_tag_list:
     pattern: /tag-list-{page}
