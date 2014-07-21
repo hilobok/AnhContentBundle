@@ -21,7 +21,7 @@ class PaperController extends ResourceController
                 'section' => $section,
                 '[isPublished]',
             ),
-            'viewVars' => array(
+            'data' => array(
                 'section' => $section,
             ),
         );
@@ -51,7 +51,7 @@ class PaperController extends ResourceController
                 'section' => $section,
                 'slug' => $slug,
             ),
-            'viewVars' => array(
+            'data' => array(
                 'section' => $section,
             ),
         ));
@@ -79,7 +79,7 @@ class PaperController extends ResourceController
                 'category' => $category,
                 '[isPublished]',
             ),
-            'viewVars' => array(
+            'data' => array(
                 'section' => $section,
                 'category' => $category,
             ),

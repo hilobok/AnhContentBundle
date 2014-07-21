@@ -27,7 +27,7 @@ class CategoryController extends ResourceController
             'criteria' => array(
                 'section' => $section,
             ),
-            'viewVars' => array(
+            'data' => array(
                 'section' => $section,
             ),
         );

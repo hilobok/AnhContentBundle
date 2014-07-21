@@ -4,7 +4,7 @@ anh_content_admin:
         _controller: anh_content.paper.controller:dummyAction
         _anh_resource:
             view: AnhContentBundle:Admin:index.html.twig
-            viewVars:
+            data:
                 options: container.getParameter("anh_content.options")
                 sections: container.getParameter("anh_content.sections")
 
@@ -15,7 +15,7 @@ anh_content_admin_category_list:
         _anh_resource:
             filter: 'container.get("anh_content.filter.admin_category_list")'
             view: AnhContentBundle:Admin:category/list.html.twig
-            viewVars:
+            data:
                 options: container.getParameter("anh_content.options")
                 sections: container.getParameter("anh_content.sections")
 
@@ -27,7 +27,7 @@ anh_content_admin_category_add:
             form: anh_content_form_type_category
             redirect: anh_content_admin_category_list
             view: AnhContentBundle:Admin:category/add.html.twig
-            viewVars:
+            data:
                 options: container.getParameter("anh_content.options")
                 sections: container.getParameter("anh_content.sections")
 
@@ -39,7 +39,7 @@ anh_content_admin_category_edit:
             form: anh_content_form_type_category
             redirect: referer
             view: AnhContentBundle:Admin:category/edit.html.twig
-            viewVars:
+            data:
                 options: container.getParameter("anh_content.options")
                 sections: container.getParameter("anh_content.sections")
     requirements:
@@ -61,7 +61,7 @@ anh_content_admin_tag_list:
         _anh_resource:
             page: request.attributes.get("page")
             view: AnhContentBundle:Admin:tag/list.html.twig
-            viewVars:
+            data:
                 options: container.getParameter("anh_content.options")
                 sections: container.getParameter("anh_content.sections")
     requirements:
@@ -75,7 +75,7 @@ anh_content_admin_tag_edit:
             form: anh_taggable_form_type_tag
             redirect: anh_content_admin_tag_list
             view: AnhContentBundle:Admin:tag/edit.html.twig
-            viewVars:
+            data:
                 options: container.getParameter("anh_content.options")
                 sections: container.getParameter("anh_content.sections")
     requirements:
@@ -103,7 +103,7 @@ anh_content_admin_paper_list:
                 section: 'request.attributes.get("section")'
             page: 'request.attributes.get("page")'
             view: AnhContentBundle:Admin:paper/list.html.twig
-            viewVars:
+            data:
                 options: 'container.getParameter("anh_content.options")'
                 section: 'request.attributes.get("section")'
                 sections: 'container.getParameter("anh_content.sections")'
@@ -121,7 +121,7 @@ anh_content_admin_paper_add:
                 section: request.attributes.get('section')
             redirect: referer
             view: AnhContentBundle:Admin:paper/add.html.twig
-            viewVars:
+            data:
                 options: 'container.getParameter("anh_content.options")'
                 section: 'request.attributes.get("section")'
                 sections: 'container.getParameter("anh_content.sections")'
@@ -138,7 +138,7 @@ anh_content_admin_paper_edit:
                 section: request.attributes.get('section')
             redirect: referer
             view: AnhContentBundle:Admin:paper/edit.html.twig
-            viewVars:
+            data:
                 options: 'container.getParameter("anh_content.options")'
                 section: 'request.attributes.get("section")'
                 sections: 'container.getParameter("anh_content.sections")'
