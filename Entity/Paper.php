@@ -50,7 +50,7 @@ class Paper extends AbstractTaggable implements TaggableInterface
     /**
      * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Category", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="papers", fetch="EAGER")
      * @ORM\JoinColumn(name="categoryId", referencedColumnName="id")
      */
     protected $category;
