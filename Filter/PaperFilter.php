@@ -28,14 +28,17 @@ class PaperFilter extends AbstractFilter
         $fields = array();
 
         if ($this->sections[$section]['publishedSince']) {
-            $fields = array(
-                'publishedSince' => 'publishedSince',
-            );
+            $fields['publishedSince'] = 'publishedSince';
+        }
+
+        if ($this->sections[$section]['category']) {
+            $fields['category.title'] = 'category';
         }
 
         return $fields + array(
             'updatedAt' => 'updatedAt',
             'createdAt' => 'createdAt',
+            'title' => 'title',
         );
     }
 
