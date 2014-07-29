@@ -39,6 +39,7 @@ class PaperFilter extends AbstractFilter
             'updatedAt' => 'updatedAt',
             'createdAt' => 'createdAt',
             'title' => 'title',
+            'externalLinksCount' => 'Number of external links',
         );
     }
 
@@ -81,6 +82,25 @@ class PaperFilter extends AbstractFilter
             'isDraft' => array(
                 'type' => 'checkbox',
                 'empty_data' => false,
+            ),
+
+            'hasLinks' => array(
+                'type' => 'choice',
+                'form' => array(
+                    'empty_value' => 'No matter',
+                    'choices' => array(
+                        1 => 'With links',
+                        2 => 'Without links',
+                    )
+                ),
+                'operator' => function($value) {
+                    switch ($value) {
+                        case 1:
+                            return ['%externalLinksCount' => ['>' => 0]];
+                        case 2:
+                            return ['externalLinksCount' => 0];
+                    }
+                },
             ),
         );
     }

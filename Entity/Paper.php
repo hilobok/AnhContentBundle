@@ -23,9 +23,11 @@ use Anh\Taggable\TaggableInterface;
  *      @ORM\Index(name="idx_updatedAt", columns={ "updatedAt" }),
  *      @ORM\Index(name="idx_publishedSince", columns={ "publishedSince" }),
  *      @ORM\Index(name="idx_isDraft", columns={ "isDraft" }),
- *      @ORM\Index(name="idx_image", columns={ "image" })
+ *      @ORM\Index(name="idx_image", columns={ "image" }),
+ *      @ORM\Index(name="idx_externalLinksCount", columns={ "externalLinksCount" })
  * })
  * @ORM\Entity(repositoryClass="Anh\ContentBundle\Entity\PaperRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Paper extends AbstractTaggable implements TaggableInterface
 {
@@ -160,6 +162,35 @@ class Paper extends AbstractTaggable implements TaggableInterface
      * @ORM\Column(name="metaKeywords", type="string", nullable=true)
      */
     protected $metaKeywords;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="externalLinksCount", type="integer")
+     */
+    protected $externalLinksCount = 0;
+
+    public function setExternalLinksCount($count)
+    {
+        $this->externalLinksCount = $count;
+    }
+
+    public function getExternalLinksCount()
+    {
+        return $this->externalLinksCount;
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function countExternalLinks()
+    {
+        $this->externalLinksCount = preg_match_all(
+            '/<a\s+.*?href="https?\:\/\/.+?".*?>/i',
+            $this->content
+        );
+    }
 
     /**
      * Get metaAuthor

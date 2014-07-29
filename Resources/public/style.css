@@ -43,3 +43,6 @@
     color: mediumseagreen;
 }
 
+.list_row_flags .has-external-links {
+    color: dodgerblue;
+}
