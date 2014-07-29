@@ -442,12 +442,17 @@
 
                         for(var i in plugin.settings.tagList) {
                             var tagName = plugin.settings.tagList[i];
-                            var pattern = new RegExp(tagName + "(\\W|$)");
+
+                            RegExp.quote = function(str) {
+                                return (str + '').replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
+                            };
+
+                            var pattern = new RegExp(RegExp.quote(tagName) + "(\\W|$)");
 
                             var match = stream.match(pattern);
 
                             if(match) {
-                                state.style = 'tag-' + tagName;
+                                state.style = 'tag-' + (tagName == '*' ? 'li' : tagName);
 
                                 stream.backUp(match[1].length);
                                 break;
