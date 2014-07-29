@@ -58,7 +58,7 @@ class PaperFilter extends AbstractFilter
                 'form' => array(
                     'class' => $this->categoryClass,
                     'property' => 'title',
-                    'empty_value' => 'All',
+                    'empty_value' => 'Any',
                     'query_builder' => function(EntityRepository $repository) use ($section) {
                         return $repository->prepareQueryBuilder([ 'section' => $section ], [ 'title' => 'asc']);
                     }
