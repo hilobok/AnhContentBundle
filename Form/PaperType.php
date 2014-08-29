@@ -130,7 +130,8 @@ class PaperType extends AbstractType
         }
 
         $builder
-            ->add('submit', 'submit')
+            ->add('save', 'submit')
+            ->add('save_and_preview', 'submit')
         ;
 
         $builder

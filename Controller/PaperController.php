@@ -98,4 +98,27 @@ class PaperController extends ResourceController
 
         return $this->listAction($request);
     }
+
+    public function createAction(Request $request)
+    {
+        return $this->handleResponse(parent::createAction($request));
+    }
+
+    public function updateAction(Request $request)
+    {
+        return $this->handleResponse(parent::updateAction($request));
+    }
+
+    protected function handleResponse($response)
+    {
+        if (isset($response['redirect'])) {
+            if ($response['data']['resource_form']->get('save_and_preview')->isClicked()) {
+                $response['redirect'] = $this->container->get('anh_content.url_generator')->resolveAndGenerate(
+                    $response['data']['resource']
+                );
+            }
+        }
+
+        return $response;
+    }
 }
