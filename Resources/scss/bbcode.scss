@@ -40,4 +40,9 @@
         color: #999;
         margin-top: 0.8em;
     }
+
+    .message {
+        border-left: 3px solid lighten(green, 10%);
+        padding-left: 2em;
+    }
 }
