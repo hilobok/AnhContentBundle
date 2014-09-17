@@ -69,7 +69,7 @@ class AnhContentExtension extends Extension implements PrependExtensionInterface
                     'inputs' => array(
                         'bundles/anhcontent/components/codemirror/lib/codemirror.css',
                         'bundles/anhcontent/components/fine-uploader/fineuploader.min.css',
-                        'bundles/anhcontent/editor.css'
+                        '@AnhContentBundle/Resources/assets/css/editor.css',
                     ),
                     'filters' => array(
                         'cssrewrite'
@@ -79,9 +79,9 @@ class AnhContentExtension extends Extension implements PrependExtensionInterface
                     'inputs' => array(
                         'bundles/anhcontent/components/codemirror/lib/codemirror.js',
                         'bundles/anhcontent/components/fine-uploader/jquery.fineuploader.min.js',
-                        'bundles/anhcontent/editor-toolbar.js',
-                        'bundles/anhcontent/editor-tags.js',
-                        'bundles/anhcontent/editor.js'
+                        '@AnhContentBundle/Resources/assets/js/editor-toolbar.js',
+                        '@AnhContentBundle/Resources/assets/js/editor-tags.js',
+                        '@AnhContentBundle/Resources/assets/js/editor.js',
                     )
                 )
             ),
