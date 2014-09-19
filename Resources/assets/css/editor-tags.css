@@ -1,8 +1,3 @@
-.cm-s-default .cm-tag {
-    color: skyblue;
-    font-weight: bolder;
-}
-
 .cm-s-default .cm-tag-h1,
 .cm-s-default .cm-tag-h2,
 .cm-s-default .cm-tag-h3,
@@ -16,7 +11,7 @@
 .cm-s-default .cm-tag-i,
 .cm-s-default .cm-tag-u,
 .cm-s-default .cm-tag-s {
-    color: darkcyan;
+    color: lightseagreen;
 }
 
 .cm-s-default .cm-tag-sub,
@@ -37,7 +32,7 @@
 
 .cm-s-default .cm-tag-img,
 .cm-s-default .cm-tag-image {
-    color: slategray;
+    color: darkcyan;
 }
 
 .cm-s-default .cm-tag-video,
@@ -54,8 +49,18 @@
     color: mediumvioletred;
 }
 
-.cm-s-default .cm-tag-preview { color: saddlebrown;}
-.cm-s-default .cm-tag-proceed { color: sienna;}
+.cm-s-default .cm-tag-table,
+.cm-s-default .cm-tag-tr,
+.cm-s-default .cm-tag-row {
+    color: royalblue;
+}
+.cm-s-default .cm-tag-td,
+.cm-s-default .cm-tag-col {
+    color: mediumslateblue;
+}
+.cm-s-default .cm-tag-th {
+    color: orchid;
+}
 
 .cm-s-default .cm-tag-abbr,
 .cm-s-default .cm-tag-br,
@@ -83,6 +88,13 @@
 .cm-s-default .cm-tag-quote,
 {}
 
+.cm-s-default .cm-tag-preview {
+    color: sienna;
+}
+.cm-s-default .cm-tag-proceed {
+    color: chocolate;
+}
+
 .cm-s-default .cm-tag-asset {
-    color: gray;
+    color: slategray;
 }

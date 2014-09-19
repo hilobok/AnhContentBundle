@@ -6,6 +6,11 @@
     color: #333;
 }
 
+.cm-s-default .cm-tag {
+    color: skyblue;
+    font-weight: bolder;
+}
+
 .editor {
     min-width: 700px;
 }
