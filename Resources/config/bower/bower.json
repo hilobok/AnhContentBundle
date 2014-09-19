@@ -2,7 +2,7 @@
     "name": "AnhContentBundle",
     "private": true,
     "dependencies": {
-        "codemirror": "~4.0.3",
-        "fine-uploader": "http://github.com/hilobok/fine-uploader.git#4.4.0"
+        "codemirror": "~4.5.0",
+        "fine-uploader": "http://github.com/hilobok/fine-uploader.git#5.0.6"
     }
 }
