@@ -332,6 +332,14 @@
                 plugin.deleteAsset(image);
                 span.remove();
 
+                // remove asset tag
+                plugin.codemirror.setValue(
+                    plugin.codemirror.getValue().replace(
+                        new RegExp('\\[asset=["\']?' + image.fileName + '["\']?.*?\\/\\]', 'gi'),
+                        ''
+                    )
+                );
+
                 plugin.hasChanges = true;
             });
 
