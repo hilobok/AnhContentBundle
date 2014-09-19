@@ -87,9 +87,6 @@ class AnhContentExtension extends Extension implements PrependExtensionInterface
                     'inputs' => array(
                         '@AnhContentBundle/Resources/assets/css/editor-tags.css',
                     ),
-                    'filters' => array(
-                        'compass',
-                    ),
                 ),
                 'anh_content_editor_options_js' => array(
                     'inputs' => array(
