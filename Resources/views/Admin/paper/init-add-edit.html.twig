@@ -2,6 +2,7 @@
     {% stylesheets
         '@jquery_ui_css'
         '@anh_content_editor_css'
+        '@anh_content_editor_tags_css'
         '@anh_dateTimePicker_css'
         '@anh_taggable_css'
     %}<link rel="stylesheet" href="{{ asset_url }}" />{% endstylesheets %}
@@ -17,20 +18,8 @@
         '@jquery_js'
         '@jquery_ui_js'
         '@anh_content_editor_js'
+        '@anh_content_editor_options_js'
         '@anh_dateTimePicker_js'
         '@anh_taggable_js'
     %}<script src="{{ asset_url }}"></script>{% endjavascripts %}
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-            var ed = new $.editor({
-                textarea: $('.bbcode'),
-                tagList: editor_tags,
-                tagSet: editor_toolbar,
-                uploader: {
-                    endpoint: '{{ oneup_uploader_endpoint('anh_content_assets') }}'
-                }
-            });
-        });
-    </script>
 {% endblock %}

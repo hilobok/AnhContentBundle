@@ -5,10 +5,9 @@ namespace Anh\ContentBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-
 use Doctrine\ORM\EntityRepository;
-
 use Anh\Taggable\TaggableManager;
+use Oneup\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class PaperType extends AbstractType
 {
@@ -35,12 +34,19 @@ class PaperType extends AbstractType
      * @var \Anh\Taggable\TaggableManager
      */
 
-    public function __construct($paperClass, $categoryClass, $sections, TaggableManager $taggableManager)
+    public function __construct(
+        $paperClass,
+        $categoryClass,
+        $sections,
+        TaggableManager $taggableManager,
+        UploaderHelper $uploaderHelper
+    )
     {
         $this->paperClass = $paperClass;
         $this->categoryClass = $categoryClass;
         $this->sections = $sections;
         $this->taggableManager = $taggableManager;
+        $this->uploaderHelper = $uploaderHelper;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -91,7 +97,11 @@ class PaperType extends AbstractType
         $builder
             ->add('markup', 'textarea', array(
                 'attr' => array(
-                    'class' => 'bbcode'
+                    'class' => 'editor',
+                    'data-options' => json_encode(array(
+                        'uploader_endpoint' => $this->uploaderHelper->endpoint('anh_content_assets'),
+                        'type' => 'bbcode',
+                    )),
                 ),
                 'required' => false
             ))

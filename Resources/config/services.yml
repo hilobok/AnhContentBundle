@@ -41,6 +41,7 @@ services:
             - %anh_content.entity.category.class%
             - %anh_content.sections%
             - @anh_taggable.manager
+            - @oneup_uploader.templating.uploader_helper
         tags:
             - { name: form.type, alias: anh_content_form_type_paper }
 

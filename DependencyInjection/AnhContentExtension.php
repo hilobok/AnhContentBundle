@@ -73,17 +73,29 @@ class AnhContentExtension extends Extension implements PrependExtensionInterface
                     ),
                     'filters' => array(
                         'cssrewrite'
-                    )
+                    ),
                 ),
                 'anh_content_editor_js' => array(
                     'inputs' => array(
                         'bundles/anhcontent/components/codemirror/lib/codemirror.js',
-                        'bundles/anhcontent/components/fine-uploader/jquery.fineuploader.min.js',
-                        '@AnhContentBundle/Resources/assets/js/editor-toolbar.js',
-                        '@AnhContentBundle/Resources/assets/js/editor-tags.js',
+                        'bundles/anhcontent/components/fine-uploader/fineuploader.min.js',
+                        '@AnhContentBundle/Resources/assets/js/mode/bbcode.js',
                         '@AnhContentBundle/Resources/assets/js/editor.js',
-                    )
-                )
+                    ),
+                ),
+                'anh_content_editor_tags_css' => array(
+                    'inputs' => array(
+                        '@AnhContentBundle/Resources/assets/css/editor-tags.css',
+                    ),
+                    'filters' => array(
+                        'compass',
+                    ),
+                ),
+                'anh_content_editor_options_js' => array(
+                    'inputs' => array(
+                        '@AnhContentBundle/Resources/assets/js/editor-options.js',
+                    ),
+                ),
             ),
             'bundles' => array(
                 'AnhContentBundle'

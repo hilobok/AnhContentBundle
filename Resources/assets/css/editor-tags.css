@@ -1,0 +1,88 @@
+.cm-s-default .cm-tag {
+    color: skyblue;
+    font-weight: bolder;
+}
+
+.cm-s-default .cm-tag-h1,
+.cm-s-default .cm-tag-h2,
+.cm-s-default .cm-tag-h3,
+.cm-s-default .cm-tag-h4,
+.cm-s-default .cm-tag-h5,
+.cm-s-default .cm-tag-h6 {
+    color: mediumblue;
+}
+
+.cm-s-default .cm-tag-b,
+.cm-s-default .cm-tag-i,
+.cm-s-default .cm-tag-u,
+.cm-s-default .cm-tag-s {
+    color: darkcyan;
+}
+
+.cm-s-default .cm-tag-sub,
+.cm-s-default .cm-tag-sup {
+    color: yellowgreen;
+}
+
+.cm-s-default .cm-tag-olist,
+.cm-s-default .cm-tag-list,
+.cm-s-default .cm-tag-li {
+    color: limegreen;
+}
+
+.cm-s-default .cm-tag-link,
+.cm-s-default .cm-tag-url {
+    color: darkorchid;
+}
+
+.cm-s-default .cm-tag-img,
+.cm-s-default .cm-tag-image {
+    color: slategray;
+}
+
+.cm-s-default .cm-tag-video,
+.cm-s-default .cm-tag-youtube,
+.cm-s-default .cm-tag-vimeo,
+.cm-s-default .cm-tag-veoh,
+.cm-s-default .cm-tag-vevo,
+.cm-s-default .cm-tag-liveleak,
+.cm-s-default .cm-tag-dailymotion,
+.cm-s-default .cm-tag-myspace,
+.cm-s-default .cm-tag-collegehumor,
+.cm-s-default .cm-tag-funnyordie,
+.cm-s-default .cm-tag-wegame {
+    color: mediumvioletred;
+}
+
+.cm-s-default .cm-tag-preview { color: saddlebrown;}
+.cm-s-default .cm-tag-proceed { color: sienna;}
+
+.cm-s-default .cm-tag-abbr,
+.cm-s-default .cm-tag-br,
+.cm-s-default .cm-tag-hr,
+.cm-s-default .cm-tag-time,
+.cm-s-default .cm-tag-email,
+.cm-s-default .cm-tag-mail,
+.cm-s-default .cm-tag-font,
+.cm-s-default .cm-tag-size,
+.cm-s-default .cm-tag-color,
+.cm-s-default .cm-tag-align,
+.cm-s-default .cm-tag-left,
+.cm-s-default .cm-tag-right,
+.cm-s-default .cm-tag-center,
+.cm-s-default .cm-tag-justify,
+.cm-s-default .cm-tag-float,
+.cm-s-default .cm-tag-hide,
+.cm-s-default .cm-tag-alert,
+.cm-s-default .cm-tag-note,
+.cm-s-default .cm-tag-div,
+.cm-s-default .cm-tag-spoiler,
+.cm-s-default .cm-tag-code,
+.cm-s-default .cm-tag-source,
+.cm-s-default .cm-tag-var,
+.cm-s-default .cm-tag-quote,
+{}
+
+.cm-s-default .cm-tag-asset {
+    color: gray;
+}
