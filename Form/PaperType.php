@@ -64,7 +64,7 @@ class PaperType extends AbstractType
                 ->add('category', 'entity', array(
                     'class' => $this->categoryClass,
                     'property' => 'title',
-                    'query_builder' => function(EntityRepository $repository) use ($section) {
+                    'query_builder' => function (EntityRepository $repository) use ($section) {
                         return $repository->prepareQueryBuilder(
                             [ 'section' => $section ], // criteria
                             [ 'title' => 'asc' ] // sorting
@@ -107,7 +107,7 @@ class PaperType extends AbstractType
             ))
         ;
 
-        if(!in_array('isDraft', $options['hidden_fields'])) {
+        if (!in_array('isDraft', $options['hidden_fields'])) {
             $builder
                 ->add('isDraft', 'checkbox', array('required' => false))
             ;

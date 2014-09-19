@@ -69,7 +69,7 @@ class ContentExtension extends \Twig_Extension
     /**
      * Returns url for content
      *
-     * @param mixed $content Could be either paper or category entity or section
+     * @param mixed       $content Could be either paper or category entity or section
      * @param string|null $name
      *
      * @return string

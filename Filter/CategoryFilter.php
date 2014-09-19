@@ -44,7 +44,7 @@ class CategoryFilter extends AbstractFilter
         return $filter + array(
             'title' => array(
                 'type' => 'text',
-                'operator' => function($value) {
+                'operator' => function ($value) {
                     if (strpos($value, '%') === false) {
                         $value = sprintf('%%%s%%', $value);
                     }

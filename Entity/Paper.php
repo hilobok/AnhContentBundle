@@ -8,7 +8,6 @@ use Anh\MarkupBundle\Mapping\Annotation\Parsable as ParseMarkup;
 use Symfony\Component\Validator\Constraints as Assert;
 use Anh\ContentBundle\Validator\Constraints as PaperAssert;
 use Anh\MarkupBundle\Validator\Constraints as MarkupAssert;
-use Anh\ContentBundle\Entity\Category;
 use Anh\Taggable\AbstractTaggable;
 use Anh\Taggable\TaggableInterface;
 
@@ -205,7 +204,7 @@ class Paper extends AbstractTaggable implements TaggableInterface
     /**
      * Set metaAuthor
      *
-     * @param string $metaAuthor
+     * @param  string $metaAuthor
      * @return Paper
      */
     public function setMetaAuthor($metaAuthor)
@@ -228,7 +227,7 @@ class Paper extends AbstractTaggable implements TaggableInterface
     /**
      * Set metaDescription
      *
-     * @param string $metaDescription
+     * @param  string $metaDescription
      * @return Paper
      */
     public function setMetaDescription($metaDescription)
@@ -251,7 +250,7 @@ class Paper extends AbstractTaggable implements TaggableInterface
     /**
      * Set metaKeywords
      *
-     * @param string $metaKeywords
+     * @param  string $metaKeywords
      * @return Paper
      */
     public function setMetaKeywords($metaKeywords)
@@ -274,7 +273,7 @@ class Paper extends AbstractTaggable implements TaggableInterface
     /**
      * Set image
      *
-     * @param string $image
+     * @param  string $image
      * @return Paper
      */
     public function setImage($image)

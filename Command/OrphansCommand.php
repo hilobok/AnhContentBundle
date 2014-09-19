@@ -46,7 +46,7 @@ class OrphansCommand extends ContainerAwareCommand
             $container->getParameter('anh_content.assets_dir')
         );
 
-        $files = array_map(function($file) {
+        $files = array_map(function ($file) {
             return $file->getFilename();
         }, iterator_to_array($finder, false));
 

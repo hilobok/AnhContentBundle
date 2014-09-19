@@ -13,7 +13,8 @@ use Decoda\Filter\AbstractFilter;
 /**
  * Provides tags for URLs.
  */
-class UrlFilter extends AbstractFilter {
+class UrlFilter extends AbstractFilter
+{
     /**
      * Configuration.
      *
@@ -58,11 +59,12 @@ class UrlFilter extends AbstractFilter {
     /**
      * Strip a node but keep the URL regardless of location.
      *
-     * @param array $tag
-     * @param string $content
+     * @param  array  $tag
+     * @param  string $content
      * @return string
      */
-    public function strip(array $tag, $content) {
+    public function strip(array $tag, $content)
+    {
         $url = isset($tag['attributes']['href']) ? $tag['attributes']['href'] : $content;
 
         return parent::strip($tag, $url);

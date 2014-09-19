@@ -91,7 +91,7 @@ class UrlGenerator
      * Prepares route parameters leaving only required
      *
      * @param string $routeName
-     * @param array $parameters
+     * @param array  $parameters
      *
      * @return array
      */

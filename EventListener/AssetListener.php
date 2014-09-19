@@ -49,7 +49,7 @@ class AssetListener implements EventSubscriber
             return;
         }
 
-        $callback = function($value) {
+        $callback = function ($value) {
             return $value['fileName'];
         };
 

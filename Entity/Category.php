@@ -5,9 +5,6 @@ namespace Anh\ContentBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
-use Anh\ContentBundle\Entity\Paper;
-use Doctrine\Common\Collections\ArrayCollection;
-
 /**
  * Category
  *

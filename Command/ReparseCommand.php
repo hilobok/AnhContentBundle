@@ -97,7 +97,7 @@ class ReparseCommand extends ContainerAwareCommand
 
         $lines = array_filter(
             array_map(
-                function($value) { return trim($value); },
+                function ($value) { return trim($value); },
                 $lines
             )
         );

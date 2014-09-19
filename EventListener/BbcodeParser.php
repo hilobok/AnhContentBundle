@@ -208,7 +208,7 @@ class BbcodeParser implements EventSubscriberInterface
                 }
 
                 // leave only alphanumerical tags
-                $tags = array_filter($tags, function($value) { return preg_match('/^[_a-z0-9]+$/', $value); });
+                $tags = array_filter($tags, function ($value) { return preg_match('/^[_a-z0-9]+$/', $value); });
 
                 $event->setResult($tags);
                 break;

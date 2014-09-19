@@ -60,7 +60,7 @@ class PaperFilter extends AbstractFilter
                     'class' => $this->categoryClass,
                     'property' => 'title',
                     'empty_value' => 'Any',
-                    'query_builder' => function(EntityRepository $repository) use ($section) {
+                    'query_builder' => function (EntityRepository $repository) use ($section) {
                         return $repository->prepareQueryBuilder([ 'section' => $section ], [ 'title' => 'asc']);
                     }
                 ),
@@ -70,7 +70,7 @@ class PaperFilter extends AbstractFilter
         return $filter + array(
             'title' => array(
                 'type' => 'text',
-                'operator' => function($value) {
+                'operator' => function ($value) {
                     if (strpos($value, '%') === false) {
                         $value = sprintf('%%%s%%', $value);
                     }
@@ -93,7 +93,7 @@ class PaperFilter extends AbstractFilter
                         2 => 'Without links',
                     )
                 ),
-                'operator' => function($value) {
+                'operator' => function ($value) {
                     switch ($value) {
                         case 1:
                             return ['%externalLinksCount' => ['>' => 0]];
