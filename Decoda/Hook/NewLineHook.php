@@ -4,7 +4,7 @@ namespace Anh\ContentBundle\Decoda\Hook;
 
 use Decoda\Hook\AbstractHook;
 
-class ConvertBreaksHook extends AbstractHook
+class NewLineHook extends AbstractHook
 {
     /**
      * Leaves only 2 line break

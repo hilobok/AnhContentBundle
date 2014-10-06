@@ -17,7 +17,7 @@ use Decoda\Decoda;
 use Anh\ContentBundle\Decoda\Filter\PreviewFilter;
 use Anh\ContentBundle\Decoda\Filter\AssetFilter;
 use Anh\ContentBundle\Decoda\Filter\UrlFilter;
-use Anh\ContentBundle\Decoda\Hook\ConvertBreaksHook;
+use Anh\ContentBundle\Decoda\Hook\NewLineHook;
 
 class BbcodeParser implements EventSubscriberInterface
 {
@@ -78,7 +78,7 @@ class BbcodeParser implements EventSubscriberInterface
         $decoda = new Decoda($event->getMarkup(), $options);
         $decoda->defaults();
         $decoda->addFilter(new \Decoda\Filter\TableFilter());
-        $decoda->addHook(new ConvertBreaksHook());
+        $decoda->addHook(new NewLineHook());
 
         // original url filter is to restrictive, replace it with custom
         $decoda->removeFilter('Url');
