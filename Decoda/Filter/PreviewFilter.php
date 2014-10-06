@@ -29,7 +29,7 @@ class PreviewFilter extends AbstractFilter
     public function parse(array $tag, $content)
     {
         if ($tag['tag'] == 'preview') {
-            return $content;
+            return sprintf('{##preview##}%s{##preview##}', $content);
         }
 
         if ($tag['tag'] == 'proceed') {

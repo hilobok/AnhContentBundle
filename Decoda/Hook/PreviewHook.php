@@ -12,14 +12,14 @@ class PreviewHook extends AbstractHook
      * @param  string $content
      * @return string
      */
-    public function beforeParse($content)
+    public function afterParse($content)
     {
         if ($this->getConfig('previewOnly')) {
-            if (preg_match('|\[preview\].+\[\/preview\]|is', $content, $matches)) {
+            if (preg_match('/{##preview##}.*?{##preview##}/s', $content, $matches)) {
                 $content = $matches[0];
             }
         }
 
-        return $content;
+        return str_replace('{##preview##}', '', $content);
     }
 }
