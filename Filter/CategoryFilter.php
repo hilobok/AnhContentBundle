@@ -54,4 +54,12 @@ class CategoryFilter extends AbstractFilter
             ),
         );
     }
+
+    public function getDefaults(array $parameters = array())
+    {
+        return array(
+            'field' => 'section',
+            'order' => 'asc',
+        );
+    }
 }
