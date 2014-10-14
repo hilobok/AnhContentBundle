@@ -12,6 +12,7 @@ parameters:
     anh_content.url_generator.listener.class: Anh\ContentBundle\EventListener\UrlGenerator
     anh_content.twig.content_extension.class: Anh\ContentBundle\Twig\ContentExtension
     anh_content.section_is_configured.validator.class: Anh\ContentBundle\Validator\Constraints\SectionIsConfiguredValidator
+    anh_content.category_is_required.validator.class: Anh\ContentBundle\Validator\Constraints\CategoryIsRequiredValidator
     anh_content.feed_data_provider.class: Anh\ContentBundle\FeedDataProvider
     anh_content.filter.admin_paper_list.class: Anh\ContentBundle\Filter\PaperFilter
     anh_content.filter.admin_category_list.class: Anh\ContentBundle\Filter\CategoryFilter
@@ -119,6 +120,13 @@ services:
             - %anh_content.sections%
         tags:
             - { name: validator.constraint_validator, alias: anh_content_section_is_configured_validator }
+
+    anh_content.category_is_required.validator:
+        class: %anh_content.category_is_required.validator.class%
+        arguments:
+            - %anh_content.sections%
+        tags:
+            - { name: validator.constraint_validator, alias: anh_content_category_is_required_validator }
 
     anh_content.filter.admin_paper_list:
         class: %anh_content.filter.admin_paper_list.class%
