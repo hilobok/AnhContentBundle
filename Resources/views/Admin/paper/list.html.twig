@@ -52,6 +52,8 @@
                             {% if sections[section].publishedSince %}
                                 <span>Published since:</span> {{ paper.publishedSince|date }}
                             {% endif %}
+
+                            <span>Chars:</span> {{ paper.charsCount }}
                         </div>
 
                         <div class="preview">{{ paper.preview()|striptags[:100] ~ '...' }}</div>

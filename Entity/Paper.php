@@ -5,6 +5,7 @@ namespace Anh\ContentBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Anh\MarkupBundle\Mapping\Annotation\Parsable as ParseMarkup;
+use Anh\MarkupBundle\Mapping\Annotation\Countable as CountMarkup;
 use Symfony\Component\Validator\Constraints as Assert;
 use Anh\ContentBundle\Validator\Constraints as PaperAssert;
 use Anh\MarkupBundle\Validator\Constraints as MarkupAssert;
@@ -169,15 +170,13 @@ class Paper extends AbstractTaggable implements TaggableInterface
      */
     protected $externalLinksCount = 0;
 
-    public function setExternalLinksCount($count)
-    {
-        $this->externalLinksCount = $count;
-    }
-
-    public function getExternalLinksCount()
-    {
-        return $this->externalLinksCount;
-    }
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="charsCount", type="integer")
+     * @CountMarkup(type="bbcode", field="markup")
+     */
+    protected $charsCount = 0;
 
     /**
      * @ORM\PrePersist
@@ -189,6 +188,26 @@ class Paper extends AbstractTaggable implements TaggableInterface
             '/<a\s+.*?href="https?\:\/\/.+?".*?>/i',
             $this->content
         );
+    }
+
+    public function getCharsCount()
+    {
+        return $this->charsCount;
+    }
+
+    public function setCharsCount($count)
+    {
+        $this->charsCount = $count;
+    }
+
+    public function getExternalLinksCount()
+    {
+        return $this->externalLinksCount;
+    }
+
+    public function setExternalLinksCount($count)
+    {
+        $this->externalLinksCount = $count;
     }
 
     /**

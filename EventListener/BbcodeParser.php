@@ -200,6 +200,11 @@ class BbcodeParser implements EventSubscriberInterface
         }
 
         switch ($event->getCommand()) {
+            case 'countChars':
+                $markup = preg_replace('/\[.*?\]|\s/', '', $event->getMarkup());
+                $event->setResult(mb_strlen($markup));
+                break;
+
             case 'getTags':
                 $tags = array();
 
