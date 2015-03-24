@@ -27,7 +27,6 @@ use Anh\Taggable\TaggableInterface;
  *      @ORM\Index(name="idx_externalLinksCount", columns={ "externalLinksCount" })
  * })
  * @ORM\Entity(repositoryClass="Anh\ContentBundle\Entity\PaperRepository")
- * @ORM\HasLifecycleCallbacks
  */
 class Paper extends AbstractTaggable implements TaggableInterface
 {
@@ -178,11 +177,12 @@ class Paper extends AbstractTaggable implements TaggableInterface
      */
     protected $charsCount = 0;
 
-    /**
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
-     */
-    public function countExternalLinks()
+    public function afterMarkupParsed()
+    {
+        $this->countExternalLinks();
+    }
+
+    protected function countExternalLinks()
     {
         $this->externalLinksCount = preg_match_all(
             '/<a\s+.*?href="https?\:\/\/.+?".*?>/i',
